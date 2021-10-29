@@ -1,24 +1,34 @@
 # tabletop-online
 Belegarbeit Programmierung von Benutzeroberflächen (PBO) WS2021/22
 
+**Environment:**
+
+- Node version: 16
+  - Install pnpm via shell script: https://pnpm.io/installation
+  - Run `pnpm env use -g lts` to get the latest Node LTS version and npm
+
+
+- Package Manager helper: https://github.com/antfu/ni
+- Conventional Commits: https://cheatography.com/albelop/cheat-sheets/conventional-commits/
+
 ## Project setup
 ```
-npm install
+pnpm install
 ```
 
 ### Compiles and hot-reloads for development
 ```
-npm run serve
+pnpm run serve
 ```
 
 ### Compiles and minifies for production
 ```
-npm run build
+pnpm run build
 ```
 
 ### Lints and fixes files
 ```
-npm run lint
+pnpm run lint
 ```
 
 ### Customize configuration
