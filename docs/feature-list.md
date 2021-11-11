@@ -42,6 +42,24 @@
     * Spieler die einem Raum beitreten, können sich entweder als neuer Spieler oder als vorhandener Spieler anmelden (dadurch gibt es keine Probleme der Identifikation von "eigenen Händen" aller Mitspieler bei Export & Import)
     * Jeder Spieler kann eine eigene Spielfarbe festlegen, diese wird beim Auswählen von Objekten den anderen Spielern als Umrandung angezeigt
     * Wenn ein Spieler sich ausloggen möchte, wird er gefragt, ob er das wirklich will und es wird angeboten den aktuellen Spielstand zu speichern
+  * Interaktion mit Spielobjekten
+    * Desktop
+      * 1x Linksklick: Auswahl
+      * 1x Rechtsklick: Auswahl + Aufruf des Kontextmenüs
+      * 2x Linksklick: Hauptaktion ausführen
+      * Rechtsklick halten + Ziehen: Ansicht rotieren
+      * Linksklick halten + Ziehen: Ansicht verschieben 
+      * Auswahl + Linksklick halten + Ziehen: Ansicht verschieben 
+      * Rad: Zoom
+    * Mobil
+      * 1x Klick: Auswahl des Spielobjekts
+      * Auswahl + 2x Klick: Aufruf des (radialen?) Kontextmenüs
+      * Auswahl + Gedrückt halten und ziehen: Verschieben des Spielobjekts
+      * Auswahl + 1x Klick: Hauptaktion ausführen (z.B. Umdrehen der Karte, Würfel würfeln)
+      * Pinch & Stretch: Zoom
+      * 2-Finger-Rotate: Ansicht drehen
+      * 2-Finger-Drag | 1-Finger-Drag: Ansicht verschieben
+      * Auswahl + 2-Finger-Rotate: Spielobjekt drehen
   * Menüs
     * Obermenü
       * besteht nur aus Icons, die andere Menüs aufrufen
@@ -64,7 +82,7 @@
       * Beitritt, Verlassen, Erstellen von Objekten und Entfernen von Objekten
       * Im Debug-Modus können hier alle Aktionen dargestellt werden
     * Spielobjekte-Katalog
-      * dargestellt als Siebar (PC), und als "Bottombar" (Smartphone)
+      * dargestellt als Sidebar (PC), und als "Bottombar" (Smartphone)
       * alle Standard-Spielobjekte und Standard-Spielbretter enthalten
       * Um neue Spielobjekte hinzuzufügen, werden diese per Drag'n'Drop auf das Spielbrett gezogen
       * Option, neue Spielobjekte hinzuzufügen
@@ -78,7 +96,7 @@
   * Raum beitreten
   * Raum importieren
   * Impressum
-  * Hanbuch
+  * Handbuch
 - Spiel-View
   * Raum
 
@@ -87,8 +105,8 @@
 ## Implementation
 
 ## TODO
-- über Kontextmenü Gedanken machen
 - Kann-Kriterien bestimmen
+- Verhalten bei Rotation von Spielobjekten
 - Was sind die Limits von WebRTC?
   * Peer-To-Peer außerhalb des lokalen Netzwerks
   * Wie werden Spieler untereinander angesprochen? (über IP?)
