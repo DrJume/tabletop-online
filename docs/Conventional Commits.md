@@ -18,13 +18,13 @@
 | Type     | Explanation                                                                                                                                 | Gitmojis |
 | -------- | ------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | build    | Changes to the **build system** (vite, webpack) or **dependencies** (npm).                                                                  | ⬆️➕       |
-| chore    | **Other**⠀changes that don't modify src or test files. \n (e.g. .gitignore, lint config)                                                    | 🔧🔨🙈🔖🍱    |
+| chore    | **Other** changes that don't modify src or test files. <br> (e.g. .gitignore, lint config)                                                  | 🔧🔨🙈🔖🍱    |
 | ci       | Changes to CI configuration files and scripts.                                                                                              | 💚👷       |
 | docs     | Documentation, README.md, Code Comments.                                                                                                    | 📝💡       |
 | feat     | A new feature.                                                                                                                              | ✨💥       |
 | fix      | A bug fix.                                                                                                                                  | 🐛🚑️🩹🔒️     |
 | perf     | Code change that improves performance/memory usage.                                                                                         | ⚡️        |
-| refactor | **Rewrite**⠀code without feature, performance or bug changes. \n Architectural improvements.                                                | ♻️🏗️⚰️✏️🚚    |
+| refactor | **Rewrite** code without feature, performance or bug changes. \n Architectural improvements.                                                | ♻️🏗️⚰️✏️🚚    |
 | revert   | Reverts a previous commit.                                                                                                                  | ⏪️        |
 | style    | Improve structure/format **of the code**. Apply linting rules. <br> <span style="background-color: #FDEA9B">**No**⠀CSS / UI changes.</span> | 🎨        |
 | test     | Adding missing tests or correcting existing tests.                                                                                          | ✅🧪       |
