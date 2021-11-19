@@ -1,41 +1,28 @@
-# tabletop-online
+# Tabletop Online 2D
 Belegarbeit _Programmierung von Benutzeroberflächen (PBO)_ an der HTW Dresden im Wintersemester 2021/22
 
-> **Tabletop Online 2D** is a simulator web app for playing board and card games together with your friends. Invite them to a shared room and start playing! <br>
-> You can use the presets or upload your own game assets and play by your own rules - because it's a sandbox! <br>
-> Connect with your friends via voice or video chat or even play it next to each other.
-
-## Development
-
-**Environment:**
-
-- Node version: 16
-  - Install pnpm via shell script: https://pnpm.io/installation
-  - Run `pnpm env use -g lts` to get the latest Node LTS version and npm
+> **Tabletop Online 2D** ist eine Web-App mit der man Karten- und Brettspiele zusammen mit Freunden in einer simulierten Sandbox spielen kann. Du kannst zwischen Presets wählen oder deine eigenen Spiel-Assets hochladen und komplett nach eigenen Regeln spielen. Lade deine Freunde zu deinem geteilten Raum ein und das Spiel kann beginnen!
 
 
-- Package Manager helper: https://github.com/antfu/ni
-- [Conventional Commits](https://github.com/DrJume/tabletop-online/blob/main/docs/Conventional%20Commits.md)
+## So funktioniert's
 
-### Project setup
-```
-pnpm install
-```
+### 1. Raum betreten
+Nachdem du das Spiel gestartet hast, kannst du entweder einen neuen Raum erstellen, einem bereits laufenden Raum beitreten oder zuvor gespeicherte Spielstände / Presets in einen Raum laden.
 
-#### Compiles and hot-reloads for development
-```
-pnpm run serve
-```
 
-#### Compiles and minifies for production
-```
-pnpm run build
-```
+### 2. Spiel auswählen
+Hast du einen Raum betreten, kannst du im Spielobjekt-Katalog Spielbretter,Spielfiguren, Karten, Würfel, etc. erzeugen und auf dem Spieltisch platzieren. Du hast einen Würfel zu viel erstellt? Kein Problem! Einfach den Würfel auswählen, das Kontextmenü aufrufen und ihn wieder entfernen.
 
-#### Lints and fixes files
-```
-pnpm run lint
-```
 
-#### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### 3. Freunde einladen
+Du hast alles für das Spiel vorbereitet? Dann lade deine Freunde ein! Gehe auf das Spielmenü und klicke 'Raum teilen'. Daraufhin erscheint eine Raum-ID. Schicke diese an deine Freunde und schon können sie deinem Spiel beitreten.
+
+
+### 4. Spiel starten
+Jetzt kann das Spiel beginnen. Alle Spieler können den Spieltisch sehen und mit allen Spielobjekten interagieren. Jede Änderung auf dem Spieltisch wird für alle synchronisiert. Jeder Spieler hat außerdem seine eigene Spielhand, die nur von ihm eingesehen werden kann. Die anderen Spieler lassen sich durch ihre Cursor und unterschiedliche Farben leicht auf dem Spieltisch identifizieren. Spielanleitung? Gibt es nicht! Ihr legt die Spielregeln selbst fest.
+
+
+### 5. Spiel beenden
+Wenn ihr das Spiel beenden wollt und es gibt noch keinen Gewinner, dann kann das Spiel ganz einfach exportiert werden. Gehe dazu einfach auf das Spielmenü und klicke 'Raum exportieren'. Dann wird eine ZIP zum Download bereitgestellt, die den Spielstand inklusive allen beteiligten Spielern enthält. Beim nächsten Mal kann die ZIP dann einfach importiert werden und das Spiel geht weiter.<br>
+
+Es ist nicht notwendig, dass der Spieler, der den Raum erstellt hat, auch den Spielstand speichert. Da es keinen zentralen Server gibt und Spieler demnach Hosts sind, kann jeder Spieler den Spielstand exportieren.
