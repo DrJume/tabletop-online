@@ -1,31 +1,33 @@
 # Component Structure
 
+Die Vue-Komponenten werden unterteilt nach Views (InGame oder StartScreen). Komponenten innerhalb des Spiels werden nochmals unterteilt in direkte Spielkomponenten (z.B. Spielfiguren, Spieltisch, Karten, etc.) und Komponenten der Spielumgebung.
+
 ```tree
 ├── src
 │   ├── components
-│   │   ├── InGame
-│   │   │   ├── PlayerBar
+│   │   ├── InGame // Komponenten der InGame-View
+│   │   │   ├── PlayerBar // Anzeige aktueller Spieler im Raum
 │   │   │   │   ├── index.vue
 │   │   │   │   └── PlayerAvatar.vue
-│   │   │   ├── Sidebar
+│   │   │   ├── Sidebar // Spielmenü
 │   │   │   │   ├── PlayerList
 │   │   │   │   │   ├── index.vue
 │   │   │   │   │   └── PlayerItem.vue
 │   │   │   │   ├── index.vue
 │   │   │   │   └── SidebarItem.vue
-│   │   │   └── Tabletop
-│   │   │       ├── GameComponents
+│   │   │   └── Tabletop // Spielfläche
+│   │   │       ├── GameComponents // Spielobjekte
 │   │   │       │   ├── Dice.vue
 │   │   │       │   ├── PlayingBoard.vue
 │   │   │       │   ├── PlayingCard.vue
 │   │   │       │   └── PlayingObject.vue
 │   │   │       ├── ContextMenu.vue
 │   │   │       ├── FloatingWindow.vue
-│   │   │       ├── Hand.vue
+│   │   │       ├── Hand.vue // Spielhand
 │   │   │       └── index.vue
-│   │   ├── Manual
+│   │   ├── Manual // Handbuch
 │   │   │   └── index.vue
-│   │   ├── StartScreen
+│   │   ├── StartScreen // Komponenten der StartScreen-View
 │   │   │   ├── Menu
 │   │   │   │   ├── index.vue
 │   │   │   │   ├── MenuButton.vue
@@ -33,7 +35,7 @@
 │   │   │   │   ├── MenuJoinRoom.vue
 │   │   │   │   └── MenuUploadRoom.vue
 │   │   │   └── Logo.vue
-│   │   └── UI
+│   │   └── UI // allgemeine UI-Elemente
 │   │       ├── TabletopButton.vue
 │   │       ├── TabletopInput.vue
 │   │       └── TabletopModal.vue
