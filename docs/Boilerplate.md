@@ -1,4 +1,4 @@
-# Vue.js (vue-cli)
+# Boilerplate Vue.js (vue-cli)
 
 ## First steps
 

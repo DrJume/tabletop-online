@@ -1,4 +1,4 @@
-# Feature List for Tabletop-Online
+# Feature List
 
 ## Features
 
@@ -25,7 +25,7 @@
       * Detailierte Ansicht enthält alle Spielobjekte der Hand als Liste
     * Position der anderen Spieler
 - Spielumgebung
-  * Responsive Design (PC, Tablet, Smartphone)  
+  * Responsive Design (PC, Tablet, Smartphone)
     * Spielerlebnis auf jedes Gerät (PC, Smartphone, ...) indivuell angepasst (Unterschiedliche Gesten zwischen Maus und Finger bezüglich Spielobjekten, Menüs)
   * Synchronisation
     * In Echtzeit, peer-to-peer
@@ -48,8 +48,8 @@
       * 1x Rechtsklick: Auswahl + Aufruf des Kontextmenüs
       * 2x Linksklick: Hauptaktion ausführen
       * Rechtsklick halten + Ziehen: Ansicht rotieren
-      * Linksklick halten + Ziehen: Ansicht verschieben 
-      * Auswahl + Linksklick halten + Ziehen: Ansicht verschieben 
+      * Linksklick halten + Ziehen: Ansicht verschieben
+      * Auswahl + Linksklick halten + Ziehen: Ansicht verschieben
       * Rad: Zoom
     * Mobil
       * 1x Klick: Auswahl des Spielobjekts
