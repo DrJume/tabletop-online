@@ -1,5 +1,11 @@
 # tabletop-online
-Belegarbeit Programmierung von Benutzeroberflächen (PBO) WS2021/22
+Belegarbeit _Programmierung von Benutzeroberflächen (PBO)_ an der HTW Dresden im Wintersemester 2021/22
+
+> **Tabletop Online 2D** is a simulator web app for playing board and card games together with your friends. Invite them to a shared room and start playing! <br>
+> You can use the presets or upload your own game assets and play by your own rules - because it's a sandbox! <br>
+> Connect with your friends via voice or video chat or even play it next to each other.
+
+## Development
 
 **Environment:**
 
@@ -9,27 +15,27 @@ Belegarbeit Programmierung von Benutzeroberflächen (PBO) WS2021/22
 
 
 - Package Manager helper: https://github.com/antfu/ni
-- Conventional Commits: https://cheatography.com/albelop/cheat-sheets/conventional-commits/
+- [Conventional Commits](https://github.com/DrJume/tabletop-online/blob/main/docs/Conventional%20Commits.md)
 
-## Project setup
+### Project setup
 ```
 pnpm install
 ```
 
-### Compiles and hot-reloads for development
+#### Compiles and hot-reloads for development
 ```
 pnpm run serve
 ```
 
-### Compiles and minifies for production
+#### Compiles and minifies for production
 ```
 pnpm run build
 ```
 
-### Lints and fixes files
+#### Lints and fixes files
 ```
 pnpm run lint
 ```
 
-### Customize configuration
+#### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
