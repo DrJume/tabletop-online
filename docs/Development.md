@@ -1,4 +1,4 @@
-## Development
+# Development
 
 **Environment:**
 
@@ -10,25 +10,25 @@
 - Package Manager helper: https://github.com/antfu/ni
 - [Conventional Commits](https://github.com/DrJume/tabletop-online/blob/main/docs/Conventional%20Commits.md)
 
-### Project setup
+## Project setup
 ```
 pnpm install
 ```
 
-#### Compiles and hot-reloads for development
+### Compiles and hot-reloads for development
 ```
 pnpm run serve
 ```
 
-#### Compiles and minifies for production
+### Compiles and minifies for production
 ```
 pnpm run build
 ```
 
-#### Lints and fixes files
+### Lints and fixes files
 ```
 pnpm run lint
 ```
 
-#### Customize configuration
+### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
