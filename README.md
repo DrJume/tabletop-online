@@ -26,3 +26,8 @@ Jetzt kann das Spiel beginnen. Alle Spieler können den Spieltisch sehen und mit
 Wenn ihr das Spiel beenden wollt und es gibt noch keinen Gewinner, dann kann das Spiel ganz einfach exportiert werden. Gehe dazu einfach auf das Spielmenü und klicke 'Raum exportieren'. Dann wird eine ZIP zum Download bereitgestellt, die den Spielstand inklusive allen beteiligten Spielern enthält. Beim nächsten Mal kann die ZIP dann einfach importiert werden und das Spiel geht weiter.<br>
 
 Es ist nicht notwendig, dass der Spieler, der den Raum erstellt hat, auch den Spielstand speichert. Da es keinen zentralen Server gibt und Spieler demnach Hosts sind, kann jeder Spieler den Spielstand exportieren.
+
+## Wichtige Links
+
+- [Installation](https://github.com/DrJume/tabletop-online/blob/main/docs/Development.md)
+- [Mockups](https://www.figma.com/file/QvCJYXvBnFTH5O0j9478dD/TabletopOnline?node-id=18%3A4)
