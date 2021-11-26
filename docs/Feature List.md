@@ -13,10 +13,10 @@ Wesentliche Features sind fett markiert.
     * Spieler betrachtet die Spielfläche in der Vogelperspektive
     * Spielobjekte sind isometrisch dargestellt (3D-Effekt)
   * **Virtueller Spieltisch**
-    * Hintergrund kann beliebig verändert werden (Spielbretter, spezielle Karten, die als Hintergrund fixiert werden können)
+    * Hintergrund kann beliebig verändert werden (Spielbretter, spezielle Karten, die auf dem Hintergrund fixiert werden können)
     * Jeder Spieler kann seine Ansicht auf den Spieltisch beliebig drehen
   * **Spielobjekte** (Karten, Kartendeck, Figuren, Timer, ...)
-    * können beliebig erstellt, verschoben, entfernt werden
+    * können beliebig erstellt, verschoben, fixiert, entfernt werden
     * befinden sich auf dem Spieltisch
     * alle Spieler können mit gelegten Spielobjekten interagieren (Karte umdrehen, Würfel würfeln)
   * HUD
@@ -33,7 +33,7 @@ Wesentliche Features sind fett markiert.
     * Spieltisch und alle gelegten Spielobjekte werden synchronisiert
     * verliert ein Spieler die Verbindung, wird das Spiel für ihn eingefroren
   * **Räume**
-    * Jeder Spieler hat initial einen leeren Raum
+    * Jeder Spieler kann einen eigenen Raum erstellen
     * Spieler können andere Spieler in ihren Raum einladen
     * Spieler können anderen Räumen beitreten
   * Spielstand
