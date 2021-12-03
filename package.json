@@ -1,29 +1,58 @@
 {
   "name": "tabletop-online",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "serve": "vite preview",
+    "lint": "eslint . --ext .js,.ts,.vue --fix",
+    "preinstall": "if ! npx only-allow pnpm; then rm -rf node_modules/ package-lock.json && exit 1; fi",
+    "prepare": "husky install",
+    "commit": "cz"
   },
   "dependencies": {
-    "core-js": "^3.19.1",
-    "vue": "^3.2.21"
+    "@vueuse/core": "^7.1.2",
+    "pinia": "^2.0.5",
+    "vue": "^3.2.23",
+    "vue-router": "^4.0.12"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.0",
-    "@babel/eslint-parser": "^7.16.3",
-    "@vue/cli-plugin-babel": "~5.0.0-rc.0",
-    "@vue/cli-plugin-eslint": "~5.0.0-rc.0",
-    "@vue/cli-service": "~5.0.0-rc.0",
-    "@vue/compiler-sfc": "^3.2.21",
-    "@vue/eslint-config-prettier": "^6.0.0",
-    "eslint": "^7.32.0",
-    "eslint-plugin-prettier": "^3.4.1",
-    "eslint-plugin-vue": "^7.20.0",
-    "prettier": "^2.4.1",
-    "sass": "^1.43.4",
-    "sass-loader": "^12.3.0"
+    "@commitlint/cli": "^15.0.0",
+    "@commitlint/config-conventional": "^15.0.0",
+    "@commitlint/cz-commitlint": "^15.0.0",
+    "@types/node": "^16.11.11",
+    "@typescript-eslint/eslint-plugin": "^5.5.0",
+    "@typescript-eslint/parser": "^5.5.0",
+    "@vitejs/plugin-legacy": "^1.6.3",
+    "@vitejs/plugin-vue": "^1.10.1",
+    "autoprefixer": "^10.4.0",
+    "commitizen": "^4.2.4",
+    "eslint": "^8.3.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-tailwindcss": "^1.17.2",
+    "eslint-plugin-unicorn": "^39.0.0",
+    "eslint-plugin-vue": "^8.1.1",
+    "husky": "^7.0.4",
+    "postcss": "^8.4.4",
+    "prettier": "^2.5.0",
+    "sass": "^1.44.0",
+    "tailwindcss": "^2.2.19",
+    "typescript": "^4.5.2",
+    "vite": "^2.6.14",
+    "vite-plugin-checker": "^0.3.4",
+    "vue-eslint-parser": "^8.0.1",
+    "vue-tsc": "^0.29.8"
+  },
+  "lint-staged": {
+    "*.{js,ts,vue}": "eslint --cache --fix"
+  },
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/cz-commitlint"
+    }
   }
 }

@@ -1,0 +1,61 @@
+{
+  "[vue]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "sibiraj-s.vscode-scss-formatter"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "sibiraj-s.vscode-scss-formatter"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  //
+  "files.trimTrailingWhitespace": true,
+  //
+  "git.autofetch": "all",
+  "git.autoStash": true,
+  "git.fetchOnPull": true,
+  "git.followTagsWhenSync": true,
+  "git.rebaseWhenSync": true,
+  "git.showPushSuccessNotification": true,
+  "git.untrackedChanges": "separate",
+  "git.useCommitInputAsStashMessage": true,
+  "git.inputValidationSubjectLength": 100,
+  //
+  "eslint.lintTask.enable": true,
+  "eslint.format.enable": true,
+  "eslint.validate": [
+    "javascript",
+    "typescript",
+    "vue"
+  ],
+  "eslint.onIgnoredFiles": "warn",
+  //
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+  },
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  //
+  "tailwindCSS.includeLanguages": {
+    "Vue": "html"
+  },
+  //
+  "path-intellisense.mappings": {
+    "@": "${workspaceRoot}/src"
+  },
+  //
+  "volar.completion.preferredAttrNameCase": "auto-camel",
+  "volar.completion.preferredTagNameCase": "pascal",
+  //
+  "editor.guides.bracketPairs": true,
+  "editor.bracketPairColorization.enabled": true,
+}
