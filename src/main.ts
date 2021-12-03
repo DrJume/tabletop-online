@@ -5,4 +5,4 @@ import { createPinia } from 'pinia'
 
 import './tailwind.css'
 
-createApp(App).use(createPinia()).use(router).mount('#vue-boilerplate')
+createApp(App).use(createPinia()).use(router).mount('#tabletop-online')
