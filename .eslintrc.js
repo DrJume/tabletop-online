@@ -34,6 +34,7 @@ module.exports = {
     'unicorn/filename-case': 'off',
     'unicorn/prevent-abbreviations': 'off',
     'unicorn/prefer-node-protocol': 'off',
+    'unicorn/no-null': 'off',
 
     'vue/valid-define-props': 'error',
 
