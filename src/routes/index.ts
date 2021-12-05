@@ -1,12 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import InGame from '@/views/InGame.vue'
+import StartScreen from '@/views/StartScreen.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'InGame',
-    component: InGame,
+    name: 'StartScreen',
+    component: StartScreen,
   },
   // {
   //   path: '/about',
