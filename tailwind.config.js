@@ -3,7 +3,7 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 
 // eslint-disable-next-line unicorn/prefer-module
 module.exports = {
-  content: ['./public/index.html', './src/**/*.{vue,js,ts}'],
+  content: ['./index.html', './src/**/*.{vue,js,ts}'],
   theme: {
     extend: {
       fontFamily: {
