@@ -2,11 +2,11 @@ import { createServer } from 'http'
 import { Server } from 'socket.io'
 import { instrument } from '@socket.io/admin-ui'
 
-import { TabletopEvents } from './types/tabletopEvents'
+import { ClientToServerEvents, ServerToClientEvents } from './types/socketIo'
 
 const httpServer = createServer()
 
-const io = new Server(httpServer, {
+const io = new Server<ClientToServerEvents, ServerToClientEvents>(httpServer, {
   cors: {
     origin: ['http://localhost:3000', 'https://admin.socket.io'],
     credentials: true,
@@ -22,7 +22,7 @@ instrument(io, {
 io.of('/tabletop').on('connection', (socket) => {
   console.log('user ' + socket.id + ' connected')
 
-  socket.emit(TabletopEvents.HELLO, Date.now())
+  socket.emit('hello', Date.now())
 
   socket.on('disconnect', () => {
     console.log('user ' + socket.id + ' disconnected')

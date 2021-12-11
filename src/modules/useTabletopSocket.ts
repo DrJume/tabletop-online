@@ -1,7 +1,6 @@
 import { useSocketIo } from '@/modules/useSocketIo'
 
 import { AnonymousCallback } from '@/types/'
-import { TabletopEvents } from '../../backend/types/tabletopEvents'
 
 // let socketIoConnection: undefined | ReturnType<typeof useSocketIo>
 
@@ -11,7 +10,7 @@ export const useTabletopSocket = (backendUrl: string) => {
 
   const { reconnect, disconnect, onEvent } = useSocketIo(backendUrl, '/tabletop')
 
-  const onHello = (callback: AnonymousCallback) => onEvent(TabletopEvents.HELLO, callback)
+  const onHello = (callback: AnonymousCallback) => onEvent('hello', callback)
 
   return {
     reconnect,
