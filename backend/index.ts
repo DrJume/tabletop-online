@@ -18,11 +18,22 @@ instrument(io, {
   auth: false,
 })
 
+let cardLocked = false
+
 // tabletop server logic
 io.of('/tabletop').on('connection', (socket) => {
   console.log('user ' + socket.id + ' connected')
 
-  socket.emit('hello', Date.now())
+  socket.on('drag', (x, y) => {
+    socket.broadcast.emit('move', x, y)
+  })
+
+  socket.on('lockFromClient', (lock) => {
+    console.log({ cardLocked, lock, id: socket.id })
+    cardLocked = lock
+
+    socket.broadcast.emit('lockFromServer', cardLocked)
+  })
 
   socket.on('disconnect', () => {
     console.log('user ' + socket.id + ' disconnected')
