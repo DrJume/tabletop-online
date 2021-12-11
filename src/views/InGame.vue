@@ -2,6 +2,15 @@
 import { ref } from 'vue'
 import { useDraggable } from '@vueuse/core'
 
+import { useTabletopSocket } from '@/modules/useTabletopSocket'
+
+const { onHello } = useTabletopSocket('http://localhost:8080')
+
+onHello((timestamp: number) => {
+  console.log(timestamp)
+})
+
+// draggable card
 const el = ref<HTMLElement | null>(null)
 
 // `style` will be a helper computed for `left: ?px; top: ?px;`
