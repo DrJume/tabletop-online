@@ -39,6 +39,13 @@ module.exports = {
     'vue/valid-define-props': 'error',
 
     'tailwindcss/no-custom-classname': 'off', // tmp disabled because of issue with vite dev mode
+
+    'vue/multi-word-component-names': [
+      'error',
+      {
+        ignores: ['index'],
+      },
+    ],
   },
   settings: {
     'import/resolver': {

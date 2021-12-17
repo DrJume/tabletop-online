@@ -35,5 +35,6 @@ export const useSocketIo = (backendUrl: string, namespace: `/${string}`) => {
     disconnect,
     onEvent,
     emit,
+    socket,
   }
 }

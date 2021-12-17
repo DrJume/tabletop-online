@@ -13,7 +13,10 @@
   },
   "dependencies": {
     "@vueuse/core": "^7.3.0",
+    "events": "^3.3.0",
     "pinia": "^2.0.6",
+    "reconnecting-websocket": "^4.4.0",
+    "sharedb": "^2.2.1",
     "socket.io-client": "^4.4.0",
     "vue": "^3.2.26",
     "vue-router": "^4.0.12"
@@ -23,6 +26,7 @@
     "@commitlint/config-conventional": "^15.0.0",
     "@commitlint/cz-commitlint": "^15.0.0",
     "@types/node": "^16.11.14",
+    "@types/sharedb": "^2.2.0",
     "@typescript-eslint/eslint-plugin": "^5.7.0",
     "@typescript-eslint/parser": "^5.7.0",
     "@vitejs/plugin-legacy": "^1.6.4",
