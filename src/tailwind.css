@@ -8,13 +8,13 @@
 
 /* Portrait */
 @media screen and (orientation: portrait) {
-  .fill-viewport {
+  .tt-fill-viewport {
     height: var(--zoom);
   }
 }
 /* Landscape */
 @media screen and (orientation: landscape) {
-  .fill-viewport {
+  .tt-fill-viewport {
     width: var(--zoom);
   }
 }
