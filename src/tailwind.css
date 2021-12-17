@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --zoom: 100%;
+}
+
+/* Portrait */
+@media screen and (orientation: portrait) {
+  .fill-viewport {
+    height: var(--zoom);
+  }
+}
+/* Landscape */
+@media screen and (orientation: landscape) {
+  .fill-viewport {
+    width: var(--zoom);
+  }
+}
