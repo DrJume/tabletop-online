@@ -23,7 +23,7 @@ Wir haben weitere Mockups für die Smartphone-Ansicht erstellt und die bestehend
 ### 19.11.2021 - Ideen-Review
 Um eine Priorität in der FeatureList einzuführen, haben wir Muss- und Kann-Kriterien eingeführt. Muss-Kriterien sollten zuerst abgearbeitet werden und sind in der FeatureList fett markiert.
 
-In einer initialen Vue App haben wir eine grundlegende Struktur unserer Vue-Komponenten festgelegt. Dazu haben wurde ein Verzeichnisbaum erstellt, um die unterschiedlichen Vue-Komponenten einordnen zu können.
+In einer initialen Vue App haben wir eine grundlegende Struktur unserer Vue-Komponenten festgelegt. Dazu wurde ein Verzeichnisbaum erstellt, um die unterschiedlichen Vue-Komponenten einordnen zu können.
 
 Wir haben außerdem eine erste README für das GitHub-Projekt verfasst.
 
@@ -60,3 +60,11 @@ Für eine effizientere Synchronisation der Spielobjekte haben wir uns für die N
 Eine erste Implementation von sharedb war erfolgreich. Die Karte kann jetzt ohne "Glitches" und Nutzungsprobleme einwandfrei auf dem Spielfeld bewegt werden. Jede Änderung wird dabei sofort synchronisiert.
 
 Da sharedb bereits eine eigene WebSocket-Implementation mitbringt, haben wir die Socket.io-Schnittstelle erst einmal deaktiviert. Für spätere Synchronisatsprobleme außerhalb der sharedb-Datenbank bleibt Socket.io aber weiterhin relevant.
+
+### 28.12.2021
+Als nächsten Schritt wollten wir nun die eine statisch generierte Karte auf dem Spielfeld in eine dynamisch erstellbare Karte umwandeln. Dafür mussten wir erstmal viel Restrukturieren, was den Informationsaustausch zwischen Karte, Spielfeld und dem globalen Store angeht. Bis jetzt haben wir nur die Umgebung der Karte für eine dynamische Handhabung vorbereitet.
+
+### 30.12.2021
+Wir haben weiter an der Umsetzung der dynamisch generierten Karte gearbeitet. Diese lässt sich nun lokal erstellen und synchronisiert sich mit dem globalen Store der Vue App. Zur vollständigen Synchronisation fehlt nun nur noch die Einbindung von sharedb an die Karte und den Store.
+
+Anhand unseres derzeitigen Forschritts haben wir das Projektziel neu bewertet, um unsere Prioritäten in der Abarbeitung der Aufgaben besser organisieren zu können. Zur Präsentation des Projekts wollen wir ein funktionierendes Spiel vorführen. Wir haben uns entschieden, dass sich dafür am besten "Mensch ärgere dich nicht!" eignet. Bei diesem Spiel gibt es, außer beim Würfel, kaum weitere Logik zu den Spielobjekten zu implementieren. Die Idee ist, unseren Karten-Prototyp zu nutzen, um damit die Basis für das Verhalten von Spielbrett und Spielfiguren zu schaffen.
