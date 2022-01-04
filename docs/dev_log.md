@@ -68,3 +68,8 @@ Als nächsten Schritt wollten wir nun die eine statisch generierte Karte auf dem
 Wir haben weiter an der Umsetzung der dynamisch generierten Karte gearbeitet. Diese lässt sich nun lokal erstellen und synchronisiert sich mit dem globalen Store der Vue App. Zur vollständigen Synchronisation fehlt nun nur noch die Einbindung von sharedb an die Karte und den Store.
 
 Anhand unseres derzeitigen Forschritts haben wir das Projektziel neu bewertet, um unsere Prioritäten in der Abarbeitung der Aufgaben besser organisieren zu können. Zur Präsentation des Projekts wollen wir ein funktionierendes Spiel vorführen. Wir haben uns entschieden, dass sich dafür am besten "Mensch ärgere dich nicht!" eignet. Bei diesem Spiel gibt es, außer beim Würfel, kaum weitere Logik zu den Spielobjekten zu implementieren. Die Idee ist, unseren Karten-Prototyp zu nutzen, um damit die Basis für das Verhalten von Spielbrett und Spielfiguren zu schaffen.
+
+### 04.01.2022
+Um die Kommunikationswege für die Synchronisation besser nachvollziehen zu können, haben wir ein entsprechendes Kommunikationsdiagramm erstellt.
+
+Für die vollständige Synchronisation von Spielobjekten zwischen allen Clients fehlt uns noch die Schnittstelle zwischen sharedb und dem lokalen Store. Da sich sharedb generell schon etwas umständlich benutzen lässt, haben wir entschlossen, die zu synchronisierenden Daten mit einer anderen Library zu verwalten. Dazu sah "Automerge" vielversprechend aus. Leider ist auch der Ansatz mit Automerge nicht sehr intuitiv. Deshalb überlegen wir, doch weiter bei sharedb zu bleiben und den Mehraufwand zu investieren.
