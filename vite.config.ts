@@ -10,14 +10,14 @@ import VueTypeImports from 'vite-plugin-vue-type-imports'
 export default defineConfig({
   plugins: [
     vue(),
-    checker({
-      typescript: true,
-      vueTsc: true,
-      // eslint: {
-      //   files: ['./src'],
-      //   extensions: ['.js', '.ts', '.vue'],
-      // },
-    }),
+    // checker({
+    //   typescript: true,
+    //   vueTsc: true,
+    //   // eslint: {
+    //   //   files: ['./src'],
+    //   //   extensions: ['.js', '.ts', '.vue'],
+    //   // },
+    // }),
     legacy({
       renderLegacyChunks: false,
     }),
@@ -25,7 +25,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@/': new URL('./src/', import.meta.url).pathname,
+      '@/': new URL('src/', import.meta.url).pathname,
     },
   },
 })

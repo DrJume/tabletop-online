@@ -2,6 +2,8 @@
 import { ref, watch } from 'vue'
 import { useDraggable, useElementBounding, useVModel, biSyncRef, useThrottleFn } from '@vueuse/core'
 
+import { log } from '@/util/logger'
+
 import { GameObjectDataTypes, GameObjectType } from '@/stores/gameObjects'
 
 const props = defineProps<{
@@ -29,14 +31,14 @@ const { position: positionDragPx, isDragging } = useDraggable(card, {
   // Callback when the dragging starts. Return `false` to prevent dragging.
   onStart() {
     // if (doc.data.objects['0'].isLocked) {
-    //   console.log('start drag blocked')
+    //   log.log('start drag blocked')
 
     //   return false
     // }
     // hasDragged.value = true
     // doc.submitOp([{ p: ['objects', '0', 'isLocked'], oi: true }])
 
-    console.log('start card drag')
+    log.log('start card drag')
   },
 
   // Callback during dragging.
@@ -51,14 +53,14 @@ const { position: positionDragPx, isDragging } = useDraggable(card, {
   // Callback when dragging end.
   onEnd() {
     // if (!hasDragged.value) return
-    console.log('end card drag')
+    log.log('end card drag')
     // doc.submitOp([{ p: ['objects', '0', 'isLocked'], oi: false }])
     // hasDragged.value = false
   },
 })
 
 const updateCard = () => {
-  // console.log('update card', JSON.stringify(doc.data))
+  // log.log('update card', JSON.stringify(doc.data))
   // // if the viewport is scrolled, get the offset for coordinates calculation
   // const xScrollOffset = props.tabletopRef?.parentElement?.scrollLeft || 0
   // const yScrollOffset = props.tabletopRef?.parentElement?.scrollTop || 0
@@ -79,9 +81,9 @@ const positionPercent = ref({
 watch(
   positionDragPx,
   (positionLocalPx) => {
-    console.debug('watch(positionDragPx)', { ...positionLocalPx })
+    log.debug('watch(positionDragPx)', { ...positionLocalPx })
     if (!isDragging.value) return // mutex
-    console.debug('watch(positionDragPx) %cupdating positionPercent', 'color: red')
+    log.debug('watch(positionDragPx) %cupdating positionPercent', 'color: red')
 
     if (!playAreaBounds) return { x: 0, y: 0 }
 
@@ -89,7 +91,7 @@ watch(
     const xScrollOffset = props.tabletopRef?.parentElement?.scrollLeft || 0
     const yScrollOffset = props.tabletopRef?.parentElement?.scrollTop || 0
 
-    // console.debug('watch(positionDragPx) scrollOffset:', { xScrollOffset, yScrollOffset })
+    // log.debug('watch(positionDragPx) scrollOffset:', { xScrollOffset, yScrollOffset })
 
     positionPercent.value.x = Math.max(
       0,
@@ -105,7 +107,7 @@ watch(
 )
 
 const broadcast = useThrottleFn((positionPercent) => {
-  console.debug('BROADCAST()', { ...positionPercent })
+  log.debug('BROADCAST()', { ...positionPercent })
   // TODO: sync with sharedb
 }, 1000 / 30)
 
@@ -117,7 +119,7 @@ const broadcast = useThrottleFn((positionPercent) => {
 watch(
   positionPercent,
   (positionLocalPercent) => {
-    console.debug('watch(positionPercent)', { ...positionLocalPercent })
+    log.debug('watch(positionPercent)', { ...positionLocalPercent })
     if (isDragging.value) {
       // user drags the card -> changes are pushed to sharedb
       broadcast(positionLocalPercent)
@@ -126,7 +128,7 @@ watch(
 
     // user doesn't drag the card -> changes are updated locally
 
-    console.debug('watch(positionPercent) %cupdating positionDragPx', 'color: blue')
+    log.debug('watch(positionPercent) %cupdating positionDragPx', 'color: blue')
 
     // TODO: interpolation for smooth move transition
 
