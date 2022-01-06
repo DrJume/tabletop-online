@@ -73,3 +73,6 @@ Anhand unseres derzeitigen Forschritts haben wir das Projektziel neu bewertet, u
 Um die Kommunikationswege für die Synchronisation besser nachvollziehen zu können, haben wir ein entsprechendes Kommunikationsdiagramm erstellt.
 
 Für die vollständige Synchronisation von Spielobjekten zwischen allen Clients fehlt uns noch die Schnittstelle zwischen sharedb und dem lokalen Store. Da sich sharedb generell schon etwas umständlich benutzen lässt, haben wir entschlossen, die zu synchronisierenden Daten mit einer anderen Library zu verwalten. Dazu sah "Automerge" vielversprechend aus. Leider ist auch der Ansatz mit Automerge nicht sehr intuitiv. Deshalb überlegen wir, doch weiter bei sharedb zu bleiben und den Mehraufwand zu investieren.
+
+### 05.01.2022
+Wir haben die Schnittstelle zwischen sharedb und dem lokalen Store hergestellt. Allerdings gibt es trotzdem noch ein Synchronisierungsproblem. Die richtigen Koordinaten der Karte werden zwar von allen Clients empfangen, aber der Store aktualisiert sich nicht schnell genung. Dadurch hat die Karte für die anderen Spieler eine veraltete Position, obwohl die aktuelle Position bei allen angekommen ist. Wir werden jetzt prüfen, ob und wie wir das Problem lösen bzw. umgehen können.
