@@ -18,53 +18,87 @@ export default {
 import { ref, computed, onMounted } from 'vue'
 import { onKeyStroke, useCssVar } from '@vueuse/core'
 
+import { log } from '@/util/logger'
+
 // sharedb socket
-// import ReconnectingWebSocket from 'reconnecting-websocket'
-// import { Connection } from 'sharedb/lib/client'
-// import type { Socket } from 'sharedb/lib/sharedb'
+import { useShareDB } from '@/modules/useShareDB'
+import { useUserID } from '@/modules/useUserID'
+const { doc } = useShareDB()
+const { userID } = useUserID()
 
-// const socket = new ReconnectingWebSocket('ws://localhost:8080')
-// const connection = new Connection(socket as Socket)
+import { useGameObjectsStore, GameObjectType } from '@/stores/gameObjects'
 
-// const doc = connection.get('doc-collection', 'doc-id')
+const gameObjects = useGameObjectsStore()
 
-// doc.subscribe((error) => {
-//   if (error) return console.error(error)
+// get doc stream
+doc.subscribe((error) => {
+  if (error) return log.error(error)
 
-//   console.log('subscribe', JSON.stringify(doc.data))
+  // load current version of the game, when the player joins
+  userID.value = doc.data._meta.userCounter
+  gameObjects._meta = doc.data._meta
+  gameObjects.objects = doc.data.objects
 
-//   // If doc.type is undefined, the document has not been created, so let's create it
-//   if (!doc.type) {
-//     doc.create({ idCounter: 0, objects: {} }, (error) => {
-//       console.log('doc created')
-//       if (error) console.error(error)
+  doc.submitOp({ p: ['_meta', 'userCounter'], na: 1 })
 
-//       // create new card and increment idCounter
-//       doc.submitOp([
-//         { p: ['objects', doc.data.idCounter], oi: { x: 0, y: 0, isLocked: false } },
-//         { p: ['idCounter'], na: 1 },
-//       ])
-//     })
-//   }
+  log.log('subscribe', JSON.stringify(doc.data))
 
-//   if (doc.data.objects['0']) {
-//     updateCard()
-//     isVisible.value = true
-//   }
+  // a change occured in the database
+  // combine all operations into one with 'op batch'
+  doc.on('op batch', (ops) => {
+    log.log('op batch', ops)
 
-//   // combine all operations into one with 'op batch'
-//   doc.on('op batch', (op) => {
-//     if (hasDragged.value) return
-//     if (!isVisible.value) isVisible.value = true
+    // check if op was oi
+    // {p:['objects', 'id', 'data', 'key'], oi:obj}
+    for (const op of ops) {
+      const path = [...op.p] as string[]
+      let pathData = gameObjects
 
-//     console.log('op batch', op)
-//     updateCard()
-//   })
-// })
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const lastPath = path.pop()
+      const objectId = path[1]
+      for (const property of path) {
+        log.log(property)
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        pathData = pathData[property]
+      }
 
-// doc.on('load', () => {
-//   console.log('load', JSON.stringify(doc.data))
-// })
+      if ('oi' in op) {
+        // an existing value changed
+        log.log(pathData, userID.value)
+
+        // if changes are received that were created by the player itself, don't update
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        if (gameObjects[objectId].data._meta.draggedBy === userID.value) {
+          log.log('NEIN ICH AKTUALISIERE MICH NICHT MEHR')
+          return
+        }
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        pathData[lastPath] = op.oi
+
+        log.log(pathData, op.oi)
+      } else if ('na' in op) {
+        // a value got incremented
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        pathData[lastPath] += op.na
+      }
+    }
+
+    // TODO: li - insert
+  })
+})
+
+doc.on('load', () => {
+  log.log('load', JSON.stringify(doc.data))
+})
 
 const tabletopRef = ref<HTMLElement | null>(null)
 
@@ -92,9 +126,6 @@ const dynamicFontSize = computed(() => `${(zoomPercent.value / 100) * 1.25}rem`)
 
 // ===================================================
 
-import { useGameObjectsStore, GameObjectType } from '@/stores/gameObjects'
-const gameObjects = useGameObjectsStore()
-
 // add game objects only after the tabletop is mounted
 // -> let the tabletop mount itself first, so that the tabletopRef is available for its children
 onMounted(() => {
@@ -109,6 +140,14 @@ onMounted(() => {
     },
   })
 })
+
+// triggers every time a change occurs in store
+// -> used to push local changes to automerge
+gameObjects.$subscribe((mutation, state) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const event = mutation.events as any
+  log.debug(event.type, event.key, event.newValue, event)
+})
 </script>
 
 <template>
@@ -122,7 +161,7 @@ onMounted(() => {
         <!-- component can be PlayingCard, PlayingObject, Dice, etc. -->
         <component
           :is="gameObject.type"
-          v-show="gameObject.meta.isVisible"
+          v-show="gameObject.data._meta.isVisible"
           v-model="gameObject.data"
           :tabletop-ref="tabletopRef"
         ></component>

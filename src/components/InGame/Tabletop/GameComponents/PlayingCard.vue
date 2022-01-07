@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, UnwrapRef, watch } from 'vue'
 import { useDraggable, useElementBounding, useVModel, biSyncRef, useThrottleFn } from '@vueuse/core'
 
 import { log } from '@/util/logger'
 
 import { GameObjectDataTypes, GameObjectType } from '@/stores/gameObjects'
+import { useShareDB } from '@/modules/useShareDB'
+import { useUserID } from '@/modules/useUserID'
+const { doc } = useShareDB()
+const { userID } = useUserID()
 
 const props = defineProps<{
   tabletopRef: HTMLElement | null
@@ -23,6 +27,15 @@ const card = ref<HTMLElement | null>(null)
 // const hasDragged = ref(false)
 const playAreaBounds = useElementBounding(props.tabletopRef)
 
+const broadcast = (position: UnwrapRef<typeof positionPercent>) => {
+  log.log('BROADCAST()', { ...position })
+
+  doc.submitOp([
+    { p: ['objects', gameObjectData.value._meta.id, 'data', 'x'], oi: position.x },
+    { p: ['objects', gameObjectData.value._meta.id, 'data', 'y'], oi: position.y },
+  ])
+}
+
 const { position: positionDragPx, isDragging } = useDraggable(card, {
   draggingElement: props.tabletopRef,
   exact: true,
@@ -38,6 +51,10 @@ const { position: positionDragPx, isDragging } = useDraggable(card, {
     // hasDragged.value = true
     // doc.submitOp([{ p: ['objects', '0', 'isLocked'], oi: true }])
 
+    doc.submitOp({
+      p: ['objects', gameObjectData.value._meta.id, 'data', '_meta', 'draggedBy'],
+      oi: `${userID.value}`,
+    })
     log.log('start card drag')
   },
 
@@ -54,6 +71,11 @@ const { position: positionDragPx, isDragging } = useDraggable(card, {
   onEnd() {
     // if (!hasDragged.value) return
     log.log('end card drag')
+    //broadcast(positionPercent.value)
+    doc.submitOp({
+      p: ['objects', gameObjectData.value._meta.id, 'data', '_meta', 'draggedBy'],
+      oi: '',
+    })
     // doc.submitOp([{ p: ['objects', '0', 'isLocked'], oi: false }])
     // hasDragged.value = false
   },
@@ -106,10 +128,7 @@ watch(
   { deep: true }
 )
 
-const broadcast = useThrottleFn((positionPercent) => {
-  log.debug('BROADCAST()', { ...positionPercent })
-  // TODO: sync with sharedb
-}, 1000 / 30)
+const broadcastThrottled = useThrottleFn(broadcast, 1000 / 30)
 
 /* watch incoming position changes in percent
    position in percent is synced between local and store
@@ -122,7 +141,7 @@ watch(
     log.debug('watch(positionPercent)', { ...positionLocalPercent })
     if (isDragging.value) {
       // user drags the card -> changes are pushed to sharedb
-      broadcast(positionLocalPercent)
+      broadcastThrottled(positionLocalPercent)
       return
     }
 

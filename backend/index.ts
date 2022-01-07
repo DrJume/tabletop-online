@@ -44,6 +44,40 @@ httpServer.on('upgrade', function upgrade(request, socket, head) {
 })
 
 // *** sharedb server logic ***
+const connection = backend.connect()
+const doc = connection.get('doc-collection', 'doc-id')
+
+// create initial sharedb doc
+if (!doc.type) {
+  doc.create(
+    {
+      _meta: {
+        userCounter: 1,
+        idCounter: 2,
+      },
+      objects: {
+        '1': {
+          type: 'PlayingCard',
+          data: {
+            _meta: {
+              id: 1,
+              draggedBy: '',
+              isVisible: true,
+            },
+            x: 0,
+            y: 0,
+            isLocked: false,
+            isFlipped: false,
+          },
+        },
+      },
+    },
+    (error) => {
+      console.log('doc created')
+      if (error) console.error(error)
+    }
+  )
+}
 
 shareDBSocketServer.on('connection', (webSocket) => {
   const stream = new WebSocketJSONStream(webSocket)

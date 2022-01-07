@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 
 interface GameObjectsState {
   _meta: {
+    userCounter: number
     idCounter: number
   }
   objects: Record<string, GameObject>
@@ -10,16 +11,26 @@ interface GameObjectsState {
 // big thanks to TypeScript for providing pattern matching
 
 type GameObjectInit =
-  | GameObjectBase<GameObjectType.PlayingCard, GameObjectDataTypes[GameObjectType.PlayingCard]>
+  | GameObjectBase<GameObjectType.PlayingCard, GameObjectInitDataTypes[GameObjectType.PlayingCard]>
   | GameObjectBase<GameObjectType, GameObjectData>
 
-export type GameObjectDataTypes = {
+type GameObjectInitDataTypes = {
   [GameObjectType.PlayingCard]: GameObjectDataPlayingCard
 }
 
+export type GameObjectDataTypes = {
+  [K in keyof GameObjectInitDataTypes]: GameObjectInitDataTypes[K] & GameObjectMeta
+}
+
 type GameObject = GameObjectInit & {
-  meta: {
-    isDragged: boolean
+  data: GameObjectMeta
+}
+
+type GameObjectMeta = {
+  _meta: {
+    id: string
+
+    draggedBy: string
     isVisible: boolean
   }
 }
@@ -51,11 +62,12 @@ interface GameObjectDataPlayingCard extends GameObjectData {
 
 // const test: GameObject = {
 //   type: GameObjectType.PlayingCard,
-//   meta: {
-//     isDragged: false,
-//     isVisible: true,
-//   },
 //   data: {
+//     _meta: {
+//       id: '0',
+//       isDragged: false,
+//       isVisible: true,
+//     },
 //     x: 0,
 //     y: 0,
 //     isLocked: false,
@@ -66,20 +78,25 @@ interface GameObjectDataPlayingCard extends GameObjectData {
 export const useGameObjectsStore = defineStore('gameObjects', {
   state: (): GameObjectsState => ({
     _meta: {
+      userCounter: 1,
       idCounter: 1,
     },
     objects: {},
   }),
   // getters: {},
   actions: {
-    addGameObject({ type, data }: GameObjectInit) {
-      this.objects[this._meta.idCounter++] = {
+    addGameObject({ type, data: initData }: GameObjectInit) {
+      const id = this._meta.idCounter++
+      this.objects[id] = {
         type,
-        meta: {
-          isDragged: false,
-          isVisible: true,
+        data: {
+          _meta: {
+            id: `${id}`,
+            draggedBy: '',
+            isVisible: true,
+          },
+          ...initData,
         },
-        data,
       }
     },
     deleteGameObject({ id }: { id: number }) {
