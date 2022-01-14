@@ -12,7 +12,11 @@
     "commit": "cz"
   },
   "dependencies": {
+    "@headlessui/vue": "^1.4.2",
+    "@heroicons/vue": "^1.0.5",
+    "@tailwindcss/forms": "^0.4.0",
     "@vueuse/core": "^7.2.2",
+    "inquirer": "^8.0.0",
     "pinia": "^2.0.6",
     "vue": "^3.2.24",
     "vue-router": "^4.0.12"

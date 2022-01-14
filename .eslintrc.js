@@ -37,6 +37,7 @@ module.exports = {
     'unicorn/no-null': 'off',
 
     'vue/valid-define-props': 'error',
+    'vue/multi-word-component-names': 0,
 
     'tailwindcss/no-custom-classname': 'off', // tmp disabled because of issue with vite dev mode
   },
