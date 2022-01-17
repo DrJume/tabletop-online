@@ -69,7 +69,6 @@
 </template>
 
 <script lang="ts">
-// props: icon, name, children
 import { defineComponent } from 'vue'
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 
