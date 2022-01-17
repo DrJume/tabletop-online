@@ -53,170 +53,40 @@
             <div class="overflow-y-auto flex-1 mt-5 h-0">
               <nav class="flex-1 px-2 space-y-1 bg-white" aria-label="Sidebar">
                 <!-- Player -->
-                <div>
-                  <a
-                    href="#"
-                    class="group flex items-center py-2 pl-2 w-full text-sm font-medium text-gray-900 bg-gray-100 rounded-md"
-                  >
-                    <UserIcon
-                      :style="'color: ' + navigation.player.color"
-                      class="flex-shrink-0 mr-3 w-6 h-6 text-gray-500"
-                      aria-hidden="true"
-                    />
-                    {{ navigation.player.name }}
-                  </a>
-                </div>
+                <SidebarItem :item="navigation.player" />
 
                 <!-- Teammates -->
-                <Disclosure v-slot="{ open }" as="div" class="space-y-1">
-                  <!-- list header -->
-                  <DisclosureButton
-                    class="group flex items-center py-2 pr-1 pl-2 w-full text-sm font-medium text-left text-gray-900 bg-gray-100 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-                  >
-                    <UsersIcon
-                      class="flex-shrink-0 mr-3 w-6 h-6 text-gray-400 group-hover:text-gray-500"
+                <SidebarItem :item="navigation.teammates">
+                  <template #default="children">
+                    <UserIcon
+                      class="flex-shrink-0 mr-3 w-6 h-6"
+                      :style="'color: ' + children.item.color"
                       aria-hidden="true"
                     />
-                    <span class="flex-1"> Mitspieler </span>
-                    <svg
-                      :class="[
-                        open ? 'text-gray-400 rotate-90' : 'text-gray-300',
-                        'ml-3 flex-shrink-0 h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150',
-                      ]"
-                      viewBox="0 0 20 20"
-                      aria-hidden="true"
-                    >
-                      <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
-                    </svg>
-                  </DisclosureButton>
-
-                  <!-- list items -->
-                  <DisclosurePanel class="space-y-1">
-                    <DisclosureButton
-                      v-for="subItem in navigation.teammates"
-                      :key="subItem.name"
-                      as="a"
-                      class="group flex items-center py-2 pr-2 pl-11 w-full text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md"
-                    >
-                      <UserIcon
-                        class="flex-shrink-0 mr-3 w-6 h-6"
-                        :style="'color: ' + subItem.color"
-                        aria-hidden="true"
-                      />
-                      {{ subItem.name }}
-                    </DisclosureButton>
-                  </DisclosurePanel>
-                </Disclosure>
+                    {{ children.item.name }}
+                  </template>
+                </SidebarItem>
 
                 <!-- Boards -->
-                <Disclosure v-slot="{ open }" as="div" class="space-y-1">
-                  <!-- list header -->
-                  <DisclosureButton
-                    class="group flex items-center py-2 pr-1 pl-2 w-full text-sm font-medium text-left text-gray-900 bg-gray-100 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-                  >
-                    <MapIcon
-                      class="flex-shrink-0 mr-3 w-6 h-6 text-gray-400 group-hover:text-gray-500"
-                      aria-hidden="true"
-                    />
-                    <span class="flex-1"> Spielbretter </span>
-                    <svg
-                      :class="[
-                        open ? 'text-gray-400 rotate-90' : 'text-gray-300',
-                        'ml-3 flex-shrink-0 h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150',
-                      ]"
-                      viewBox="0 0 20 20"
-                      aria-hidden="true"
-                    >
-                      <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
-                    </svg>
-                  </DisclosureButton>
-
-                  <!-- list items -->
-                  <DisclosurePanel class="space-y-1">
-                    <DisclosureButton
-                      v-for="subItem in navigation.boards"
-                      :key="subItem.name"
-                      as="a"
-                      class="group flex flex-col items-center p-2 w-full text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md"
-                    >
-                      <img :src="subItem.path" loading="lazy" width="100" />
-                      {{ subItem.name }}
-                    </DisclosureButton>
-                  </DisclosurePanel>
-                </Disclosure>
+                <SidebarItem :item="navigation.boards">
+                  <template #default="children">
+                    <img :src="children.item.path" loading="lazy" width="100" />
+                    {{ children.item.name }}
+                  </template>
+                </SidebarItem>
 
                 <!-- Figures -->
-                <Disclosure v-slot="{ open }" as="div" class="space-y-1">
-                  <!-- list header -->
-                  <DisclosureButton
-                    class="group flex items-center py-2 pr-1 pl-2 w-full text-sm font-medium text-left text-gray-900 bg-gray-100 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-                  >
-                    <PuzzleIcon
-                      class="flex-shrink-0 mr-3 w-6 h-6 text-gray-400 group-hover:text-gray-500"
-                      aria-hidden="true"
-                    />
-                    <span class="flex-1"> Figuren </span>
-                    <svg
-                      :class="[
-                        open ? 'text-gray-400 rotate-90' : 'text-gray-300',
-                        'ml-3 flex-shrink-0 h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150',
-                      ]"
-                      viewBox="0 0 20 20"
-                      aria-hidden="true"
-                    >
-                      <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
-                    </svg>
-                  </DisclosureButton>
-
-                  <!-- list items -->
-                  <DisclosurePanel class="space-y-1">
-                    <DisclosureButton
-                      v-for="subItem in navigation.figures"
-                      :key="subItem.name"
-                      as="a"
-                      class="group flex flex-col items-center p-2 w-full text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md"
-                    >
-                      <img :src="subItem.path" loading="lazy" width="50" />
-                      {{ subItem.name }}
-                    </DisclosureButton>
-                  </DisclosurePanel>
-                </Disclosure>
+                <SidebarItem :item="navigation.figures">
+                  <template #default="children">
+                    <img :src="children.item.path" loading="lazy" width="50" />
+                    {{ children.item.name }}
+                  </template>
+                </SidebarItem>
 
                 <!-- Settings -->
-                <Disclosure v-slot="{ open }" as="div" class="space-y-1">
-                  <!-- list header -->
-                  <DisclosureButton
-                    class="group flex items-center py-2 pr-1 pl-2 w-full text-sm font-medium text-left text-gray-900 bg-gray-100 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-                  >
-                    <AdjustmentsIcon
-                      class="flex-shrink-0 mr-3 w-6 h-6 text-gray-400 group-hover:text-gray-500"
-                      aria-hidden="true"
-                    />
-                    <span class="flex-1"> Einstellungen </span>
-                    <svg
-                      :class="[
-                        open ? 'text-gray-400 rotate-90' : 'text-gray-300',
-                        'ml-3 flex-shrink-0 h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150',
-                      ]"
-                      viewBox="0 0 20 20"
-                      aria-hidden="true"
-                    >
-                      <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
-                    </svg>
-                  </DisclosureButton>
-
-                  <!-- list items -->
-                  <DisclosurePanel class="space-y-1">
-                    <DisclosureButton
-                      as="a"
-                      href="#"
-                      :current="true"
-                      class="group flex flex-col items-center p-2 w-full text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md"
-                    >
-                      <input type="color" />
-                    </DisclosureButton>
-                  </DisclosurePanel>
-                </Disclosure>
+                <SidebarItem :item="navigation.settings">
+                  <input type="color" />
+                </SidebarItem>
               </nav>
             </div>
           </div>
@@ -240,58 +110,68 @@
 
 <script lang="ts">
 import { ref } from 'vue'
+import { Dialog, DialogOverlay, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import {
-  Dialog,
-  DialogOverlay,
-  TransitionChild,
-  TransitionRoot,
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-} from '@headlessui/vue'
-import {
-  AdjustmentsIcon,
+  // AdjustmentsIcon,
   MenuAlt2Icon,
   MapIcon,
   UsersIcon,
   UserIcon,
   PuzzleIcon,
   XIcon,
+  AdjustmentsIcon,
 } from '@heroicons/vue/outline'
+import SidebarItem from './SidebarItem.vue'
 
 const navigation = {
   player: {
     name: 'Lenny',
+    icon: UserIcon,
     color: 'red',
+    current: true,
   },
-  teammates: [
-    { name: 'Raphael', color: 'blue' },
-    { name: 'Julian', color: 'green' },
-  ],
-
-  boards: [
-    {
-      name: 'Mensch ärgere dich nicht (4 Personen)',
-      path: '/assets/boards/mensch_aergere_dich_nicht_4er.svg',
-    },
-    {
-      name: 'Mensch ärgere dich nicht (6 Personen)',
-      path: '/assets/boards/mensch_aergere_dich_nicht_6er.svg',
-    },
-  ],
-  figures: [
-    {
-      name: 'Figur',
-      path: '/assets/figures/figure.svg',
-    },
-  ],
-  settings: {
+  teammates: {
+    name: 'Mitspieler',
+    icon: UsersIcon,
+    current: false,
     children: [
-      // { name: 'Overview', href: '#' },
-      // { name: 'Members', href: '#' },
-      // { name: 'Calendar', href: '#' },
-      // { name: 'Settings', href: '#' },
+      { name: 'Raphael', color: 'blue' },
+      { name: 'Julian', color: 'green' },
     ],
+  },
+  boards: {
+    name: 'Spielbretter',
+    icon: MapIcon,
+    current: false,
+    buttonLayout: 'flex-col',
+    children: [
+      {
+        name: 'Mensch ärgere dich nicht (4 Personen)',
+        path: '/assets/boards/mensch_aergere_dich_nicht_4er.svg',
+      },
+      {
+        name: 'Mensch ärgere dich nicht (6 Personen)',
+        path: '/assets/boards/mensch_aergere_dich_nicht_6er.svg',
+      },
+    ],
+  },
+  figures: {
+    name: 'Spielfiguren',
+    icon: PuzzleIcon,
+    current: false,
+    buttonLayout: 'flex-col',
+    children: [
+      {
+        name: 'Figur',
+        path: '/assets/figures/figure.svg',
+      },
+    ],
+  },
+  settings: {
+    name: 'Einstellungen',
+    icon: AdjustmentsIcon,
+    current: false,
+    children: [{ name: 'backgroundColor' }],
   },
 }
 
@@ -301,16 +181,10 @@ export default {
     DialogOverlay,
     TransitionChild,
     TransitionRoot,
-    Disclosure,
-    DisclosureButton,
-    DisclosurePanel,
     MenuAlt2Icon,
-    AdjustmentsIcon,
     XIcon,
-    MapIcon,
     UserIcon,
-    UsersIcon,
-    PuzzleIcon,
+    SidebarItem,
   },
   setup() {
     const sidebarOpen = ref(false)
