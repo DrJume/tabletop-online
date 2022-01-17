@@ -76,3 +76,6 @@ Für die vollständige Synchronisation von Spielobjekten zwischen allen Clients 
 
 ### 05.01.2022
 Wir haben die Schnittstelle zwischen sharedb und dem lokalen Store hergestellt. Allerdings gibt es trotzdem noch ein Synchronisierungsproblem. Die richtigen Koordinaten der Karte werden zwar von allen Clients empfangen, aber der Store aktualisiert sich nicht schnell genung. Dadurch hat die Karte für die anderen Spieler eine veraltete Position, obwohl die aktuelle Position bei allen angekommen ist. Wir werden jetzt prüfen, ob und wie wir das Problem lösen bzw. umgehen können.
+
+### 14.01.2022
+Um besser voranzukommen, haben wir die verbleibenden Aufgaben untereinander aufgeteilt. Julian arbeitet weiter an der Synchronisation des Spiels, während Raphael und Lenny das User Interface gestalten. Zunächst wird dabei an der ausklappbaren Sidenbar gearbeitet. Wir haben alle noch fehlende Features in einer TODO-Liste festgehalten, die wir bis zur Abgabe abgearbeitet haben wollen.
