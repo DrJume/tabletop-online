@@ -18,6 +18,7 @@
     "@vueuse/core": "^7.5.3",
     "inquirer": "^8.2.0",
     "pinia": "^2.0.9",
+    "vite-svg-loader": "^3.1.2",
     "vue": "^3.2.27",
     "vue-router": "^4.0.12"
   },

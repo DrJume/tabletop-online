@@ -3,6 +3,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import checker from 'vite-plugin-checker'
 import legacy from '@vitejs/plugin-legacy'
+import svgLoader from 'vite-svg-loader'
 
 import path from 'path'
 import url from 'url'
@@ -22,6 +23,7 @@ export default defineConfig({
     legacy({
       renderLegacyChunks: false,
     }),
+    svgLoader(),
   ],
   resolve: {
     alias: {
