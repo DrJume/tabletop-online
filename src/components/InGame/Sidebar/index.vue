@@ -1,11 +1,10 @@
 <template>
-  <!-- TODO: Beim Klicken auf Listenelemente schließt sich die Liste -->
   <TabletopSidebar orientation="left" caption="TabletopOnline">
     <!-- Player -->
     <SidebarItem :item="navigation.player" />
 
     <!-- Teammates -->
-    <SidebarItem :item="navigation.teammates">
+    <SidebarItem :item="navigation.teammates" item-style="cursor-default pl-11">
       <template #default="children">
         <UserIcon
           class="flex-shrink-0 mr-3 w-6 h-6"
@@ -17,30 +16,32 @@
     </SidebarItem>
 
     <!-- Boards -->
-    <SidebarItem :item="navigation.boards">
+    <SidebarItem :item="navigation.boards" item-style="flex-col cursor-pointer">
       <template #default="children">
-        <img :src="children.item.path" loading="lazy" width="100" />
+        <img :src="children.item.path" loading="lazy" width="100" class="mb-2" />
         {{ children.item.name }}
       </template>
     </SidebarItem>
 
     <!-- Figures -->
-    <SidebarItem :item="navigation.figures">
+    <SidebarItem :item="navigation.figures" item-style="flex-col cursor-pointer">
       <template #default="children">
-        <img :src="children.item.path" loading="lazy" width="50" />
+        <img :src="children.item.path" loading="lazy" width="50" class="mb-2" />
         {{ children.item.name }}
       </template>
     </SidebarItem>
 
     <!-- Settings -->
-    <SidebarItem :item="navigation.settings">
-      <input type="color" />
+    <SidebarItem :item="navigation.settings" item-style="pl-11">
+      <div class="flex-auto">Hintergrundfarbe</div>
+      <input type="color" class="cursor-pointer color-input" />
     </SidebarItem>
   </TabletopSidebar>
 </template>
 
 <script lang="ts">
-import { MapIcon, UsersIcon, UserIcon, PuzzleIcon, AdjustmentsIcon } from '@heroicons/vue/outline'
+import { MapIcon, UsersIcon, PuzzleIcon, AdjustmentsIcon } from '@heroicons/vue/outline'
+import { UserIcon } from '@heroicons/vue/solid'
 import SidebarItem from './SidebarItem.vue'
 import TabletopSidebar from '@/components/UI/TabletopSidebar.vue'
 
@@ -49,12 +50,10 @@ const navigation = {
     name: 'Lenny',
     icon: UserIcon,
     color: 'red',
-    current: true,
   },
   teammates: {
     name: 'Mitspieler',
     icon: UsersIcon,
-    current: false,
     children: [
       { name: 'Raphael', color: 'blue' },
       { name: 'Julian', color: 'green' },
@@ -63,8 +62,6 @@ const navigation = {
   boards: {
     name: 'Spielbretter',
     icon: MapIcon,
-    current: false,
-    buttonLayout: 'flex-col',
     children: [
       {
         name: 'Mensch ärgere dich nicht (4 Personen)',
@@ -79,8 +76,6 @@ const navigation = {
   figures: {
     name: 'Spielfiguren',
     icon: PuzzleIcon,
-    current: false,
-    buttonLayout: 'flex-col',
     children: [
       {
         name: 'Figur',
@@ -91,7 +86,6 @@ const navigation = {
   settings: {
     name: 'Einstellungen',
     icon: AdjustmentsIcon,
-    current: false,
     children: [{ name: 'backgroundColor' }],
   },
 }

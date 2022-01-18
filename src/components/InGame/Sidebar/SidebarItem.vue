@@ -1,45 +1,31 @@
 <template>
   <!-- fallback content, when no children are provided -->
-  <div v-if="!item.children">
-    <a
-      href="#"
-      :class="[
-        item.current
-          ? 'bg-gray-100 text-gray-900'
-          : 'bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900',
-        'group w-full flex items-center pl-2 py-2 text-sm font-medium rounded-md',
-      ]"
+  <div v-if="!$props.item.children">
+    <div
+      class="group flex items-center py-2 pl-2 w-full text-sm font-medium text-gray-600 hover:text-gray-900 bg-white hover:bg-gray-50 rounded-md"
     >
       <component
-        :is="item.icon"
-        :class="[
-          item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500',
-          'mr-3 flex-shrink-0 h-6 w-6',
-        ]"
-        :style="'color: ' + item.color"
+        :is="$props.item.icon"
+        class="flex-shrink-0 mr-3 w-6 h-6 text-gray-400 group-hover:text-gray-500"
+        :style="'color: ' + $props.item.color"
         aria-hidden="true"
       />
-      {{ item.name }}
-    </a>
+      {{ $props.item.name }}
+    </div>
   </div>
 
   <!-- list header -->
   <Disclosure v-else v-slot="{ open }" as="div" class="space-y-1">
     <DisclosureButton
-      :class="[
-        item.current
-          ? 'bg-gray-100 text-gray-900'
-          : 'bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900',
-        'group w-full flex items-center pl-2 pr-1 py-2 text-left text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500',
-      ]"
+      class="group flex items-center py-2 pr-1 pl-2 w-full text-sm font-medium text-left text-gray-600 hover:text-gray-900 bg-white hover:bg-gray-50 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"
     >
       <component
-        :is="item.icon"
+        :is="$props.item.icon"
         class="flex-shrink-0 mr-3 w-6 h-6 text-gray-400 group-hover:text-gray-500"
         aria-hidden="true"
       />
       <span class="flex-1">
-        {{ item.name }}
+        {{ $props.item.name }}
       </span>
       <svg
         :class="[
@@ -55,15 +41,15 @@
 
     <!-- list items -->
     <DisclosurePanel class="space-y-1">
-      <DisclosureButton
-        v-for="subItem in item.children"
+      <div
+        v-for="subItem in $props.item.children"
         :key="subItem.name"
         as="a"
-        :class="item.buttonLayout"
-        class="group flex items-center py-2 pr-2 pl-11 w-full text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md"
+        :class="$props.itemStyle"
+        class="group flex items-center py-2 pr-2 w-full text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md"
       >
         <slot :item="subItem"></slot>
-      </DisclosureButton>
+      </div>
     </DisclosurePanel>
   </Disclosure>
 </template>
@@ -83,9 +69,10 @@ export default defineComponent({
       type: Object,
       required: true,
     },
-  },
-  setup(props) {
-    return props.item
+    itemStyle: {
+      type: String,
+      default: '',
+    },
   },
 })
 </script>

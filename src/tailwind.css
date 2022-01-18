@@ -6,6 +6,23 @@
   --zoom: 100%;
 }
 
+.color-input{
+  border-radius: 50%;
+  height: 2rem;
+  width: 2rem;
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.color-input::-webkit-color-swatch-wrapper {
+  padding: 0; 
+}
+.color-input::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+
 /* Portrait */
 @media screen and (orientation: portrait) {
   .tt-fill-viewport {
