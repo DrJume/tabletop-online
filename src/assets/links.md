@@ -14,3 +14,8 @@ https://www.kinder-malvorlagen.com/spiele-drucken/mensch-aergere-dich-nicht.php
 https://www.kribbelbunt.de/artikel/news/mensch-aergere-dich-nicht-spielfeld/
 https://www.4teachers.de/?action=show&id=7126&page=0
 https://www.secrethitler.com/
+
+dice icon:
+
+https://www.svgrepo.com/svg/162719/big-dice
+CC0 Lizenz
