@@ -79,3 +79,6 @@ Wir haben die Schnittstelle zwischen sharedb und dem lokalen Store hergestellt. 
 
 ### 14.01.2022
 Um besser voranzukommen, haben wir die verbleibenden Aufgaben untereinander aufgeteilt. Julian arbeitet weiter an der Synchronisation des Spiels, während Raphael und Lenny das User Interface gestalten. Zunächst wird dabei an der ausklappbaren Sidenbar gearbeitet. Wir haben alle noch fehlende Features in einer TODO-Liste festgehalten, die wir bis zur Abgabe abgearbeitet haben wollen.
+
+### 18.01.2022
+Das User Interface unabhängig vom Spielfeld ist vom Layout her umgesetzt. Der nächste Schritt ist das Einbinden von Funktionalität ins UI.
