@@ -1,20 +1,20 @@
 ☐ UI
     ☐ Sidebareinstellungen
-        ☐ Farbe des Hintergrunds anpassbar (nur lokal)
+        ✔ Farbe des Hintergrunds anpassbar (nur lokal) @done(22-01-18 21:44)
         ☐ Anzahl gewürfelter Würfel (nur lokal)
     ✔ einklappbare Sidebar @done(22-01-14 23:02)
-    ☐ Abschnitt in Sidebar zum Erzeugen der Spielobjekte
+    ✔ Abschnitt in Sidebar zum Erzeugen der Spielobjekte @done(22-01-18 21:44)
     ☐ weitere TODOs Sidebar in index.vue
     Anzahl der Spielobjekte entspricht Anzahl Bildern im Assets-Ordner
     Beim Anklicken eines Elements im Abschnitt, wird ein entsprechendes Spielobjekt mit dem Bild erzeugt
 
-    ☐ Abschnitt in Sidebar zum Einsehen der Spieler
+    ✔ Abschnitt in Sidebar zum Einsehen der Spieler @done(22-01-18 21:45)
     ☐ Nutzer wird beim Betreten der Webseite nach Spielernamen gefragt
-    ☐ Würfel
+    ✔ Würfel @done(22-01-18 21:45)
     Einfache Implementation als runder Button
     Nach dem Würfeln erscheint im Log
 
-    ☐ Logbuch auf rechter Displayseite
+    ✔ Logbuch auf rechter Displayseite @done(22-01-18 21:45)
     kann eingeblendet werden
 
     ☐ Jedes erstellte Spielobjekt hat einen festen z-Index (abgeleitet aus ShareDB, wird hochgezählt)
