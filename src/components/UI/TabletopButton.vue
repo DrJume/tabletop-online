@@ -5,25 +5,29 @@
     @click="buttonClicked"
   >
     <slot></slot>
-    <component :is="data.icon" class="w-6 h-6" aria-hidden="true" />
+    <component :is="heroIcons[$props.icon]" class="w-6 h-6" aria-hidden="true" />
   </button>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import * as heroIcons from '@heroicons/vue/outline'
 
 export default defineComponent({
   props: {
-    data: {
-      type: Object,
+    icon: {
+      type: String,
       required: true,
+      default: 'MenuAlt2Icon',
     },
   },
   emits: {
     clickEvent: null,
   },
-  setup(props) {
-    return props.data
+  setup() {
+    return {
+      heroIcons,
+    }
   },
   methods: {
     buttonClicked() {
