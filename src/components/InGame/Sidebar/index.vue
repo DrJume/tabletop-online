@@ -1,6 +1,6 @@
 <template>
   <!-- TODO: Beim Klicken auf Listenelemente schließt sich die Liste -->
-  <TabletopSidebar>
+  <TabletopSidebar orientation="left" caption="TabletopOnline">
     <!-- Player -->
     <SidebarItem :item="navigation.player" />
 

@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue'
 import { useDraggable, useElementBounding, onKeyStroke, useCssVar } from '@vueuse/core'
 import Sidebar from '@/components/InGame/Sidebar/index.vue'
+import LogBar from '@/components/InGame/LogBar/index.vue'
 
 const el = ref<HTMLElement | null>(null)
 const playAreaRef = ref<HTMLElement | null>(null)
@@ -52,6 +53,7 @@ const position = computed(() => {
 
 <template>
   <Sidebar />
+  <LogBar />
   <div class="overflow-auto h-full bg-gray-200">
     <div
       ref="playAreaRef"
