@@ -32,14 +32,14 @@
     </SidebarItem>
 
     <!-- Settings -->
-    <SidebarItem :item="navigation.settings" item-style="pl-11">
+    <SidebarItem :item="navigation.settings" item-style="pl-11 cursor-default">
       <div class="flex-auto">Hintergrundfarbe</div>
       <input type="color" class="cursor-pointer color-input" />
     </SidebarItem>
   </TabletopSidebar>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { MapIcon, UsersIcon, PuzzleIcon, AdjustmentsIcon } from '@heroicons/vue/outline'
 import { UserIcon } from '@heroicons/vue/solid'
 import SidebarItem from './SidebarItem.vue'
@@ -87,19 +87,6 @@ const navigation = {
     name: 'Einstellungen',
     icon: AdjustmentsIcon,
     children: [{ name: 'backgroundColor' }],
-  },
-}
-
-export default {
-  components: {
-    UserIcon,
-    SidebarItem,
-    TabletopSidebar,
-  },
-  setup() {
-    return {
-      navigation,
-    }
   },
 }
 </script>

@@ -21,7 +21,7 @@
   </TabletopSidebar>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import TabletopSidebar from '@/components/UI/TabletopSidebar.vue'
 
 const log = [
@@ -31,16 +31,4 @@ const log = [
   { timestamp: '13:50', message: 'Lenny hat eine 5 gewürfelt' },
   { timestamp: '13:51', message: 'Raphael ist beigetreten' },
 ]
-
-export default {
-  components: {
-    TabletopSidebar,
-  },
-
-  setup() {
-    return {
-      log,
-    }
-  },
-}
 </script>

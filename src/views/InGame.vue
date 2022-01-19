@@ -54,11 +54,11 @@ const position = computed(() => {
 </script>
 
 <template>
-  <Sidebar />
-  <LogBar />
-  <Dice />
   <TabletopModal />
-  <div class="overflow-auto h-full bg-gray-200">
+  <div class="overflow-auto relative h-full bg-gray-200">
+    <Sidebar />
+    <LogBar />
+    <Dice />
     <div
       ref="playAreaRef"
       class="flex relative items-start bg-red-400 aspect-square tt-fill-viewport"

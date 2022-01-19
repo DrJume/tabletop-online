@@ -106,7 +106,7 @@
   </TransitionRoot>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { ref } from 'vue'
 import {
   Dialog,
@@ -128,26 +128,6 @@ const colors = [
   { name: 'Black', bgColor: 'bg-gray-900', selectedColor: 'ring-gray-900' },
 ]
 
-export default {
-  components: {
-    Dialog,
-    DialogOverlay,
-    DialogTitle,
-    TransitionChild,
-    TransitionRoot,
-    RadioGroup,
-    RadioGroupLabel,
-    RadioGroupOption,
-  },
-  setup() {
-    const open = ref(true)
-    const selectedColor = ref(colors[1])
-
-    return {
-      open,
-      colors,
-      selectedColor,
-    }
-  },
-}
+const open = ref(true)
+const selectedColor = ref(colors[1])
 </script>
