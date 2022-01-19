@@ -45,7 +45,7 @@ httpServer.on('upgrade', function upgrade(request, socket, head) {
 
 // *** sharedb server logic ***
 const connection = backend.connect()
-const doc = connection.get('doc-collection', 'doc-id')
+const doc = connection.get('tabletop-online', 'room-1')
 
 // create initial sharedb doc
 if (!doc.type) {
@@ -60,12 +60,30 @@ if (!doc.type) {
           type: 'PlayingCard',
           data: {
             _meta: {
-              id: 1,
               draggedBy: '',
               isVisible: true,
             },
-            x: 0,
-            y: 0,
+            position: {
+              x: 0,
+              y: 0,
+              z: 10,
+            },
+            isLocked: false,
+            isFlipped: false,
+          },
+        },
+        '2': {
+          type: 'PlayingCard',
+          data: {
+            _meta: {
+              draggedBy: '',
+              isVisible: true,
+            },
+            position: {
+              x: 25,
+              y: 0,
+              z: 10,
+            },
             isLocked: false,
             isFlipped: false,
           },

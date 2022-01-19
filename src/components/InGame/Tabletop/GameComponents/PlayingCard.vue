@@ -1,176 +1,168 @@
 <script setup lang="ts">
-import { ref, UnwrapRef, watch } from 'vue'
-import { useDraggable, useElementBounding, useVModel, biSyncRef, useThrottleFn } from '@vueuse/core'
+import { computed, ref, UnwrapRef, watch } from 'vue'
+import { useDraggable, useElementBounding, useVModel, useThrottleFn } from '@vueuse/core'
 
 import { log } from '@/util/logger'
 
-import { GameObjectDataTypes, GameObjectType } from '@/stores/gameObjects'
+import { GameObjectDataTypes, GameObjectType, useGameObjectsStore } from '@/stores/gameObjects'
 import { useShareDB } from '@/modules/useShareDB'
-import { useUserID } from '@/modules/useUserID'
-const { doc } = useShareDB()
-const { userID } = useUserID()
+
+const { ShareDB } = useShareDB()
 
 const props = defineProps<{
   tabletopRef: HTMLElement | null
   modelValue: GameObjectDataTypes[GameObjectType.PlayingCard]
+  id: string
 }>()
-const gameObjectData = useVModel(props, 'modelValue')
-
-// TODO: needs to be connected with store over bisyncref
-// TODO: local changes of card
-// -> 1. push to store
-// -> 2. push to sharedb
-
-// global changes come from store
-
-const card = ref<HTMLElement | null>(null)
-// const hasDragged = ref(false)
-const playAreaBounds = useElementBounding(props.tabletopRef)
-
-const broadcast = (position: UnwrapRef<typeof positionPercent>) => {
-  log.log('BROADCAST()', { ...position })
-
-  doc.submitOp([
-    { p: ['objects', gameObjectData.value._meta.id, 'data', 'x'], oi: position.x },
-    { p: ['objects', gameObjectData.value._meta.id, 'data', 'y'], oi: position.y },
-  ])
-}
-
-const { position: positionDragPx, isDragging } = useDraggable(card, {
-  draggingElement: props.tabletopRef,
-  exact: true,
-  // initialValue: { x: gameObjectData.value.x, y: gameObjectData.value.y }, // not needed -> biSync does this
-
-  // Callback when the dragging starts. Return `false` to prevent dragging.
-  onStart() {
-    // if (doc.data.objects['0'].isLocked) {
-    //   log.log('start drag blocked')
-
-    //   return false
-    // }
-    // hasDragged.value = true
-    // doc.submitOp([{ p: ['objects', '0', 'isLocked'], oi: true }])
-
-    doc.submitOp({
-      p: ['objects', gameObjectData.value._meta.id, 'data', '_meta', 'draggedBy'],
-      oi: `${userID.value}`,
-    })
-    log.log('start card drag')
-  },
-
-  // Callback during dragging.
-  onMove() {
-    // // TODO: throttle down the amount of messages sent
-    // doc.submitOp([
-    //   { p: ['objects', '0', 'x'], oi: position.value.x },
-    //   { p: ['objects', '0', 'y'], oi: position.value.y },
-    // ])
-  },
-
-  // Callback when dragging end.
-  onEnd() {
-    // if (!hasDragged.value) return
-    log.log('end card drag')
-    //broadcast(positionPercent.value)
-    doc.submitOp({
-      p: ['objects', gameObjectData.value._meta.id, 'data', '_meta', 'draggedBy'],
-      oi: '',
-    })
-    // doc.submitOp([{ p: ['objects', '0', 'isLocked'], oi: false }])
-    // hasDragged.value = false
-  },
-})
-
-const updateCard = () => {
-  // log.log('update card', JSON.stringify(doc.data))
-  // // if the viewport is scrolled, get the offset for coordinates calculation
-  // const xScrollOffset = props.tabletopRef?.parentElement?.scrollLeft || 0
-  // const yScrollOffset = props.tabletopRef?.parentElement?.scrollTop || 0
-  // x.value = (doc.data.objects['0'].x / 100) * playAreaBounds.width.value - xScrollOffset
-  // y.value = (doc.data.objects['0'].y / 100) * playAreaBounds.height.value - yScrollOffset
-}
-
-// const positionTruncated = computed(() => {})
-
-// calculate the percentage for the position of objects
-// useDraggable requires coordinates but the objects are arranged with percentages
-const positionPercent = ref({
-  x: 0,
-  y: 0,
-})
-
-// converts useDraggable coordinates into percent, if card is dragged by user
-watch(
-  positionDragPx,
-  (positionLocalPx) => {
-    log.debug('watch(positionDragPx)', { ...positionLocalPx })
-    if (!isDragging.value) return // mutex
-    log.debug('watch(positionDragPx) %cupdating positionPercent', 'color: red')
-
-    if (!playAreaBounds) return { x: 0, y: 0 }
-
-    // if the viewport is scrolled, get the offset for coordinates calculation
-    const xScrollOffset = props.tabletopRef?.parentElement?.scrollLeft || 0
-    const yScrollOffset = props.tabletopRef?.parentElement?.scrollTop || 0
-
-    // log.debug('watch(positionDragPx) scrollOffset:', { xScrollOffset, yScrollOffset })
-
-    positionPercent.value.x = Math.max(
-      0,
-      Math.trunc(((positionLocalPx.x + xScrollOffset) / playAreaBounds.width.value) * 1000) / 10
-    )
-
-    positionPercent.value.y = Math.max(
-      0,
-      Math.trunc(((positionLocalPx.y + yScrollOffset) / playAreaBounds.height.value) * 1000) / 10
-    )
-  },
-  { deep: true }
+const gameObjectData = useVModel(
+  props,
+  'modelValue' /* , undefined, { deep: true, passive: true } */
 )
 
-const broadcastThrottled = useThrottleFn(broadcast, 1000 / 30)
+// const gameObjects = useGameObjectsStore()
 
-/* watch incoming position changes in percent
-   position in percent is synced between local and store
-   handle 2 different cases:
-   - user drags the card -> changes are pushed to sharedb
-   - user doesn't drag the card -> changes are updated locally */
-watch(
-  positionPercent,
-  (positionLocalPercent) => {
-    log.debug('watch(positionPercent)', { ...positionLocalPercent })
-    if (isDragging.value) {
-      // user drags the card -> changes are pushed to sharedb
-      broadcastThrottled(positionLocalPercent)
-      return
+// const gameObjectData = computed(() => gameObjects.objects[props.id].data)
+
+const cardRef = ref<HTMLElement | null>(null)
+const playAreaBounds = useElementBounding(props.tabletopRef)
+
+const broadcast = (position: UnwrapRef<typeof gameObjectData>) => {
+  log.debug('BROADCAST()', { ...position })
+
+  // TODO: sync live movement over socket.io
+}
+const broadcastThrottled = useThrottleFn(broadcast, 1000 / 30 /* 30 Hz */)
+
+const { position: positionAbsoluteDraggable, isDragging } = useDraggable(cardRef, {
+  draggingElement: props.tabletopRef,
+  exact: true,
+  // initialValue: { x: gameObjectData.value.position.x, y: gameObjectData.value.position.y },
+
+  // runs when dragging starts. Return `false` to prevent dragging.
+  onStart() {
+    log.log('useDraggable onStart()')
+
+    // block if object is already dragged by another user
+    if (gameObjectData.value._meta.draggedBy !== '') return false
+
+    // lock game object for other players
+    ShareDB.roomDoc.submitOp({
+      p: ['objects', props.id, 'data', '_meta', 'draggedBy'],
+      oi: `${ShareDB.userId}`,
+    })
+  },
+
+  // runs during dragging.
+  onMove(positionAbsolute) {
+    // log.log('useDraggable onMove()', positionAbsolute)
+
+    log.debug('useDraggable onMove() %cupdating positionRelative', 'color: red')
+
+    if (!playAreaBounds) return
+
+    // if the viewport is scrolled, get the offset for coordinates calculation
+    const scrollOffset = {
+      x: props.tabletopRef?.parentElement?.scrollLeft ?? 0,
+      y: props.tabletopRef?.parentElement?.scrollTop ?? 0,
     }
 
-    // user doesn't drag the card -> changes are updated locally
+    // log.debug('useDraggable onMove() scrollOffset:', { xScrollOffset, yScrollOffset })
 
-    log.debug('watch(positionPercent) %cupdating positionDragPx', 'color: blue')
+    gameObjectData.value.position = {
+      x: Math.max(
+        0,
+        coordinateToRelative(positionAbsolute.x, scrollOffset.x, playAreaBounds.width.value)
+      ),
+      y: Math.max(
+        0,
+        coordinateToRelative(positionAbsolute.y, scrollOffset.y, playAreaBounds.height.value)
+      ),
+      z: 10,
+    }
+
+    broadcastThrottled(gameObjectData.value)
+  },
+
+  // runs when dragging ends. https://github.com/vueuse/vueuse/pull/1145
+  onEnd(position, event) {
+    if (!cardRef.value || !event.composedPath().includes(cardRef.value)) return
+
+    log.log('useDraggable onEnd()', { ...gameObjectData.value, event })
+
+    // sync final position over ShareDB
+    ShareDB.roomDoc.submitOp([
+      {
+        p: ['objects', props.id, 'data', 'position'],
+        oi: {
+          ...gameObjectData.value.position,
+        },
+      },
+    ])
+
+    // unlock game object for other players
+    ShareDB.roomDoc.submitOp({
+      p: ['objects', props.id, 'data', '_meta', 'draggedBy'],
+      oi: '',
+    })
+  },
+})
+
+const coordinateToRelative = (coordinate: number, scrollOffset: number, axisLength: number) =>
+  Math.trunc(((coordinate + scrollOffset) / axisLength) * 1000) / 10
+
+const relativeToCoordinate = (relative: number, scrollOffset: number, axisLength: number) =>
+  (relative / 100) * axisLength - scrollOffset
+
+/*
+  Watch for changes on the gameObject, which is connected via v-model to the store.
+  Convert the synced relative positions back to absolute positions for useDraggable.
+*/
+watch(
+  gameObjectData,
+  (positionRelative) => {
+    log.debug('watch(positionRelative)', { ...positionRelative })
+    if (isDragging.value) return
+
+    log.debug('watch(positionRelative) %cupdating positionDraggableAbsolute', 'color: blue')
 
     // TODO: interpolation for smooth move transition
 
-    const xScrollOffset = props.tabletopRef?.parentElement?.scrollLeft || 0
-    const yScrollOffset = props.tabletopRef?.parentElement?.scrollTop || 0
+    const scrollOffset = {
+      x: props.tabletopRef?.parentElement?.scrollLeft ?? 0,
+      y: props.tabletopRef?.parentElement?.scrollTop ?? 0,
+    }
 
-    positionDragPx.value.x =
-      (positionLocalPercent.x / 100) * playAreaBounds.width.value - xScrollOffset
-    positionDragPx.value.y =
-      (positionLocalPercent.y / 100) * playAreaBounds.height.value - yScrollOffset
+    positionAbsoluteDraggable.value.x = relativeToCoordinate(
+      positionRelative.position.x,
+      scrollOffset.x,
+      playAreaBounds.width.value
+    )
+    positionAbsoluteDraggable.value.y = relativeToCoordinate(
+      positionRelative.position.y,
+      scrollOffset.y,
+      playAreaBounds.height.value
+    )
   },
   { deep: true }
 )
 
-biSyncRef(positionPercent, gameObjectData)
+const zIndex = computed(() => gameObjectData.value.position.z)
 </script>
 
 <template>
   <div
-    ref="card"
-    :style="{ top: `${positionPercent.y}%`, left: `${positionPercent.x}%` }"
+    ref="cardRef"
+    :style="{ top: `${gameObjectData.position.y}%`, left: `${gameObjectData.position.x}%` }"
     class="flex absolute justify-center items-center w-[20%] h-[30%] text-center bg-green-400 cursor-pointer select-none tt-dynamic-font-size"
   >
-    Drag me! I am at <br />{{ positionPercent.x }}%, <br />{{ positionPercent.y }}%
+    {{ gameObjectData.position.x }}% <br />
+    {{ gameObjectData.position.y }}% <br />
+    {{ gameObjectData.position.z }}
   </div>
 </template>
+
+<style scoped>
+.tt-dynamic-z-index {
+  z-index: v-bind(zIndex);
+}
+</style>

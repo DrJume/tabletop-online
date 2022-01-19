@@ -4,6 +4,7 @@ specifiers:
   '@commitlint/cli': ^16.0.2
   '@commitlint/config-conventional': ^16.0.0
   '@commitlint/cz-commitlint': ^16.0.0
+  '@types/lodash-es': ^4.17.5
   '@types/node': ^17.0.10
   '@types/sharedb': ^2.2.0
   '@typescript-eslint/eslint-plugin': ^5.10.0
@@ -23,6 +24,7 @@ specifiers:
   eslint-plugin-vue: ^8.3.0
   events: ^3.3.0
   husky: ^7.0.4
+  lodash-es: ^4.17.21
   pinia: ^2.0.9
   postcss: ^8.4.5
   prettier: ^2.5.1
@@ -31,6 +33,7 @@ specifiers:
   sharedb: ^2.2.3
   socket.io-client: ^4.4.1
   tailwindcss: ^3.0.15
+  ts-toolbelt: ^9.6.0
   typescript: ^4.5.4
   vite: ^2.7.13
   vite-plugin-checker: ^0.3.4
@@ -43,10 +46,12 @@ specifiers:
 dependencies:
   '@vueuse/core': 7.5.3_vue@3.2.27
   events: 3.3.0
+  lodash-es: 4.17.21
   pinia: 2.0.9_typescript@4.5.4+vue@3.2.27
   reconnecting-websocket: 4.4.0
   sharedb: 2.2.3
   socket.io-client: 4.4.1
+  ts-toolbelt: 9.6.0
   vue: 3.2.27
   vue-router: 4.0.12_vue@3.2.27
 
@@ -54,6 +59,7 @@ devDependencies:
   '@commitlint/cli': 16.0.2_@types+node@17.0.10
   '@commitlint/config-conventional': 16.0.0
   '@commitlint/cz-commitlint': 16.0.0_f1e889c1eb9e603e5ab1dc0e0e7e524c
+  '@types/lodash-es': 4.17.5
   '@types/node': 17.0.10
   '@types/sharedb': 2.2.0
   '@typescript-eslint/eslint-plugin': 5.10.0_3b6b276e93ead7cf6063f183a5e18d1f
@@ -164,6 +170,9 @@ packages:
     peerDependencies:
       commitizen: ^4.0.3
       inquirer: ^8.0.0
+    peerDependenciesMeta:
+      inquirer:
+        optional: true
     dependencies:
       '@commitlint/ensure': 16.0.0
       '@commitlint/load': 16.0.0_@types+node@17.0.10
@@ -415,6 +424,16 @@ packages:
 
   /@types/json5/0.0.29:
     resolution: {integrity: sha1-7ihweulOEdK4J7y+UnC86n8+ce4=}
+    dev: true
+
+  /@types/lodash-es/4.17.5:
+    resolution: {integrity: sha512-SHBoI8/0aoMQWAgUHMQ599VM6ZiSKg8sh/0cFqqlQQMyY9uEplc0ULU5yQNzcvdR4ZKa0ey8+vFmahuRbOCT1A==}
+    dependencies:
+      '@types/lodash': 4.14.178
+    dev: true
+
+  /@types/lodash/4.14.178:
+    resolution: {integrity: sha512-0d5Wd09ItQWH1qFbEyQ7oTQ3GZrMfth5JkbN3EvTKLXcHLRDSXeLnlvlOn0wvxVIwK5o2M8JzP/OWz7T3NRsbw==}
     dev: true
 
   /@types/minimist/1.2.2:
@@ -2725,6 +2744,10 @@ packages:
       p-locate: 5.0.0
     dev: true
 
+  /lodash-es/4.17.21:
+    resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
+    dev: false
+
   /lodash.debounce/4.0.8:
     resolution: {integrity: sha1-gteb/zCmfEAF/9XiUVMArZyk168=}
     dev: true
@@ -3839,6 +3862,10 @@ packages:
       yn: 3.1.1
     dev: true
 
+  /ts-toolbelt/9.6.0:
+    resolution: {integrity: sha512-nsZd8ZeNUzukXPlJmTBwUAuABDe/9qtVDelJeT/qW0ow3ZS3BsQJtNkan1802aM9Uf68/Y8ljw86Hu0h5IUW3w==}
+    dev: false
+
   /tsconfig-paths/3.12.0:
     resolution: {integrity: sha512-e5adrnOYT6zqVnWqZu7i/BQ3BnhzvGbjEjejFXO20lKIKpwTaupkCPgEfv4GZK1IBciJUEhYs3J3p75FdaTFVg==}
     dependencies:
@@ -3974,6 +4001,9 @@ packages:
     peerDependencies:
       '@vue/compiler-sfc': ^3.2.24
       vue: ^3.2.24
+    peerDependenciesMeta:
+      '@vue/compiler-sfc':
+        optional: true
     dependencies:
       vue: 3.2.27
     dev: true

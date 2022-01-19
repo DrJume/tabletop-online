@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-interface GameObjectsState {
+export interface GameObjectsState {
   _meta: {
     userCounter: number
     idCounter: number
@@ -28,7 +28,7 @@ type GameObject = GameObjectInit & {
 
 type GameObjectMeta = {
   _meta: {
-    id: string
+    // id: string
 
     draggedBy: string
     isVisible: boolean
@@ -51,8 +51,11 @@ interface GameObjectBase<Type, Data> {
 }
 
 interface GameObjectData {
-  x: number
-  y: number
+  position: {
+    x: number
+    y: number
+    z: number
+  }
   isLocked: boolean
 }
 
@@ -91,7 +94,7 @@ export const useGameObjectsStore = defineStore('gameObjects', {
         type,
         data: {
           _meta: {
-            id: `${id}`,
+            // id: `${id}`,
             draggedBy: '',
             isVisible: true,
           },

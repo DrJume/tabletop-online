@@ -20,94 +20,19 @@ import { onKeyStroke, useCssVar } from '@vueuse/core'
 
 import { log } from '@/util/logger'
 
-// sharedb socket
-import { useShareDB } from '@/modules/useShareDB'
-import { useUserID } from '@/modules/useUserID'
-const { doc } = useShareDB()
-const { userID } = useUserID()
-
-import { useGameObjectsStore, GameObjectType } from '@/stores/gameObjects'
+import { useGameObjectsStore } from '@/stores/gameObjects'
+import { connectShareDB, useShareDB } from '@/modules/useShareDB'
 
 const gameObjects = useGameObjectsStore()
 
-// get doc stream
-doc.subscribe((error) => {
-  if (error) return log.error(error)
+connectShareDB()
 
-  // load current version of the game, when the player joins
-  userID.value = doc.data._meta.userCounter
-  gameObjects._meta = doc.data._meta
-  gameObjects.objects = doc.data.objects
-
-  doc.submitOp({ p: ['_meta', 'userCounter'], na: 1 })
-
-  log.log('subscribe', JSON.stringify(doc.data))
-
-  // a change occured in the database
-  // combine all operations into one with 'op batch'
-  doc.on('op batch', (ops) => {
-    log.log('op batch', ops)
-
-    // check if op was oi
-    // {p:['objects', 'id', 'data', 'key'], oi:obj}
-    for (const op of ops) {
-      const path = [...op.p] as string[]
-      let pathData = gameObjects
-
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      const lastPath = path.pop()
-      const objectId = path[1]
-      for (const property of path) {
-        log.log(property)
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        pathData = pathData[property]
-      }
-
-      if ('oi' in op) {
-        // an existing value changed
-        log.log(pathData, userID.value)
-
-        // if changes are received that were created by the player itself, don't update
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        if (gameObjects[objectId].data._meta.draggedBy === userID.value) {
-          log.log('NEIN ICH AKTUALISIERE MICH NICHT MEHR')
-          return
-        }
-
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        pathData[lastPath] = op.oi
-
-        log.log(pathData, op.oi)
-      } else if ('na' in op) {
-        // a value got incremented
-
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        pathData[lastPath] += op.na
-      }
-    }
-
-    // TODO: li - insert
-  })
-})
-
-doc.on('load', () => {
-  log.log('load', JSON.stringify(doc.data))
-})
+const { ShareDB } = useShareDB()
 
 const tabletopRef = ref<HTMLElement | null>(null)
 
-// TODO: global sharedb listener that pushes changes to store
-
 const zoomVar = useCssVar('--zoom', tabletopRef)
-const zoomPercent = computed(() => {
-  return Number.parseInt(zoomVar.value.replace('%', ''))
-})
+const zoomPercent = computed(() => Number.parseInt(zoomVar.value.replace('%', '')))
 
 onKeyStroke('+', () => {
   zoomVar.value = `${zoomPercent.value + 10}%`
@@ -126,19 +51,22 @@ const dynamicFontSize = computed(() => `${(zoomPercent.value / 100) * 1.25}rem`)
 
 // ===================================================
 
-// add game objects only after the tabletop is mounted
-// -> let the tabletop mount itself first, so that the tabletopRef is available for its children
+/* add game objects only after the tabletop is mounted
+   -> let the tabletop mount itself first, so that the tabletopRef is available for its children */
 onMounted(() => {
   // add initial playing card
-  gameObjects.addGameObject({
-    type: GameObjectType.PlayingCard,
-    data: {
-      x: 0,
-      y: 0,
-      isLocked: false,
-      isFlipped: false,
-    },
-  })
+  // gameObjects.addGameObject({
+  //   type: GameObjectType.PlayingCard,
+  //   data: {
+  //     position: {
+  //       x: 10,
+  //       y: 10,
+  //       z: 10,
+  //     },
+  //     isLocked: false,
+  //     isFlipped: false,
+  //   },
+  // })
 })
 
 // triggers every time a change occurs in store
@@ -146,7 +74,8 @@ onMounted(() => {
 gameObjects.$subscribe((mutation, state) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const event = mutation.events as any
-  log.debug(event.type, event.key, event.newValue, event)
+  if (event.type === 'set' && event.key === 'position') return
+  log.log('gameObjects.$subscribe()', event.type, event.key, event.newValue, event, mutation)
 })
 </script>
 
@@ -156,12 +85,17 @@ gameObjects.$subscribe((mutation, state) => {
       ref="tabletopRef"
       class="aspect-square flex relative items-start bg-red-400 tt-fill-viewport"
     >
-      <!-- dynamically load in objects -->
+      <!-- dynamically loop over game objects -->
       <template v-for="(gameObject, id) in gameObjects.objects" :key="id">
         <!-- component can be PlayingCard, PlayingObject, Dice, etc. -->
         <component
           :is="gameObject.type"
-          v-show="gameObject.data._meta.isVisible"
+          v-show="
+            gameObject.data._meta.isVisible &&
+            (gameObject.data._meta.draggedBy === '' ||
+              gameObject.data._meta.draggedBy === ShareDB.userId)
+          "
+          :id="id"
           v-model="gameObject.data"
           :tabletop-ref="tabletopRef"
         ></component>
