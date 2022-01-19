@@ -41,14 +41,14 @@
 
     <!-- list items -->
     <DisclosurePanel class="space-y-1">
-      <button
+      <div
         v-for="subItem in props.item.children"
         :key="subItem.name"
         :class="props.itemStyle"
         class="group flex items-center py-2 pr-2 w-full text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md"
       >
         <slot :item="subItem"></slot>
-      </button>
+      </div>
     </DisclosurePanel>
   </Disclosure>
 </template>
@@ -57,7 +57,12 @@
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 
 const props = defineProps<{
-  item: object
+  item: {
+    name: string
+    icon: string
+    color?: string
+    children?: ({ name: string } & ({ color: string } | { path: string } | { svg: string }))[]
+  }
   itemStyle: string
 }>()
 </script>
