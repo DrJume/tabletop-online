@@ -1,0 +1,24 @@
+{
+  "name": "tabletop-online-backend",
+  "version": "0.0.0",
+  "private": "true",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "dev": "nodemon index.ts",
+    "start": "ts-node index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@socket.io/admin-ui": "^0.2.0",
+    "@teamwork/websocket-json-stream": "^2.0.0",
+    "socket.io": "^4.4.1",
+    "ws": "^8.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.21",
+    "ts-node": "^10.4.0",
+    "tslib": "^2.3.1",
+    "typescript": "^4.5.4"
+  }
+}

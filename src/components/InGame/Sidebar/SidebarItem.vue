@@ -6,7 +6,7 @@
     >
       <component
         :is="props.item.icon"
-        class="flex-shrink-0 mr-3 w-6 h-6 text-gray-400 group-hover:text-gray-500"
+        class="shrink-0 mr-3 w-6 h-6 text-gray-400 group-hover:text-gray-500"
         :style="'color: ' + props.item.color"
         aria-hidden="true"
       />
@@ -17,11 +17,11 @@
   <!-- list header -->
   <Disclosure v-else v-slot="{ open }" as="div" class="space-y-1">
     <DisclosureButton
-      class="group flex items-center py-2 pr-1 pl-2 w-full text-sm font-medium text-left text-gray-600 hover:text-gray-900 bg-white hover:bg-gray-50 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+      class="group flex items-center py-2 pr-1 pl-2 w-full text-sm font-medium text-left text-gray-600 hover:text-gray-900 bg-white hover:bg-gray-50 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
     >
       <component
         :is="props.item.icon"
-        class="flex-shrink-0 mr-3 w-6 h-6 text-gray-400 group-hover:text-gray-500"
+        class="shrink-0 mr-3 w-6 h-6 text-gray-400 group-hover:text-gray-500"
         aria-hidden="true"
       />
       <span class="flex-1">

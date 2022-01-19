@@ -1,26 +1,40 @@
+<script lang="ts">
+import PlayingCard from '@/components/InGame/Tabletop/GameComponents/PlayingCard.vue'
+import PlayingBoard from '@/components/InGame/Tabletop/GameComponents/PlayingBoard.vue'
+import PlayingObject from '@/components/InGame/Tabletop/GameComponents/PlayingObject.vue'
+
+export default {
+  components: {
+    PlayingCard,
+    PlayingBoard,
+    PlayingObject,
+  },
+}
+</script>
+
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { useDraggable, useElementBounding, onKeyStroke, useCssVar } from '@vueuse/core'
+import { ref, computed, onMounted } from 'vue'
+import { onKeyStroke, useCssVar } from '@vueuse/core'
 import Sidebar from '@/components/InGame/Sidebar/index.vue'
 import LogBar from '@/components/InGame/LogBar/index.vue'
 import Dice from '@/components/InGame/Dice/index.vue'
 import TabletopModal from '@/components/UI/TabletopModal.vue'
 
-const el = ref<HTMLElement | null>(null)
-const playAreaRef = ref<HTMLElement | null>(null)
+import { log } from '@/util/logger'
 
-const playArea = useElementBounding(playAreaRef)
+import { useGameObjectsStore } from '@/stores/gameObjects'
+import { connectShareDB, useShareDB } from '@/modules/useShareDB'
 
-const { x, y } = useDraggable(el, {
-  draggingElement: playAreaRef,
-  exact: true,
-  initialValue: { x: 40, y: 40 },
-})
+const gameObjects = useGameObjectsStore()
 
-const zoomVar = useCssVar('--zoom', playAreaRef)
-const zoomPercent = computed(() => {
-  return Number.parseInt(zoomVar.value.replace('%', ''))
-})
+connectShareDB()
+
+const { ShareDB } = useShareDB()
+
+const tabletopRef = ref<HTMLElement | null>(null)
+
+const zoomVar = useCssVar('--zoom', tabletopRef)
+const zoomPercent = computed(() => Number.parseInt(zoomVar.value.replace('%', '')))
 
 onKeyStroke('+', () => {
   zoomVar.value = `${zoomPercent.value + 10}%`
@@ -37,19 +51,33 @@ onKeyStroke('-', () => {
 
 const dynamicFontSize = computed(() => `${(zoomPercent.value / 100) * 1.25}rem`)
 
-// calculate the percentage for the position of objects
-// useDraggable requires coordinates but the objects are arranged with percentages
-const position = computed(() => {
-  if (!playArea) return { x: 0, y: 0 }
+// ===================================================
 
-  // if the viewport is scrolled, get the offset for coordinates calculation
-  const xScrollOffset = playAreaRef.value?.parentElement?.scrollLeft || 0
-  const yScrollOffset = playAreaRef.value?.parentElement?.scrollTop || 0
+/* add game objects only after the tabletop is mounted
+   -> let the tabletop mount itself first, so that the tabletopRef is available for its children */
+onMounted(() => {
+  // add initial playing card
+  // gameObjects.addGameObject({
+  //   type: GameObjectType.PlayingCard,
+  //   data: {
+  //     position: {
+  //       x: 10,
+  //       y: 10,
+  //       z: 10,
+  //     },
+  //     isLocked: false,
+  //     isFlipped: false,
+  //   },
+  // })
+})
 
-  return {
-    x: Math.max(0, Math.floor(((x.value + xScrollOffset) / playArea.width.value) * 1000) / 10),
-    y: Math.max(0, Math.floor(((y.value + yScrollOffset) / playArea.height.value) * 1000) / 10),
-  }
+// triggers every time a change occurs in store
+// -> used to push local changes to automerge
+gameObjects.$subscribe((mutation, state) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const event = mutation.events as any
+  if (event.type === 'set' && event.key === 'position') return
+  log.log('gameObjects.$subscribe()', event.type, event.key, event.newValue, event, mutation)
 })
 </script>
 
@@ -60,16 +88,24 @@ const position = computed(() => {
     <LogBar />
     <Dice />
     <div
-      ref="playAreaRef"
-      class="flex relative items-start bg-red-400 aspect-square tt-fill-viewport"
+      ref="tabletopRef"
+      class="aspect-square flex relative items-start bg-red-400 tt-fill-viewport"
     >
-      <div
-        ref="el"
-        :style="`top: ${position.y}%; left: ${position.x}%`"
-        class="flex absolute justify-center items-center text-center bg-green-400 cursor-pointer select-none w-[20%] h-[30%] tt-dynamic-font-size"
-      >
-        Drag me! I am at <br />{{ position.x }}%, <br />{{ position.y }}%
-      </div>
+      <!-- dynamically loop over game objects -->
+      <template v-for="(gameObject, id) in gameObjects.objects" :key="id">
+        <!-- component can be PlayingCard, PlayingObject, Dice, etc. -->
+        <component
+          :is="gameObject.type"
+          v-show="
+            gameObject.data._meta.isVisible &&
+            (gameObject.data._meta.draggedBy === '' ||
+              gameObject.data._meta.draggedBy === ShareDB.userId)
+          "
+          :id="id"
+          v-model="gameObject.data"
+          :tabletop-ref="tabletopRef"
+        ></component>
+      </template>
     </div>
   </div>
 </template>

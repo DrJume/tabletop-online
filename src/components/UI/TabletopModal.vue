@@ -3,7 +3,7 @@
   <TransitionRoot as="template" :show="open">
     <Dialog as="div" class="overflow-y-auto fixed inset-0 z-10">
       <div
-        class="flex sm:block justify-center items-end sm:p-0 px-4 pt-4 pb-20 min-h-screen text-center"
+        class="flex justify-center items-end px-4 pt-4 pb-20 min-h-screen text-center sm:block sm:p-0"
       >
         <TransitionChild
           as="template"
@@ -14,7 +14,7 @@
           leave-from="opacity-100"
           leave-to="opacity-0"
         >
-          <DialogOverlay class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          <DialogOverlay class="fixed inset-0 bg-gray-500 transition-opacity bg-opacity-75" />
         </TransitionChild>
 
         <!-- This element is to trick the browser into centering the modal contents. -->
@@ -31,7 +31,7 @@
           leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         >
           <div
-            class="inline-block overflow-hidden p-4 sm:p-6 sm:my-8 sm:w-full sm:max-w-sm text-left align-bottom sm:align-middle bg-white rounded-lg shadow-xl transition-all transform"
+            class="inline-block overflow-hidden p-4 text-left align-bottom bg-white rounded-lg shadow-xl transition-all sm:p-6 sm:my-8 sm:w-full sm:max-w-sm sm:align-middle"
           >
             <div>
               <div class="text-center">
@@ -53,7 +53,7 @@
                   autocomplete="off"
                   type="text"
                   name="username"
-                  class="block w-full sm:text-sm rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
+                  class="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm sm:text-sm"
                 />
               </div>
             </div>
@@ -93,7 +93,7 @@
             <div class="mt-10">
               <button
                 type="button"
-                class="inline-flex justify-center py-2 px-4 w-full text-base sm:text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-md border border-transparent focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 shadow-sm focus:outline-none"
+                class="inline-flex justify-center py-2 px-4 w-full text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-md border border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 shadow-sm sm:text-sm"
                 @click="open = false"
               >
                 Spiel beitreten

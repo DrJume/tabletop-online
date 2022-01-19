@@ -7,7 +7,7 @@
     <SidebarItem :item="navigation.teammates" item-style="cursor-default pl-11">
       <template #default="{ item }">
         <UserIcon
-          class="flex-shrink-0 mr-3 w-6 h-6"
+          class="shrink-0 mr-3 w-6 h-6"
           :style="'color: ' + item.color"
           aria-hidden="true"
         />

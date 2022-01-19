@@ -47,7 +47,7 @@
             >
               <button
                 type="button"
-                class="flex justify-center items-center ml-1 w-10 h-10 rounded-full focus:ring-2 focus:ring-inset focus:ring-white focus:outline-none"
+                class="flex justify-center items-center ml-1 w-10 h-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                 @click="sidebarOpen = false"
               >
                 <span class="sr-only">Close sidebar</span>
@@ -55,7 +55,7 @@
               </button>
             </div>
           </TransitionChild>
-          <div class="flex flex-shrink-0 items-center px-4">
+          <div class="flex shrink-0 items-center px-4">
             <h2>{{ props.caption }}</h2>
           </div>
           <div class="overflow-y-auto flex-1 mt-5 h-0">
@@ -65,7 +65,7 @@
           </div>
         </div>
       </TransitionChild>
-      <div class="flex-shrink-0 w-14" aria-hidden="true">
+      <div class="shrink-0 w-14" aria-hidden="true">
         <!-- Dummy element to force sidebar to shrink to fit close icon -->
       </div>
     </Dialog>
