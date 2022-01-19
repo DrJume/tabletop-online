@@ -1,42 +1,34 @@
 # Development
 
-**Node.js version:** `16`
+**Environment:**
 
-**Commit style:** [Conventional Commits](https://github.com/DrJume/tabletop-online/blob/main/docs/Conventional%20Commits.md)
+- Node version: 16
+  - Install pnpm via shell script: https://pnpm.io/installation
+  - Run `pnpm env use -g lts` to get the latest Node LTS version and npm
 
-## Project Setup
 
-> You can also use `npm`, but it is not recommended. <br>
-> Run the scripts with `npm run <script-name>`.
+- Package Manager helper: https://github.com/antfu/ni
+- [Conventional Commits](https://github.com/DrJume/tabletop-online/blob/main/docs/Conventional%20Commits.md)
 
-```sh
+## Project setup
+```
 pnpm install
 ```
 
-### Compile and Hot-Reload for Development
-
-```sh
-pnpm dev
+### Compiles and hot-reloads for development
+```
+pnpm run serve
 ```
 
-### Compile and Minify for Production
-
-```sh
-pnpm build
+### Compiles and minifies for production
+```
+pnpm run build
 ```
 
-### Lint and fix files
-
-```sh
-pnpm lint
+### Lints and fixes files
+```
+pnpm run lint
 ```
 
-## Tool Installation
-
-**`pnpm`:**
-
-- install pnpm via shell script: https://pnpm.io/installation
-
-**`node`:**
-
-- run `pnpm env use -g lts` to get the latest `Node.js` LTS version and `npm`
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
