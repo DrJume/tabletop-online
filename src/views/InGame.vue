@@ -4,6 +4,7 @@ import { useDraggable, useElementBounding, onKeyStroke, useCssVar } from '@vueus
 import Sidebar from '@/components/InGame/Sidebar/index.vue'
 import LogBar from '@/components/InGame/LogBar/index.vue'
 import Dice from '@/components/InGame/Dice/index.vue'
+import TabletopModal from '@/components/UI/TabletopModal.vue'
 
 const el = ref<HTMLElement | null>(null)
 const playAreaRef = ref<HTMLElement | null>(null)
@@ -56,6 +57,7 @@ const position = computed(() => {
   <Sidebar />
   <LogBar />
   <Dice />
+  <TabletopModal />
   <div class="overflow-auto h-full bg-gray-200">
     <div
       ref="playAreaRef"
