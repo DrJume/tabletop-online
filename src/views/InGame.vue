@@ -2,14 +2,12 @@
 import PlayingCard from '@/components/InGame/Tabletop/GameComponents/PlayingCard.vue'
 import PlayingBoard from '@/components/InGame/Tabletop/GameComponents/PlayingBoard.vue'
 import PlayingObject from '@/components/InGame/Tabletop/GameComponents/PlayingObject.vue'
-import Dice from '@/components/InGame/Tabletop/GameComponents/Dice.vue'
 
 export default {
   components: {
     PlayingCard,
     PlayingBoard,
     PlayingObject,
-    Dice,
   },
 }
 </script>
@@ -17,6 +15,10 @@ export default {
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { onKeyStroke, useCssVar } from '@vueuse/core'
+import Sidebar from '@/components/InGame/Sidebar/index.vue'
+import LogBar from '@/components/InGame/LogBar/index.vue'
+import Dice from '@/components/InGame/Dice/index.vue'
+import TabletopModal from '@/components/UI/TabletopModal.vue'
 
 import { log } from '@/util/logger'
 
@@ -80,7 +82,11 @@ gameObjects.$subscribe((mutation, state) => {
 </script>
 
 <template>
-  <div class="overflow-auto h-full bg-gray-200">
+  <TabletopModal />
+  <div class="overflow-auto relative h-full bg-gray-200">
+    <Sidebar />
+    <LogBar />
+    <Dice />
     <div
       ref="tabletopRef"
       class="aspect-square flex relative items-start bg-red-400 tt-fill-viewport"
