@@ -34,10 +34,18 @@ module.exports = {
     'unicorn/filename-case': 'off',
     'unicorn/prevent-abbreviations': 'off',
     'unicorn/prefer-node-protocol': 'off',
+    'unicorn/no-null': 'off',
 
     'vue/valid-define-props': 'error',
 
     'tailwindcss/no-custom-classname': 'off', // tmp disabled because of issue with vite dev mode
+
+    'vue/multi-word-component-names': [
+      'error',
+      {
+        ignores: ['index'],
+      },
+    ],
   },
   settings: {
     'import/resolver': {
