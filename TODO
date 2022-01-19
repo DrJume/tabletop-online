@@ -4,12 +4,11 @@
         ☐ Anzahl gewürfelter Würfel (nur lokal)
     ✔ einklappbare Sidebar @done(22-01-14 23:02)
     ✔ Abschnitt in Sidebar zum Erzeugen der Spielobjekte @done(22-01-18 21:44)
-    ☐ weitere TODOs Sidebar in index.vue
     Anzahl der Spielobjekte entspricht Anzahl Bildern im Assets-Ordner
     Beim Anklicken eines Elements im Abschnitt, wird ein entsprechendes Spielobjekt mit dem Bild erzeugt
 
     ✔ Abschnitt in Sidebar zum Einsehen der Spieler @done(22-01-18 21:45)
-    ☐ Nutzer wird beim Betreten der Webseite nach Spielernamen gefragt
+    ✔ Nutzer wird beim Betreten der Webseite nach Spielernamen gefragt @done(22-01-19 22:15)
     ✔ Würfel @done(22-01-18 21:45)
     Einfache Implementation als runder Button
     Nach dem Würfeln erscheint im Log
@@ -17,30 +16,29 @@
     ✔ Logbuch auf rechter Displayseite @done(22-01-18 21:45)
     kann eingeblendet werden
 
-    ☐ Jedes erstellte Spielobjekt hat einen festen z-Index (abgeleitet aus ShareDB, wird hochgezählt)
+    ☐ Jedes erstellte Spielobjekt hat einen eigenen z-Index (abgeleitet aus ShareDB, wird hochgezählt)
     Spielbrett muss zuerst erstellt werden, da alle Spielfiguren darüber liegen
 
 ☐ Synchronisation
-    ☐ Z-Index, Log
+    ✔ Z-Index @done(22-01-19 22:16)
+    ☐ Log
     ☐ Spielernamen (und -farben)
     Farben sind vorgegeben anhand Spielbrett
     Beim Erstellen von Spielfiguren wird die Farbe des Spielers auf die Farbe der Spielfigur gesetzt
 
     ☐ Erstellen eines neues Objekts und Pushen an ShareDB
-    ☐ Optional: Live-Updates von Objekten über Socket.io, sonst Interpolation zwischen Anfangs- und Endzustand
+    ☐ Live-Updates von Objekten über Socket.io, sonst Interpolation zwischen Anfangs- und Endzustand
 
 ☐ Assets
-    ☐ Mensch ärgere dich nicht - Spielbrett
+    ✔ Mensch ärgere dich nicht - Spielbrett @done(22-01-19 22:16)
     Spielbrett ist eine einfache Komponente mit einem Bild
     Wird lokal standardmäßig erzeugt und befindet sich zentriert auf dem Spielfeld
     Bei Auswahl eines Spielbretts wird eine Eigenschaft im ShareDB angepasst, die das Bild des Spielbretts enthält
 
+    ✔ Spielfigur als SVG @done(22-01-19 22:17)
+    ☐ Spielfigur als Spielobjekt einbinden
 
-    ☐ Spielfigur als SVG
-    ☐ Spielfigur auf einer Karte einbinden
-    ☐ Assets für Spielbretter und Spielfiguren werden in extra Ordnern abgelegt, 
-
-☐ Erweiterungen
+☐ Zukünftige Erweiterungen
     ☐ Funktion zum Löschen von Objekten
     ☐ Hand
     ☐ Kartenspiele (Kartenstapel, Mischlogik, usw)
