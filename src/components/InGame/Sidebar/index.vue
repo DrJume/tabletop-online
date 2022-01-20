@@ -1,10 +1,17 @@
 <template>
-  <TabletopSidebar orientation="left" caption="TabletopOnline">
+  <TabletopSidebar
+    v-model:open="sessionStore.ui.isTabletopSidebarOpen"
+    orientation="left"
+    caption="TabletopOnline"
+  >
     <!-- Player -->
-    <SidebarSection :item="userSection" />
+    <SidebarSection
+      :item="{ name: currentUser.name, icon: UserIcon, color: currentUser.color }"
+      @click="switchToUserProfileModal()"
+    />
 
     <!-- Teammates -->
-    <SidebarSection :item="teammateSection">
+    <SidebarSection :item="{ name: 'Mitspieler', icon: UsersIcon }">
       <div
         v-for="[userId, user] in filteredTeammates"
         :key="userId"
@@ -16,7 +23,7 @@
     </SidebarSection>
 
     <!-- Boards -->
-    <SidebarSection :item="boardSection">
+    <SidebarSection :item="{ name: 'Spielbretter', icon: MapIcon }">
       <div
         v-for="(board, index) in boardItems"
         :key="index"
@@ -28,23 +35,22 @@
         </button>
       </div>
     </SidebarSection>
-
     <!-- Figures -->
-    <SidebarSection :item="figureSection">
+    <SidebarSection :item="{ name: 'Spielfiguren', icon: PuzzleIcon }">
       <div
         v-for="(figure, index) in figureItems"
         :key="index"
         class="group flex flex-col items-center py-2 pr-2 w-full text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md cursor-pointer"
       >
         <button class="flex-col items-center">
-          <component :is="figure.svg" style="color: red" />
+          <component :is="figure.svg" :style="{ color: currentUser.color }" />
           {{ figure.name }}
         </button>
       </div>
     </SidebarSection>
 
     <!-- Settings -->
-    <SidebarSection :item="settingsSection">
+    <SidebarSection :item="{ name: 'Einstellungen', icon: AdjustmentsIcon }">
       <div
         class="group flex items-center py-2 pr-2 pl-11 w-full text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md cursor-default"
       >
@@ -68,30 +74,26 @@ import { computed } from 'vue'
 const tabletopStore = useTabletopStore()
 const sessionStore = useSessionStore()
 
-const userSection = computed(() => {
+const currentUser = computed(() => {
   if (sessionStore.userId === undefined) throw new Error('UserId is undefined')
   const user = tabletopStore.players[sessionStore.userId]
 
-  return {
-    name: user.name,
-    icon: UserIcon,
-    color: user.color,
-  }
+  return user
 })
 
-const teammateSection = {
-  name: 'Mitspieler',
-  icon: UsersIcon,
+const switchToUserProfileModal = () => {
+  sessionStore.ui.isTabletopSidebarOpen = false
+  sessionStore.ui.isUserProfileModalOpen = true
 }
+
+// const userSection = computed(() => ({
+//   ...currentUser.value,
+//   icon: UserIcon,
+// }))
 
 const filteredTeammates = computed(() => {
   return Object.entries(tabletopStore.players).filter(([key, value]) => key !== sessionStore.userId)
 })
-
-const boardSection = {
-  name: 'Spielbretter',
-  icon: MapIcon,
-}
 
 const boardItems = [
   {
@@ -104,20 +106,57 @@ const boardItems = [
   },
 ]
 
-const figureSection = {
-  name: 'Spielfiguren',
-  icon: PuzzleIcon,
-}
-
 const figureItems = [
   {
     name: 'Figur',
     svg: FigureImg,
   },
 ]
-
-const settingsSection = {
-  name: 'Einstellungen',
-  icon: AdjustmentsIcon,
-}
 </script>
+
+<style scoped>
+@keyframes rainbow {
+  100%,
+  0% {
+    color: rgb(255, 0, 0);
+  }
+  8% {
+    color: rgb(255, 127, 0);
+  }
+  16% {
+    color: rgb(255, 255, 0);
+  }
+  25% {
+    color: rgb(127, 255, 0);
+  }
+  33% {
+    color: rgb(0, 255, 0);
+  }
+  41% {
+    color: rgb(0, 255, 127);
+  }
+  50% {
+    color: rgb(0, 255, 255);
+  }
+  58% {
+    color: rgb(0, 127, 255);
+  }
+  66% {
+    color: rgb(0, 0, 255);
+  }
+  75% {
+    color: rgb(127, 0, 255);
+  }
+  83% {
+    color: rgb(255, 0, 255);
+  }
+  91% {
+    color: rgb(255, 0, 127);
+  }
+}
+
+.tt-rainbow {
+  animation: rainbow 1s linear;
+  animation-iteration-count: infinite;
+}
+</style>

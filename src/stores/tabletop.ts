@@ -41,7 +41,7 @@ export const useTabletopStore = defineStore('tabletop', {
     deleteGameObject({ id }: { id: number }) {
       delete this.objects[id]
     },
-    playerJoin({ name, color }: Player) {
+    playerUpdate({ name, color }: Player) {
       const { ShareDBDoc } = useShareDB()
       const sessionStore = useSessionStore()
 

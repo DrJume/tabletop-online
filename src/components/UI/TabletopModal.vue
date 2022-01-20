@@ -1,7 +1,7 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
   <TransitionRoot as="template" :show="open">
-    <Dialog as="div" class="overflow-y-auto fixed inset-0 z-10">
+    <Dialog as="div" class="overflow-y-auto fixed inset-0 z-10" :initial-focus="getActiveElement()">
       <div
         class="flex justify-center items-end px-4 pt-4 pb-20 min-h-screen text-center sm:block sm:p-0"
       >
@@ -36,7 +36,9 @@
             <div>
               <div class="text-center">
                 <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
-                  Willkommen bei TabletopOnline!
+                  <span
+                    >{{ mode === 'join' ? 'Willkommen bei TabletopOnline!' : 'Nutzerprofil' }}
+                  </span>
                 </DialogTitle>
                 <div class="mt-2">
                   <p class="text-sm text-gray-500">Wähle einen Namen und eine Farbe.</p>
@@ -56,7 +58,7 @@
                   name="username"
                   class="block w-full rounded-md border-gray-300 focus:border-transparent focus:ring-2 shadow-sm sm:text-sm"
                   :style="`--tw-ring-color: ${selectedColorCSS}`"
-                  @keypress.enter="username && gameEnter()"
+                  @keypress.enter="username && submitProfile()"
                 />
               </div>
             </div>
@@ -105,12 +107,13 @@
                 class="group inline-flex justify-center w-full text-base font-medium text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-sm disabled:opacity-60 disabled:cursor-not-allowed sm:text-sm"
                 :style="`--tw-ring-color: ${selectedColorCSS}; background-color: ${selectedColorCSS};`"
                 :disabled="!username"
-                @click="gameEnter"
+                @click="submitProfile"
               >
                 <span
                   class="py-2 px-4 w-full rounded-md border border-transparent group-hover:backdrop-brightness-75 group-disabled:group-hover:backdrop-filter-none"
-                  >Spiel beitreten</span
                 >
+                  {{ mode === 'join' ? 'Spiel beitreten' : 'Aktualisieren' }}
+                </span>
               </button>
             </div>
           </div>
@@ -133,12 +136,24 @@ import {
   RadioGroupOption,
 } from '@headlessui/vue'
 import { Player } from '@/types/player'
+import { useVModel } from '@vueuse/core'
+
+const getActiveElement = () => document.activeElement as HTMLElement
+
+const props = withDefaults(
+  defineProps<{ mode?: 'join' | 'change'; username?: string; color?: string; open: boolean }>(),
+  {
+    mode: 'join',
+    username: 'dev',
+    color: '',
+  }
+)
 
 const emit = defineEmits<{
-  (e: 'submitEvent', { name, color }: Player): void
+  (e: 'submit', { name, color }: Player): void
 }>()
 
-const open = ref(true)
+const open = useVModel(props, 'open')
 
 const colors = [
   { name: 'Red', bgColor: 'bg-red-600', ringColor: 'ring-red-600' },
@@ -153,20 +168,22 @@ const colors = [
   { name: 'Black', bgColor: 'bg-gray-800', ringColor: 'ring-gray-800' },
 ]
 
-const username = ref('dev')
+const username = ref(props.username)
 
 const colorElements = ref<Element[]>(Array.from({ length: colors.length }))
 
-const selectedColorIndex = ref(1)
+const selectedColorIndex = ref(props.color ? -1 : 0)
 const selectedColorCSS = computed(() => {
+  if (selectedColorIndex.value === -1) return props.color
+
   const selectedColorElement = colorElements.value[selectedColorIndex.value]
   if (!selectedColorElement) return ''
 
   return window.getComputedStyle(selectedColorElement).backgroundColor
 })
 
-const gameEnter = () => {
+const submitProfile = () => {
   open.value = false
-  emit('submitEvent', { name: username.value, color: selectedColorCSS.value })
+  emit('submit', { name: username.value, color: selectedColorCSS.value })
 }
 </script>

@@ -4,7 +4,6 @@ import { useDraggable, useElementBounding, useVModel, useThrottleFn } from '@vue
 
 import { log } from '@/util/logger'
 
-import { useTabletopStore } from '@/stores/tabletop'
 import { useSessionStore } from '@/stores/session'
 
 import { GameObjectDataTypes, GameObjectType } from '@/types/gameObject'

@@ -2,7 +2,7 @@
   <!-- fallback content, when no children are provided -->
   <div v-if="!$slots.default">
     <div
-      class="group flex items-center py-2 pl-2 w-full text-sm font-medium text-gray-600 hover:text-gray-900 bg-white hover:bg-gray-50 rounded-md"
+      class="group flex items-center py-2 pl-2 w-full text-sm font-medium text-gray-600 hover:text-gray-900 bg-white hover:bg-gray-50 rounded-md cursor-pointer"
     >
       <component
         :is="item.icon"
@@ -47,9 +47,11 @@
 </template>
 
 <script setup lang="ts">
+import { RenderFunction } from 'vue'
+
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 
 defineProps<{
-  item: { icon: string; name: string; color?: string }
+  item: { icon: RenderFunction; name: string; color?: string }
 }>()
 </script>

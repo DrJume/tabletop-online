@@ -17,7 +17,7 @@
         leave-from="opacity-100"
         leave-to="opacity-0"
       >
-        <DialogOverlay class="fixed inset-0 bg-white bg-opacity-0" />
+        <DialogOverlay class="fixed inset-0 bg-transparent" />
       </TransitionChild>
       <TransitionChild
         as="template"
@@ -74,29 +74,32 @@
   <TabletopButton
     :icon="props.buttonIcon"
     :class="props.orientation == 'right' ? 'right-3' : ''"
-    @click-event="sidebarOpen = true"
+    @click="sidebarOpen = true"
   >
     <span class="sr-only">Open sidebar</span>
   </TabletopButton>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { useVModel } from '@vueuse/core'
 import { Dialog, DialogOverlay, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { XIcon } from '@heroicons/vue/outline'
-import TabletopButton from './TabletopButton.vue'
+
+import TabletopButton from '@/components/UI/TabletopButton.vue'
 
 interface Props {
-  orientation: string
-  caption: string
-  buttonIcon: string
+  open?: boolean
+  orientation?: string
+  caption?: string
+  buttonIcon?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  open: false,
   orientation: 'left',
   caption: '',
   buttonIcon: 'MenuAlt2Icon',
 })
 
-const sidebarOpen = ref(false)
+const sidebarOpen = useVModel(props, 'open')
 </script>

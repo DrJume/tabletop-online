@@ -78,14 +78,38 @@ tabletopStore.$subscribe((mutation, state) => {
   log.log('tabletopStore.$subscribe()', event.type, event.key, event.newValue, event, mutation)
 })
 
-const playerJoin = ({ name, color }: Player) => {
-  log.log('playerJoin()', { name, color })
-  tabletopStore.playerJoin({ name, color })
+const submitProfile = ({ name, color }: Player) => {
+  log.log('submitProfile()', { name, color })
+  tabletopStore.playerUpdate({ name, color })
 }
+
+const tabletopModalOptions = computed(
+  (): { mode: 'join' | 'change'; username?: string; color?: string } => {
+    // the player has not yet joined, when userId is not in the player list
+    if (!sessionStore.userId || !tabletopStore.players[sessionStore.userId]) {
+      return {
+        mode: 'join',
+        username: undefined,
+        color: undefined,
+      }
+    }
+    return {
+      mode: 'change',
+      username: tabletopStore.players[sessionStore.userId].name,
+      color: tabletopStore.players[sessionStore.userId].color,
+    }
+  }
+)
 </script>
 
 <template>
-  <TabletopModal @submit-event="playerJoin" />
+  <TabletopModal
+    v-model:open="sessionStore.ui.isUserProfileModalOpen"
+    :mode="tabletopModalOptions.mode"
+    :username="tabletopModalOptions.username"
+    :color="tabletopModalOptions.color"
+    @submit="submitProfile"
+  />
   <div class="overflow-auto relative h-full bg-gray-200">
     <Sidebar />
     <LogBar />
