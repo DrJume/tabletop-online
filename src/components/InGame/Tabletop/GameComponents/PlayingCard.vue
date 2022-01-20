@@ -4,10 +4,14 @@ import { useDraggable, useElementBounding, useVModel, useThrottleFn } from '@vue
 
 import { log } from '@/util/logger'
 
-import { GameObjectDataTypes, GameObjectType, useGameObjectsStore } from '@/stores/gameObjects'
+import { useSessionStore } from '@/stores/session'
+
+import { GameObjectDataTypes, GameObjectType } from '@/types/gameObject'
 import { useShareDB } from '@/modules/useShareDB'
 
-const { ShareDB } = useShareDB()
+const sessionStore = useSessionStore()
+
+const { ShareDBDoc } = useShareDB()
 
 const props = defineProps<{
   tabletopRef: HTMLElement | null
@@ -46,9 +50,9 @@ const { position: positionAbsoluteDraggable, isDragging } = useDraggable(cardRef
     if (gameObjectData.value._meta.draggedBy !== '') return false
 
     // lock game object for other players
-    ShareDB.roomDoc.submitOp({
+    ShareDBDoc.value.submitOp({
       p: ['objects', props.id, 'data', '_meta', 'draggedBy'],
-      oi: `${ShareDB.userId}`,
+      oi: `${sessionStore.userId}`,
     })
   },
 
@@ -90,7 +94,7 @@ const { position: positionAbsoluteDraggable, isDragging } = useDraggable(cardRef
     log.log('useDraggable onEnd()', { ...gameObjectData.value, event })
 
     // sync final position over ShareDB
-    ShareDB.roomDoc.submitOp([
+    ShareDBDoc.value.submitOp([
       {
         p: ['objects', props.id, 'data', 'position'],
         oi: {
@@ -100,7 +104,7 @@ const { position: positionAbsoluteDraggable, isDragging } = useDraggable(cardRef
     ])
 
     // unlock game object for other players
-    ShareDB.roomDoc.submitOp({
+    ShareDBDoc.value.submitOp({
       p: ['objects', props.id, 'data', '_meta', 'draggedBy'],
       oi: '',
     })

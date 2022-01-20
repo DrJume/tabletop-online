@@ -1,7 +1,7 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
   <TransitionRoot as="template" :show="open">
-    <Dialog as="div" class="overflow-y-auto fixed inset-0 z-10">
+    <Dialog as="div" class="overflow-y-auto fixed inset-0 z-10" :initial-focus="getActiveElement()">
       <div
         class="flex justify-center items-end px-4 pt-4 pb-20 min-h-screen text-center sm:block sm:p-0"
       >
@@ -14,7 +14,7 @@
           leave-from="opacity-100"
           leave-to="opacity-0"
         >
-          <DialogOverlay class="fixed inset-0 bg-gray-500 transition-opacity bg-opacity-75" />
+          <DialogOverlay class="fixed inset-0 bg-gray-500/75 transition-opacity" />
         </TransitionChild>
 
         <!-- This element is to trick the browser into centering the modal contents. -->
@@ -36,7 +36,9 @@
             <div>
               <div class="text-center">
                 <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
-                  Willkommen bei TabletopOnline!
+                  <span
+                    >{{ mode === 'join' ? 'Willkommen bei TabletopOnline!' : 'Nutzerprofil' }}
+                  </span>
                 </DialogTitle>
                 <div class="mt-2">
                   <p class="text-sm text-gray-500">Wähle einen Namen und eine Farbe.</p>
@@ -44,35 +46,38 @@
               </div>
             </div>
             <div>
-              <label for="username" class="block mt-5 text-sm font-medium text-gray-700"
+              <label for="username" class="block mt-6 text-sm font-medium text-gray-700"
                 >Name</label
               >
               <div class="mt-1">
                 <input
                   id="username"
+                  v-model="username"
                   autocomplete="off"
                   type="text"
                   name="username"
-                  class="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm sm:text-sm"
+                  class="block w-full rounded-md border-gray-300 focus:border-transparent focus:ring-2 shadow-sm sm:text-sm"
+                  :style="`--tw-ring-color: ${selectedColorCSS}`"
+                  @keypress.enter="username && submitProfile()"
                 />
               </div>
             </div>
 
-            <RadioGroup v-model="selectedColor">
+            <RadioGroup v-model="selectedColorIndex">
               <label for="username" class="block mt-5 text-sm font-medium text-gray-700"
                 >Farbe</label
               >
-              <div class="flex justify-center items-center mt-1 space-x-3">
+              <div class="grid grid-cols-5 grid-rows-2 gap-3 mx-auto mt-3 w-fit">
                 <RadioGroupOption
-                  v-for="color in colors"
+                  v-for="(color, index) in colors"
                   :key="color.name"
                   v-slot="{ active, checked }"
                   as="template"
-                  :value="color"
+                  :value="index"
                 >
                   <div
                     :class="[
-                      color.selectedColor,
+                      color.ringColor,
                       active && checked ? 'ring ring-offset-1' : '',
                       !active && checked ? 'ring-2' : '',
                       '-m-0.5 relative p-0.5 rounded-full flex items-center justify-center cursor-pointer focus:outline-none',
@@ -80,6 +85,12 @@
                   >
                     <RadioGroupLabel as="p" class="sr-only">{{ color.name }}</RadioGroupLabel>
                     <span
+                      :ref="
+                        (el) => {
+                          if (el) colorElements[index] = el as Element
+                        }
+                      "
+                      :title="color.name"
                       aria-hidden="true"
                       :class="[
                         color.bgColor,
@@ -93,10 +104,16 @@
             <div class="mt-10">
               <button
                 type="button"
-                class="inline-flex justify-center py-2 px-4 w-full text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-md border border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 shadow-sm sm:text-sm"
-                @click="open = false"
+                class="group inline-flex justify-center w-full text-base font-medium text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-sm disabled:opacity-60 disabled:cursor-not-allowed sm:text-sm"
+                :style="`--tw-ring-color: ${selectedColorCSS}; background-color: ${selectedColorCSS};`"
+                :disabled="!username"
+                @click="submitProfile"
               >
-                Spiel beitreten
+                <span
+                  class="py-2 px-4 w-full rounded-md border border-transparent group-hover:backdrop-brightness-75 group-disabled:group-hover:backdrop-filter-none"
+                >
+                  {{ mode === 'join' ? 'Spiel beitreten' : 'Aktualisieren' }}
+                </span>
               </button>
             </div>
           </div>
@@ -107,7 +124,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import {
   Dialog,
   DialogOverlay,
@@ -118,16 +135,55 @@ import {
   RadioGroupLabel,
   RadioGroupOption,
 } from '@headlessui/vue'
+import { Player } from '@/types/player'
+import { useVModel } from '@vueuse/core'
+
+const getActiveElement = () => document.activeElement as HTMLElement
+
+const props = withDefaults(
+  defineProps<{ mode?: 'join' | 'change'; username?: string; color?: string; open: boolean }>(),
+  {
+    mode: 'join',
+    username: 'dev',
+    color: '',
+  }
+)
+
+const emit = defineEmits<{
+  (e: 'submit', { name, color }: Player): void
+}>()
+
+const open = useVModel(props, 'open')
 
 const colors = [
-  { name: 'Red', bgColor: 'bg-red-600', selectedColor: 'ring-red-600' },
-  { name: 'Yellow', bgColor: 'bg-yellow-400', selectedColor: 'ring-yellow-400' },
-  { name: 'Green', bgColor: 'bg-green-600', selectedColor: 'ring-green-600' },
-  { name: 'Blue', bgColor: 'bg-sky-600', selectedColor: 'ring-sky-600' },
-  { name: 'Purple', bgColor: 'bg-purple-600', selectedColor: 'ring-purple-600' },
-  { name: 'Black', bgColor: 'bg-gray-900', selectedColor: 'ring-gray-900' },
+  { name: 'Red', bgColor: 'bg-red-600', ringColor: 'ring-red-600' },
+  { name: 'Orange', bgColor: 'bg-orange-500', ringColor: 'ring-orange-500' },
+  { name: 'Yellow', bgColor: 'bg-yellow-500', ringColor: 'ring-yellow-500' },
+  { name: 'Green', bgColor: 'bg-green-600', ringColor: 'ring-green-600' },
+  { name: 'Blue', bgColor: 'bg-sky-500', ringColor: 'ring-sky-500' },
+  { name: 'Indigo', bgColor: 'bg-indigo-800', ringColor: 'ring-indigo-800' },
+  { name: 'Purple', bgColor: 'bg-purple-600', ringColor: 'ring-purple-600' },
+  { name: 'Brown', bgColor: 'bg-yellow-900', ringColor: 'ring-yellow-900' },
+  { name: 'Gray', bgColor: 'bg-gray-500', ringColor: 'ring-gray-500' },
+  { name: 'Black', bgColor: 'bg-gray-800', ringColor: 'ring-gray-800' },
 ]
 
-const open = ref(true)
-const selectedColor = ref(colors[1])
+const username = ref(props.username)
+
+const colorElements = ref<Element[]>(Array.from({ length: colors.length }))
+
+const selectedColorIndex = ref(props.color ? -1 : 0)
+const selectedColorCSS = computed(() => {
+  if (selectedColorIndex.value === -1) return props.color
+
+  const selectedColorElement = colorElements.value[selectedColorIndex.value]
+  if (!selectedColorElement) return ''
+
+  return window.getComputedStyle(selectedColorElement).backgroundColor
+})
+
+const submitProfile = () => {
+  open.value = false
+  emit('submit', { name: username.value, color: selectedColorCSS.value })
+}
 </script>
