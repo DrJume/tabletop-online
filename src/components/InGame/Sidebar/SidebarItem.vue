@@ -61,7 +61,13 @@ const props = defineProps<{
     name: string
     icon: string
     color?: string
-    children?: ({ name: string } & ({ color: string } | { path: string } | { svg: string }))[]
+    children?: (
+      | { name: string }
+      | { name: string; color: string }
+      | { name: string; path: string }
+      | { name: string; svg: string }
+      | { name: string; icon: any }
+    )[]
   }
   itemStyle: string
 }>()

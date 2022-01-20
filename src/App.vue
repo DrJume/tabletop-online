@@ -1,4 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { connectShareDB } from '@/modules/useShareDB'
+
+connectShareDB()
+</script>
 
 <template>
   <router-view />

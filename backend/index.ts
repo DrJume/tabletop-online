@@ -89,6 +89,7 @@ if (!doc.type) {
           },
         },
       },
+      players: {},
     },
     (error) => {
       console.log('doc created')

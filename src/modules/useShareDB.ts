@@ -1,11 +1,12 @@
-import { reactive, toRef } from 'vue'
+import { readonly, ref, Ref } from 'vue'
 
 import { Connection, Op } from 'sharedb/lib/client'
 import type { Doc, Socket } from 'sharedb/lib/sharedb'
 import ReconnectingWebSocket from 'reconnecting-websocket'
 
 import { log } from '@/util/logger'
-import { GameObjectsState, GameObjectType, useGameObjectsStore } from '@/stores/gameObjects'
+import { TabletopState, useTabletopStore } from '@/stores/tabletop'
+import { useSessionStore } from '@/stores/session'
 
 import TsToolbelt from 'ts-toolbelt'
 
@@ -13,13 +14,11 @@ import { get, setWith } from 'lodash-es'
 
 //
 
-const ShareDB = reactive<{ userId: string; roomDoc: null | Doc }>({
-  userId: '0',
-  roomDoc: null,
-})
+type ShareDBDocData = null | Doc<TabletopState>
+const ShareDBDoc = ref<ShareDBDocData>(null)
 
 // type GameObjectsStatePathUnion = List.Compulsory<Union.Merge<Object.Paths<GameObjectsState>>>
-type GameObjectsStatePaths = TsToolbelt.List.Compulsory<TsToolbelt.Object.Paths<GameObjectsState>>
+type GameObjectsStatePaths = TsToolbelt.List.Compulsory<TsToolbelt.Object.Paths<TabletopState>>
 
 // type GameObjectsStatePaths = List.Take<
 //   GameObjectsStatePathUnion,
@@ -29,12 +28,13 @@ type GameObjectsStatePaths = TsToolbelt.List.Compulsory<TsToolbelt.Object.Paths<
 export const connectShareDB = () => {
   const socket = new ReconnectingWebSocket(`ws://${location.hostname}:8080`)
   const connection = new Connection(socket as Socket)
-  const roomDoc: Doc<GameObjectsState> = connection.get('tabletop-online', 'room-1')
-  ShareDB.roomDoc = roomDoc
+  const roomDoc: Doc<TabletopState> = connection.get('tabletop-online', 'room-1')
+  ShareDBDoc.value = roomDoc
 
   log.log('useShareDB roomDoc:', roomDoc)
 
-  const gameObjects = useGameObjectsStore()
+  const tabletopStore = useTabletopStore()
+  const sessionStore = useSessionStore()
 
   // subscribe to ShareDB document
   roomDoc.subscribe((error) => {
@@ -46,16 +46,16 @@ export const connectShareDB = () => {
     // clone ShareDB doc with JSON trick to remove weird references
     const clonedShareDBDoc = JSON.parse(JSON.stringify(roomDoc.data))
     // apply ShareDB doc to local store
-    gameObjects.$patch(clonedShareDBDoc)
+    tabletopStore.$patch(clonedShareDBDoc)
 
-    ShareDB.userId = String(roomDoc.data._meta.userCounter)
+    sessionStore.userId = String(roomDoc.data._meta.userCounter)
     roomDoc.submitOp({ p: ['_meta', 'userCounter'], na: 1 })
 
     log.log('ShareDB subscribe() data:', JSON.stringify(roomDoc.data))
 
     /* A change (operation) occured in the database.
      Combine all operations into one with 'op batch'.
-     Sync ShareDB with the gameObjects store. */
+     Sync ShareDB with the tabletopStore store. */
     roomDoc.on('op batch', (ops: Op[], source) => {
       log.log("ShareDB on('op batch')", source, ops)
 
@@ -82,7 +82,7 @@ export const connectShareDB = () => {
 
         // // expect to update 'data' property
         // if (opPath.shift() !== 'data') return
-        // const gameObjectData = gameObjects.objects[objectId].data
+        // const gameObjectData = tabletopStore.objects[objectId].data
         // const lastPathPart = opPath.pop()
         // if (!lastPathPart) return // expect array to be not empty, so that a last path part exists
 
@@ -107,30 +107,30 @@ export const connectShareDB = () => {
           // 'oi': insert/overwrite property
 
           log.log("ShareDB operation 'oi'", op.p, JSON.stringify(op.oi), {
-            userID: ShareDB.userId,
+            userID: sessionStore.userId,
           })
 
-          const patch: TsToolbelt.Object.Partial<GameObjectsState, 'deep'> = setWith(
+          const patch: TsToolbelt.Object.Partial<TabletopState, 'deep'> = setWith(
             {},
             path,
             op.oi,
             Object
           )
 
-          gameObjects.$patch(patch)
+          tabletopStore.$patch(patch)
         } else if ('na' in op) {
           // 'na': add x to a number
 
           log.log("ShareDB operation 'na'", op)
 
-          const patch: TsToolbelt.Object.Partial<GameObjectsState, 'deep'> = setWith(
+          const patch: TsToolbelt.Object.Partial<TabletopState, 'deep'> = setWith(
             {},
             path,
             get(roomDoc.data, path),
             Object
           )
 
-          gameObjects.$patch(patch)
+          tabletopStore.$patch(patch)
         } else if ('li' in op) {
           //TODO: implement ShareDB 'li' operation
           log.warn("ShareDB operation 'li' not yet implemented!")
@@ -145,10 +145,10 @@ export const connectShareDB = () => {
 }
 
 export const useShareDB = () => {
-  if (!ShareDB.roomDoc)
-    throw new Error('roomDoc is not set: call connect() before using useShareDB()')
+  if (!ShareDBDoc.value)
+    throw new Error('ShareDBDoc is not set: call connect() before using useShareDB()')
 
   return {
-    ShareDB: ShareDB as Readonly<{ userId: string; roomDoc: Doc }>,
+    ShareDBDoc: ShareDBDoc as Readonly<Ref<Readonly<NonNullable<ShareDBDocData>>>>,
   }
 }

@@ -1,16 +1,4 @@
-import { defineStore } from 'pinia'
-
-export interface GameObjectsState {
-  _meta: {
-    userCounter: number
-    idCounter: number
-  }
-  objects: Record<string, GameObject>
-}
-
-// big thanks to TypeScript for providing pattern matching
-
-type GameObjectInit =
+export type GameObjectInit =
   | GameObjectBase<GameObjectType.PlayingCard, GameObjectInitDataTypes[GameObjectType.PlayingCard]>
   | GameObjectBase<GameObjectType, GameObjectData>
 
@@ -22,7 +10,7 @@ export type GameObjectDataTypes = {
   [K in keyof GameObjectInitDataTypes]: GameObjectInitDataTypes[K] & GameObjectMeta
 }
 
-type GameObject = GameObjectInit & {
+export type GameObject = GameObjectInit & {
   data: GameObjectMeta
 }
 
@@ -34,6 +22,7 @@ type GameObjectMeta = {
     isVisible: boolean
   }
 }
+// big thanks to TypeScript for providing pattern matching
 
 export enum GameObjectType {
   PlayingCard = 'PlayingCard',
@@ -77,33 +66,3 @@ interface GameObjectDataPlayingCard extends GameObjectData {
 //     isFlipped: false,
 //   },
 // }
-
-export const useGameObjectsStore = defineStore('gameObjects', {
-  state: (): GameObjectsState => ({
-    _meta: {
-      userCounter: 1,
-      idCounter: 1,
-    },
-    objects: {},
-  }),
-  // getters: {},
-  actions: {
-    addGameObject({ type, data: initData }: GameObjectInit) {
-      const id = this._meta.idCounter++
-      this.objects[id] = {
-        type,
-        data: {
-          _meta: {
-            // id: `${id}`,
-            draggedBy: '',
-            isVisible: true,
-          },
-          ...initData,
-        },
-      }
-    },
-    deleteGameObject({ id }: { id: number }) {
-      delete this.objects[id]
-    },
-  },
-})

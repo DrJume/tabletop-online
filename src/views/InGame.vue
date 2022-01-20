@@ -19,17 +19,15 @@ import Sidebar from '@/components/InGame/Sidebar/index.vue'
 import LogBar from '@/components/InGame/LogBar/index.vue'
 import Dice from '@/components/InGame/Dice/index.vue'
 import TabletopModal from '@/components/UI/TabletopModal.vue'
+import { Player } from '@/types/player'
 
 import { log } from '@/util/logger'
 
-import { useGameObjectsStore } from '@/stores/gameObjects'
-import { connectShareDB, useShareDB } from '@/modules/useShareDB'
+import { useTabletopStore } from '@/stores/tabletop'
+import { useSessionStore } from '@/stores/session'
 
-const gameObjects = useGameObjectsStore()
-
-connectShareDB()
-
-const { ShareDB } = useShareDB()
+const tabletopStore = useTabletopStore()
+const sessionStore = useSessionStore()
 
 const tabletopRef = ref<HTMLElement | null>(null)
 
@@ -57,7 +55,7 @@ const dynamicFontSize = computed(() => `${(zoomPercent.value / 100) * 1.25}rem`)
    -> let the tabletop mount itself first, so that the tabletopRef is available for its children */
 onMounted(() => {
   // add initial playing card
-  // gameObjects.addGameObject({
+  // tabletopStore.addGameObject({
   //   type: GameObjectType.PlayingCard,
   //   data: {
   //     position: {
@@ -73,16 +71,21 @@ onMounted(() => {
 
 // triggers every time a change occurs in store
 // -> used to push local changes to automerge
-gameObjects.$subscribe((mutation, state) => {
+tabletopStore.$subscribe((mutation, state) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const event = mutation.events as any
   if (event.type === 'set' && event.key === 'position') return
-  log.log('gameObjects.$subscribe()', event.type, event.key, event.newValue, event, mutation)
+  log.log('tabletopStore.$subscribe()', event.type, event.key, event.newValue, event, mutation)
 })
+
+const playerJoin = ({ name, color }: Player) => {
+  log.log('playerJoin()', { name, color })
+  tabletopStore.playerJoin({ name, color })
+}
 </script>
 
 <template>
-  <TabletopModal />
+  <TabletopModal @submit-event="playerJoin" />
   <div class="overflow-auto relative h-full bg-gray-200">
     <Sidebar />
     <LogBar />
@@ -92,14 +95,14 @@ gameObjects.$subscribe((mutation, state) => {
       class="aspect-square flex relative items-start bg-red-400 tt-fill-viewport"
     >
       <!-- dynamically loop over game objects -->
-      <template v-for="(gameObject, id) in gameObjects.objects" :key="id">
+      <template v-for="(gameObject, id) in tabletopStore.objects" :key="id">
         <!-- component can be PlayingCard, PlayingObject, Dice, etc. -->
         <component
           :is="gameObject.type"
           v-show="
             gameObject.data._meta.isVisible &&
             (gameObject.data._meta.draggedBy === '' ||
-              gameObject.data._meta.draggedBy === ShareDB.userId)
+              gameObject.data._meta.draggedBy === sessionStore.userId)
           "
           :id="id"
           v-model="gameObject.data"

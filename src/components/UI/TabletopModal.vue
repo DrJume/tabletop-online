@@ -14,7 +14,7 @@
           leave-from="opacity-100"
           leave-to="opacity-0"
         >
-          <DialogOverlay class="fixed inset-0 bg-gray-500 transition-opacity bg-opacity-75" />
+          <DialogOverlay class="fixed inset-0 bg-gray-500/75 transition-opacity" />
         </TransitionChild>
 
         <!-- This element is to trick the browser into centering the modal contents. -->
@@ -50,10 +50,12 @@
               <div class="mt-1">
                 <input
                   id="username"
+                  v-model="username"
                   autocomplete="off"
                   type="text"
                   name="username"
                   class="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm sm:text-sm"
+                  @keypress.enter="username ? gameEnter() : null"
                 />
               </div>
             </div>
@@ -80,6 +82,7 @@
                   >
                     <RadioGroupLabel as="p" class="sr-only">{{ color.name }}</RadioGroupLabel>
                     <span
+                      ref="colorOptionRef"
                       aria-hidden="true"
                       :class="[
                         color.bgColor,
@@ -93,8 +96,9 @@
             <div class="mt-10">
               <button
                 type="button"
-                class="inline-flex justify-center py-2 px-4 w-full text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-md border border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 shadow-sm sm:text-sm"
-                @click="open = false"
+                class="inline-flex justify-center py-2 px-4 w-full text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-400 rounded-md border border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 shadow-sm sm:text-sm"
+                :disabled="!username"
+                @click="gameEnter"
               >
                 Spiel beitreten
               </button>
@@ -118,6 +122,11 @@ import {
   RadioGroupLabel,
   RadioGroupOption,
 } from '@headlessui/vue'
+import { Player } from '@/types/player'
+
+const emit = defineEmits<{
+  (e: 'submitEvent', { name, color }: Player): void
+}>()
 
 const colors = [
   { name: 'Red', bgColor: 'bg-red-600', selectedColor: 'ring-red-600' },
@@ -129,5 +138,11 @@ const colors = [
 ]
 
 const open = ref(true)
-const selectedColor = ref(colors[1])
+const selectedColor = ref(colors[0])
+const username = ref('dev')
+
+const gameEnter = () => {
+  open.value = false
+  emit('submitEvent', { name: username.value, color: selectedColor.value.bgColor })
+}
 </script>
