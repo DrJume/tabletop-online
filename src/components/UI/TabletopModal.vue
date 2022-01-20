@@ -44,7 +44,7 @@
               </div>
             </div>
             <div>
-              <label for="username" class="block mt-5 text-sm font-medium text-gray-700"
+              <label for="username" class="block mt-6 text-sm font-medium text-gray-700"
                 >Name</label
               >
               <div class="mt-1">
@@ -54,27 +54,28 @@
                   autocomplete="off"
                   type="text"
                   name="username"
-                  class="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm sm:text-sm"
-                  @keypress.enter="username ? gameEnter() : null"
+                  class="block w-full rounded-md border-gray-300 focus:border-transparent focus:ring-2 shadow-sm sm:text-sm"
+                  :style="`--tw-ring-color: ${selectedColorCSS}`"
+                  @keypress.enter="username && gameEnter()"
                 />
               </div>
             </div>
 
-            <RadioGroup v-model="selectedColor">
+            <RadioGroup v-model="selectedColorIndex">
               <label for="username" class="block mt-5 text-sm font-medium text-gray-700"
                 >Farbe</label
               >
-              <div class="flex justify-center items-center mt-1 space-x-3">
+              <div class="grid grid-cols-5 grid-rows-2 gap-3 mx-auto mt-3 w-fit">
                 <RadioGroupOption
-                  v-for="color in colors"
+                  v-for="(color, index) in colors"
                   :key="color.name"
                   v-slot="{ active, checked }"
                   as="template"
-                  :value="color"
+                  :value="index"
                 >
                   <div
                     :class="[
-                      color.selectedColor,
+                      color.ringColor,
                       active && checked ? 'ring ring-offset-1' : '',
                       !active && checked ? 'ring-2' : '',
                       '-m-0.5 relative p-0.5 rounded-full flex items-center justify-center cursor-pointer focus:outline-none',
@@ -82,7 +83,12 @@
                   >
                     <RadioGroupLabel as="p" class="sr-only">{{ color.name }}</RadioGroupLabel>
                     <span
-                      ref="colorOptionRef"
+                      :ref="
+                        (el) => {
+                          if (el) colorElements[index] = el as Element
+                        }
+                      "
+                      :title="color.name"
                       aria-hidden="true"
                       :class="[
                         color.bgColor,
@@ -96,11 +102,15 @@
             <div class="mt-10">
               <button
                 type="button"
-                class="inline-flex justify-center py-2 px-4 w-full text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-400 rounded-md border border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 shadow-sm sm:text-sm"
+                class="group inline-flex justify-center w-full text-base font-medium text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-sm disabled:opacity-60 disabled:cursor-not-allowed sm:text-sm"
+                :style="`--tw-ring-color: ${selectedColorCSS}; background-color: ${selectedColorCSS};`"
                 :disabled="!username"
                 @click="gameEnter"
               >
-                Spiel beitreten
+                <span
+                  class="py-2 px-4 w-full rounded-md border border-transparent group-hover:backdrop-brightness-75 group-disabled:group-hover:backdrop-filter-none"
+                  >Spiel beitreten</span
+                >
               </button>
             </div>
           </div>
@@ -111,7 +121,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import {
   Dialog,
   DialogOverlay,
@@ -128,21 +138,35 @@ const emit = defineEmits<{
   (e: 'submitEvent', { name, color }: Player): void
 }>()
 
+const open = ref(true)
+
 const colors = [
-  { name: 'Red', bgColor: 'bg-red-600', selectedColor: 'ring-red-600' },
-  { name: 'Yellow', bgColor: 'bg-yellow-400', selectedColor: 'ring-yellow-400' },
-  { name: 'Green', bgColor: 'bg-green-600', selectedColor: 'ring-green-600' },
-  { name: 'Blue', bgColor: 'bg-sky-600', selectedColor: 'ring-sky-600' },
-  { name: 'Purple', bgColor: 'bg-purple-600', selectedColor: 'ring-purple-600' },
-  { name: 'Black', bgColor: 'bg-gray-900', selectedColor: 'ring-gray-900' },
+  { name: 'Red', bgColor: 'bg-red-600', ringColor: 'ring-red-600' },
+  { name: 'Orange', bgColor: 'bg-orange-500', ringColor: 'ring-orange-500' },
+  { name: 'Yellow', bgColor: 'bg-yellow-500', ringColor: 'ring-yellow-500' },
+  { name: 'Green', bgColor: 'bg-green-600', ringColor: 'ring-green-600' },
+  { name: 'Blue', bgColor: 'bg-sky-500', ringColor: 'ring-sky-500' },
+  { name: 'Indigo', bgColor: 'bg-indigo-800', ringColor: 'ring-indigo-800' },
+  { name: 'Purple', bgColor: 'bg-purple-600', ringColor: 'ring-purple-600' },
+  { name: 'Brown', bgColor: 'bg-yellow-900', ringColor: 'ring-yellow-900' },
+  { name: 'Gray', bgColor: 'bg-gray-500', ringColor: 'ring-gray-500' },
+  { name: 'Black', bgColor: 'bg-gray-800', ringColor: 'ring-gray-800' },
 ]
 
-const open = ref(true)
-const selectedColor = ref(colors[0])
 const username = ref('dev')
+
+const colorElements = ref<Element[]>(Array.from({ length: colors.length }))
+
+const selectedColorIndex = ref(1)
+const selectedColorCSS = computed(() => {
+  const selectedColorElement = colorElements.value[selectedColorIndex.value]
+  if (!selectedColorElement) return ''
+
+  return window.getComputedStyle(selectedColorElement).backgroundColor
+})
 
 const gameEnter = () => {
   open.value = false
-  emit('submitEvent', { name: username.value, color: selectedColor.value.bgColor })
+  emit('submitEvent', { name: username.value, color: selectedColorCSS.value })
 }
 </script>
