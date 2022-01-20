@@ -151,6 +151,7 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   (e: 'submit', { name, color }: Player): void
+  (e: 'update:open', open: boolean): void
 }>()
 
 const open = useVModel(props, 'open')

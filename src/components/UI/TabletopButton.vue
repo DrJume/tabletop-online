@@ -6,7 +6,11 @@
   >
     <slot></slot>
     <slot name="icon">
-      <component :is="(heroIcons as any)[props.icon]" class="w-6 h-6" aria-hidden="true" />
+      <component
+        :is="props.icon && (heroIcons as any)[props.icon]"
+        class="w-6 h-6"
+        aria-hidden="true"
+      />
     </slot>
   </button>
 </template>
@@ -15,7 +19,7 @@
 import * as heroIcons from '@heroicons/vue/outline'
 
 const props = defineProps<{
-  icon: string
+  icon?: string
 }>()
 
 const emit = defineEmits<{

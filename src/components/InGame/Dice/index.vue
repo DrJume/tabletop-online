@@ -1,5 +1,5 @@
 <template>
-  <TabletopButton class="right-3 bottom-0" @click-event="rollDice">
+  <TabletopButton class="right-3 bottom-0" @click="rollDice()">
     <template #icon>
       <DiceIcon class="w-10 transition ease-linear hover:-rotate-12" />
     </template>

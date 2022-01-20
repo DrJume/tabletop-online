@@ -88,14 +88,13 @@ import { XIcon } from '@heroicons/vue/outline'
 import TabletopButton from '@/components/UI/TabletopButton.vue'
 
 interface Props {
-  open?: boolean
+  open: boolean
   orientation?: string
   caption?: string
   buttonIcon?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  open: false,
   orientation: 'left',
   caption: '',
   buttonIcon: 'MenuAlt2Icon',
