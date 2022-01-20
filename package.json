@@ -7,7 +7,7 @@
     "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview",
     "lint": "eslint . --ext .js,.ts,.vue --fix",
-    "preinstall": "if ! npx only-allow pnpm; then rm -rf node_modules/ package-lock.json && exit 1; fi",
+    "preinstall": "if ! pnpm exec only-allow pnpm; then rm -rf node_modules/ package-lock.json && exit 1; fi",
     "prepare": "husky install",
     "commit": "cz"
   },
@@ -49,6 +49,7 @@
     "eslint-plugin-unicorn": "^40.1.0",
     "eslint-plugin-vue": "^8.3.0",
     "husky": "^7.0.4",
+    "only-allow": "^1.0.0",
     "postcss": "^8.4.5",
     "prettier": "^2.5.1",
     "sass": "^1.49.0",
