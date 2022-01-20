@@ -1,21 +1,17 @@
 <template>
   <TabletopSidebar orientation="left" caption="TabletopOnline">
     <!-- Player -->
-    <SidebarSection :item="playerSection" />
+    <SidebarSection :item="userSection" />
 
     <!-- Teammates -->
     <SidebarSection :item="teammateSection">
       <div
-        v-for="(player, index) in tabletopStore.players"
-        :key="index"
+        v-for="[userId, user] in filteredTeammates"
+        :key="userId"
         class="group flex items-center py-2 pr-2 pl-11 w-full text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md cursor-default"
       >
-        <UserIcon
-          class="shrink-0 mr-3 w-6 h-6"
-          :style="'color:' + player.color"
-          aria-hidden="true"
-        />
-        {{ player.name }}
+        <UserIcon class="shrink-0 mr-3 w-6 h-6" :style="{ color: user.color }" aria-hidden="true" />
+        {{ user.name }}
       </div>
     </SidebarSection>
 
@@ -66,19 +62,31 @@ import SidebarSection from './SidebarSection.vue'
 import TabletopSidebar from '@/components/UI/TabletopSidebar.vue'
 import FigureImg from '@/assets/figures/figure.svg?component'
 import { useTabletopStore } from '@/stores/tabletop'
+import { useSessionStore } from '@/stores/session'
+import { computed } from 'vue'
 
 const tabletopStore = useTabletopStore()
+const sessionStore = useSessionStore()
 
-const playerSection = {
-  name: 'Player',
-  icon: UserIcon,
-  color: 'red',
-}
+const userSection = computed(() => {
+  if (sessionStore.userId === undefined) throw new Error('UserId is undefined')
+  const user = tabletopStore.players[sessionStore.userId]
+
+  return {
+    name: user.name,
+    icon: UserIcon,
+    color: user.color,
+  }
+})
 
 const teammateSection = {
   name: 'Mitspieler',
   icon: UsersIcon,
 }
+
+const filteredTeammates = computed(() => {
+  return Object.entries(tabletopStore.players).filter(([key, value]) => key !== sessionStore.userId)
+})
 
 const boardSection = {
   name: 'Spielbretter',

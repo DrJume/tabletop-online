@@ -7,7 +7,7 @@
       <component
         :is="item.icon"
         class="shrink-0 mr-3 w-6 h-6 text-gray-400 group-hover:text-gray-500"
-        :style="'color: ' + item.color"
+        :style="{ color: item.color }"
         aria-hidden="true"
       />
       {{ item.name }}
@@ -47,8 +47,9 @@
 </template>
 
 <script setup lang="ts">
-import { SidebarSectionObject } from '@/types'
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 
-const props = defineProps<{ item: SidebarSectionObject }>()
+defineProps<{
+  item: { icon: string; name: string; color?: string }
+}>()
 </script>
