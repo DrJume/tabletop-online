@@ -11,7 +11,7 @@
     ✔ Nutzer wird beim Betreten der Webseite nach Spielernamen gefragt @done(22-01-19 22:15)
     ✔ Würfel @done(22-01-18 21:45)
     Einfache Implementation als runder Button
-    Nach dem Würfeln erscheint im Log
+        ☐ Das Würfelergebnis erscheint im Log
 
     ✔ Logbuch auf rechter Displayseite @done(22-01-18 21:45)
     kann eingeblendet werden
@@ -19,15 +19,18 @@
     ☐ Jedes erstellte Spielobjekt hat einen eigenen z-Index (abgeleitet aus ShareDB, wird hochgezählt)
     Spielbrett muss zuerst erstellt werden, da alle Spielfiguren darüber liegen
 
+    ☐ Farbwahl überarbeiten
+    ☐ Hintergrundfarbe bearbeiten
+
 ☐ Synchronisation
     ✔ Z-Index @done(22-01-19 22:16)
     ☐ Log
-    ☐ Spielernamen (und -farben)
+    ✔ Spielernamen (und -farben) @done(22-01-20 20:46)
     Farben sind vorgegeben anhand Spielbrett
     Beim Erstellen von Spielfiguren wird die Farbe des Spielers auf die Farbe der Spielfigur gesetzt
 
-    ☐ Erstellen eines neues Objekts und Pushen an ShareDB
     ☐ Live-Updates von Objekten über Socket.io, sonst Interpolation zwischen Anfangs- und Endzustand
+    ☐ Entfernen von Spielern bei Verlassen des Spiels oder bei Verbindungsverlust
 
 ☐ Assets
     ✔ Mensch ärgere dich nicht - Spielbrett @done(22-01-19 22:16)
@@ -35,8 +38,9 @@
     Wird lokal standardmäßig erzeugt und befindet sich zentriert auf dem Spielfeld
     Bei Auswahl eines Spielbretts wird eine Eigenschaft im ShareDB angepasst, die das Bild des Spielbretts enthält
 
-    ✔ Spielfigur als SVG @done(22-01-19 22:17)
+    ✔ Spielfigur als SVG mit dynamischer Farbe @done(22-01-19 22:17)
     ☐ Spielfigur als Spielobjekt einbinden
+    ☐ Spielbrett als Komponente einbinden
 
 ☐ Zukünftige Erweiterungen
     ☐ Funktion zum Löschen von Objekten
@@ -45,3 +49,4 @@
     ☐ Rotation des Spielfelds
     ☐ Mausposition der Spieler anzeigen
     ☐ Objekte können fixiert werden (z.B. Spielbrett)
+    ☐ Beim Bestätigen des Modals darf der Modus zum Aktualisieren noch nicht zu sehen sein
