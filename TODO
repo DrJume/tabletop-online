@@ -1,5 +1,5 @@
-☐ UI
-    ☐ Sidebareinstellungen
+UI:
+    ☐ Sidebareinstellungen 
         ✔ Farbe des Hintergrunds anpassbar (nur lokal) @done(22-01-18 21:44)
         ☐ Anzahl gewürfelter Würfel (nur lokal)
     ✔ einklappbare Sidebar @done(22-01-14 23:02)
@@ -22,7 +22,7 @@
     ☐ Farbwahl überarbeiten
     ☐ Hintergrundfarbe bearbeiten
 
-☐ Synchronisation
+Synchronisation:
     ✔ Z-Index @done(22-01-19 22:16)
     ☐ Log
     ✔ Spielernamen (und -farben) @done(22-01-20 20:46)
@@ -32,7 +32,7 @@
     ☐ Live-Updates von Objekten über Socket.io, sonst Interpolation zwischen Anfangs- und Endzustand
     ☐ Entfernen von Spielern bei Verlassen des Spiels oder bei Verbindungsverlust
 
-☐ Assets
+Assets:
     ✔ Mensch ärgere dich nicht - Spielbrett @done(22-01-19 22:16)
     Spielbrett ist eine einfache Komponente mit einem Bild
     Wird lokal standardmäßig erzeugt und befindet sich zentriert auf dem Spielfeld
@@ -42,7 +42,7 @@
     ☐ Spielfigur als Spielobjekt einbinden
     ☐ Spielbrett als Komponente einbinden
 
-☐ Zukünftige Erweiterungen
+Zukünftige Erweiterungen:
     ☐ Funktion zum Löschen von Objekten
     ☐ Hand
     ☐ Kartenspiele (Kartenstapel, Mischlogik, usw)
