@@ -29,12 +29,13 @@
         :key="index"
         class="group flex flex-col items-center py-2 pr-2 w-full text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md cursor-pointer"
       >
-        <button class="flex-col items-center">
+        <button class="flex-col items-center" @click="tabletopStore.setBoardURL(board.path)">
           <img :src="board.path" loading="lazy" width="100" class="mx-auto mb-2" />
           {{ board.name }}
         </button>
       </div>
     </SidebarSection>
+
     <!-- Figures -->
     <SidebarSection :item="{ name: 'Spielfiguren', icon: PuzzleIcon }">
       <div
@@ -100,6 +101,10 @@ const filteredTeammates = computed(() => {
 })
 
 const boardItems = [
+  {
+    name: 'Kein Spielbrett',
+    path: '',
+  },
   {
     name: 'Mensch ärgere dich nicht (4 Personen)',
     path: '/assets/boards/mensch_aergere_dich_nicht_4er.svg',

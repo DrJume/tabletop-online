@@ -54,6 +54,7 @@ if (!doc.type) {
       _meta: {
         userCounter: 1,
         idCounter: 1,
+        boardURL: '',
       },
       objects: {},
       players: {},

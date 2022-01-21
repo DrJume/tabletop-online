@@ -1,16 +1,16 @@
 <script lang="ts">
 import PlayingObject from '@/components/InGame/Tabletop/GameComponents/PlayingObject.vue'
-import PlayingBoard from '@/components/InGame/Tabletop/GameComponents/PlayingBoard.vue'
 
 export default {
   components: {
-    PlayingBoard,
     PlayingObject,
   },
 }
 </script>
 
 <script setup lang="ts">
+import PlayingBoard from '@/components/InGame/Tabletop/GameComponents/PlayingBoard.vue'
+
 import { ref, computed, onMounted } from 'vue'
 import { onKeyStroke, useCssVar } from '@vueuse/core'
 import Sidebar from '@/components/InGame/Sidebar/index.vue'
@@ -114,8 +114,9 @@ const tabletopModalOptions = computed(
     <Dice />
     <div
       ref="tabletopRef"
-      class="aspect-square flex relative items-start bg-slate-300 tt-fill-viewport"
+      class="aspect-square flex relative justify-center items-center bg-slate-300 tt-fill-viewport"
     >
+      <PlayingBoard :src="tabletopStore._meta.boardURL" />
       <!-- dynamically loop over game objects -->
       <template v-for="(gameObject, id) in tabletopStore.objects" :key="id">
         <!-- component can be PlayingCard, PlayingObject, Dice, etc. -->

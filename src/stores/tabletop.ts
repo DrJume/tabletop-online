@@ -8,6 +8,7 @@ export interface TabletopState {
   _meta: {
     userCounter: number
     idCounter: number
+    boardURL: string
   }
   objects: Record<string, GameObject>
   players: Record<string, Player>
@@ -18,6 +19,7 @@ export const useTabletopStore = defineStore('tabletop', {
     _meta: {
       userCounter: 1,
       idCounter: 1,
+      boardURL: '',
     },
     objects: {},
     players: {},
@@ -81,6 +83,16 @@ export const useTabletopStore = defineStore('tabletop', {
       ShareDBDoc.value.submitOp({
         p: ['players', id],
         oi: this.players[id],
+      })
+    },
+    setBoardURL(url: string) {
+      const { ShareDBDoc } = useShareDB()
+
+      this._meta.boardURL = url
+
+      ShareDBDoc.value.submitOp({
+        p: ['_meta', 'boardURL'],
+        oi: url,
       })
     },
   },
