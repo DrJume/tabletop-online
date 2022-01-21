@@ -163,18 +163,20 @@ const zIndex = computed(() => gameObjectData.value.position.z)
   <!-- TODO: make loaded svg dynamic -->
   <component
     :is="FigureImg"
-    class="flex absolute w-[50px]"
+    class="flex absolute w-[3%] h-[6%]"
     :style="{
       top: `${gameObjectData.position.y}%`,
+      'z-index': gameObjectData.position.y,
       left: `${gameObjectData.position.x}%`,
       color: `${gameObjectData.color}`,
     }"
   />
   <div
     ref="cardRef"
-    class="flex absolute w-[50px] h-[112px] cursor-pointer select-none"
+    class="flex absolute w-[3%] h-[6%] cursor-pointer select-none"
     :style="{
       top: `${gameObjectData.position.y}%`,
+      'z-index': gameObjectData.position.y,
       left: `${gameObjectData.position.x}%`,
     }"
   ></div>
