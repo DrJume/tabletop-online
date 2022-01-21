@@ -155,7 +155,7 @@ watch(
   { deep: true }
 )
 
-const zIndex = computed(() => gameObjectData.value.position.z)
+// const zIndex = computed(() => gameObjectData.value.position.z)
 </script>
 
 <template>
@@ -166,7 +166,7 @@ const zIndex = computed(() => gameObjectData.value.position.z)
     class="flex absolute w-[3%] h-[6%]"
     :style="{
       top: `${gameObjectData.position.y}%`,
-      'z-index': gameObjectData.position.y,
+      'z-index': Math.floor(gameObjectData.position.y * 1000),
       left: `${gameObjectData.position.x}%`,
       color: `${gameObjectData.color}`,
     }"
@@ -176,14 +176,14 @@ const zIndex = computed(() => gameObjectData.value.position.z)
     class="flex absolute w-[3%] h-[6%] cursor-pointer select-none"
     :style="{
       top: `${gameObjectData.position.y}%`,
-      'z-index': gameObjectData.position.y,
+      'z-index': Math.floor(gameObjectData.position.y * 1000),
       left: `${gameObjectData.position.x}%`,
     }"
   ></div>
 </template>
 
 <style scoped>
-.tt-dynamic-z-index {
+/* .tt-dynamic-z-index {
   z-index: v-bind(zIndex);
-}
+} */
 </style>

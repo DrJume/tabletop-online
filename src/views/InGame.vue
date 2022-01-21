@@ -114,7 +114,7 @@ const tabletopModalOptions = computed(
     <Dice />
     <div
       ref="tabletopRef"
-      class="aspect-square flex relative justify-center items-center bg-slate-300 tt-fill-viewport"
+      class="aspect-square flex isolate relative justify-center items-center bg-slate-300 tt-fill-viewport"
     >
       <PlayingBoard :src="tabletopStore._meta.boardURL" />
       <!-- dynamically loop over game objects -->
