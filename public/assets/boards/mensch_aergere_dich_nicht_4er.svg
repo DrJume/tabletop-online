@@ -6,7 +6,7 @@
    version="1.1"
    id="svg1620"
    sodipodi:docname="mensch_aergere_dich_nicht_4er.svg"
-   inkscape:version="1.1.1 (eb90963e84, 2021-10-02)"
+   inkscape:version="1.1.1 (50ffc5b540, 2022-01-11)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -21,15 +21,15 @@
      inkscape:pageopacity="0"
      inkscape:pagecheckerboard="0"
      showgrid="false"
-     inkscape:zoom="0.69583333"
-     inkscape:cx="567.66467"
-     inkscape:cy="612.93413"
-     inkscape:window-width="1920"
+     inkscape:zoom="0.34791667"
+     inkscape:cx="915.44911"
+     inkscape:cy="671.13773"
+     inkscape:window-width="960"
      inkscape:window-height="1044"
      inkscape:window-x="0"
      inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="g1618" />
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg1620" />
   <defs
      id="defs1355">
     <marker
@@ -57,7 +57,7 @@
      y="10"
      width="1180"
      height="1180"
-     style="fill:#FFFF99; stroke:none;"
+     style="fill:#ffff99;stroke:none"
      id="rect1359" />
   <g
      style="display:none;"
@@ -271,36 +271,6 @@
          y="370"
          xlink:href="#Pfeil"
          id="use1428" />
-      <text
-         style="font-weight:bold;font-size:40px;font-family:Arial, sans-serif;text-anchor:middle;fill:#ffffff;stroke:none"
-         id="text1442"><!--
-			--><tspan
-           style="font-size:60px"
-           x="-100"
-           y="522"
-           id="tspan1430">A</tspan><!--
-			--><tspan
-           x="0"
-           y="412"
-           id="tspan1432">a</tspan><!--
-			--><tspan
-           x="0"
-           y="312"
-           id="tspan1434">b</tspan><!--
-			--><tspan
-           x="0"
-           y="212"
-           id="tspan1436">c</tspan><!--
-			--><tspan
-           x="0"
-           y="112"
-           id="tspan1438">d</tspan><!--
-			--><tspan
-           style="font-size:50px;fill:#000000"
-           x="-450"
-           y="465"
-           id="tspan1440" /><!--
-			--></text>
     </g>
     <g
        transform="rotate(90)"
@@ -418,36 +388,6 @@
          y="370"
          xlink:href="#Pfeil"
          id="use1482" />
-      <text
-         style="font-weight:bold;font-size:40px;font-family:Arial, sans-serif;text-anchor:middle;fill:#000000;stroke:none"
-         id="text1496"><!--
-			--><tspan
-           style="font-size:60px"
-           x="-100"
-           y="522"
-           id="tspan1484">A</tspan><!--
-			--><tspan
-           x="0"
-           y="412"
-           id="tspan1486">a</tspan><!--
-			--><tspan
-           x="0"
-           y="312"
-           id="tspan1488">b</tspan><!--
-			--><tspan
-           x="0"
-           y="212"
-           id="tspan1490">c</tspan><!--
-			--><tspan
-           x="0"
-           y="112"
-           id="tspan1492">d</tspan><!--
-			--><tspan
-           style="font-size:50px"
-           x="-450"
-           y="465"
-           id="tspan1494" /><!--
-			--></text>
     </g>
     <g
        transform="rotate(180)"
@@ -565,36 +505,6 @@
          y="370"
          xlink:href="#Pfeil"
          id="use1536" />
-      <text
-         style="font-weight:bold;font-size:40px;font-family:Arial, sans-serif;text-anchor:middle;fill:#000000;stroke:none"
-         id="text1550"><!--
-			--><tspan
-           style="font-size:60px"
-           x="-100"
-           y="522"
-           id="tspan1538">A</tspan><!--
-			--><tspan
-           x="0"
-           y="412"
-           id="tspan1540">a</tspan><!--
-			--><tspan
-           x="0"
-           y="312"
-           id="tspan1542">b</tspan><!--
-			--><tspan
-           x="0"
-           y="212"
-           id="tspan1544">c</tspan><!--
-			--><tspan
-           x="0"
-           y="112"
-           id="tspan1546">d</tspan><!--
-			--><tspan
-           style="font-size:50px"
-           x="-450"
-           y="465"
-           id="tspan1548" /><!--
-			--></text>
     </g>
     <g
        transform="rotate(270)"
@@ -712,36 +622,6 @@
          y="370"
          xlink:href="#Pfeil"
          id="use1590" />
-      <text
-         style="font-weight:bold;font-size:40px;font-family:Arial, sans-serif;text-anchor:middle;fill:#000000;stroke:none"
-         id="text1604"><!--
-			--><tspan
-           style="font-size:60px"
-           x="-100"
-           y="522"
-           id="tspan1592">A</tspan><!--
-			--><tspan
-           x="0"
-           y="412"
-           id="tspan1594">a</tspan><!--
-			--><tspan
-           x="0"
-           y="312"
-           id="tspan1596">b</tspan><!--
-			--><tspan
-           x="0"
-           y="212"
-           id="tspan1598">c</tspan><!--
-			--><tspan
-           x="0"
-           y="112"
-           id="tspan1600">d</tspan><!--
-			--><tspan
-           style="font-size:50px"
-           x="-450"
-           y="465"
-           id="tspan1602" /><!--
-			--></text>
     </g>
     <path
        transform="translate(-500,-318)"

@@ -28,15 +28,15 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:zoom="3.1037318"
-     inkscape:cx="22.070206"
-     inkscape:cy="75.232017"
+     inkscape:zoom="6.2074636"
+     inkscape:cx="24.889393"
+     inkscape:cy="48.087274"
      inkscape:window-width="1920"
      inkscape:window-height="1044"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g29798"
+     inkscape:current-layer="g7512"
      units="px" />
   <defs
      id="defs28797">
@@ -68,7 +68,7 @@
          offset="0.56347233" />
       <stop
          id="stop5748"
-         style="stop-color:#000000;stop-opacity:0.38398796"
+         style="stop-color:#000000;stop-opacity:0.29668146"
          offset="1" />
     </linearGradient>
     <radialGradient
@@ -84,7 +84,7 @@
        id="linearGradient7149">
       <stop
          id="stop7143"
-         style="stop-color:#ffffff;stop-opacity:1"
+         style="stop-color:#ffffff;stop-opacity:0.89999998"
          offset="0" />
       <stop
          id="stop7145"
@@ -103,7 +103,8 @@
      transform="translate(-74.004117,-68.208822)">
     <g
        id="g7512"
-       transform="matrix(0.25431967,-0.01753188,0.01746936,0.25341275,62.420847,20.463607)">
+       transform="matrix(0.25431967,-0.01753188,0.01746936,0.25341275,62.420847,20.463607)"
+       inkscape:label="g7512">
       <path
          id="path4102"
          style="fill:currentColor;fill-opacity:1;stroke-width:4.95454"
@@ -126,7 +127,7 @@
            style="fill:url(#radialGradient3078-3);fill-opacity:1"
            cx="56.428715"
            cy="213.07648"
-           rx="20.714228"
+           rx="20.715881"
            ry="20.714285" />
       </g>
     </g>
