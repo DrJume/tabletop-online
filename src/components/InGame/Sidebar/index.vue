@@ -60,7 +60,11 @@
         class="group flex items-center py-2 pr-2 pl-11 w-full text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md cursor-default"
       >
         <div class="flex-auto">Hintergrundfarbe</div>
-        <input type="color" class="cursor-pointer color-input" />
+        <input
+          v-model="sessionStore.ui.tabletopBackgroundColor"
+          type="color"
+          class="cursor-pointer color-input"
+        />
       </div>
     </SidebarSection>
   </TabletopSidebar>

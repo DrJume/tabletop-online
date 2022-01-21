@@ -7,6 +7,7 @@ export interface SessionState {
   ui: {
     isUserProfileModalOpen: boolean
     isTabletopSidebarOpen: boolean
+    tabletopBackgroundColor: string
   }
 }
 
@@ -16,6 +17,7 @@ export const useSessionStore = defineStore('session', {
     ui: {
       isUserProfileModalOpen: true,
       isTabletopSidebarOpen: false,
+      tabletopBackgroundColor: '#cbd5e1',
     },
   }),
 })
