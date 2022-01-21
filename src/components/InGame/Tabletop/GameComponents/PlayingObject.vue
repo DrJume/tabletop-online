@@ -1,7 +1,7 @@
 <reference types="vite-svg-loader" />
 
 <script setup lang="ts">
-import { computed, ref, UnwrapRef, watch } from 'vue'
+import { ref, UnwrapRef, watch } from 'vue'
 import { useDraggable, useElementBounding, useVModel, useThrottleFn } from '@vueuse/core'
 
 import { log } from '@/util/logger'
@@ -32,7 +32,7 @@ console.log('gameObjectData', gameObjectData)
 
 // const gameObjectData = computed(() => gameObjects.objects[props.id].data)
 
-const cardRef = ref<HTMLElement | null>(null)
+const elementRef = ref<HTMLElement | null>(null)
 const playAreaBounds = useElementBounding(props.tabletopRef)
 
 const broadcast = (position: UnwrapRef<typeof gameObjectData>) => {
@@ -42,9 +42,9 @@ const broadcast = (position: UnwrapRef<typeof gameObjectData>) => {
 }
 const broadcastThrottled = useThrottleFn(broadcast, 1000 / 30 /* 30 Hz */)
 
-const { position: positionAbsoluteDraggable, isDragging } = useDraggable(cardRef, {
+const { position: positionAbsoluteDraggable, isDragging } = useDraggable(elementRef, {
   draggingElement: props.tabletopRef,
-  exact: true,
+  // exact: true,
   // initialValue: { x: gameObjectData.value.position.x, y: gameObjectData.value.position.y },
 
   // runs when dragging starts. Return `false` to prevent dragging.
@@ -92,10 +92,8 @@ const { position: positionAbsoluteDraggable, isDragging } = useDraggable(cardRef
     broadcastThrottled(gameObjectData.value)
   },
 
-  // runs when dragging ends. https://github.com/vueuse/vueuse/pull/1145
+  // runs when dragging ends.
   onEnd(position, event) {
-    if (!cardRef.value || !event.composedPath().includes(cardRef.value)) return
-
     log.log('useDraggable onEnd()', { ...gameObjectData.value, event })
 
     // sync final position over ShareDB
@@ -159,27 +157,25 @@ watch(
 </script>
 
 <template>
-  <!-- TODO: make component more compact, maybe wrap it in a div -->
   <!-- TODO: make loaded svg dynamic -->
-  <component
-    :is="FigureImg"
-    class="flex absolute w-[3%] h-[6%]"
-    :style="{
-      top: `${gameObjectData.position.y}%`,
-      'z-index': Math.floor(gameObjectData.position.y * 1000),
-      left: `${gameObjectData.position.x}%`,
-      color: `${gameObjectData.color}`,
-    }"
-  />
+
   <div
-    ref="cardRef"
+    ref="elementRef"
     class="flex absolute w-[3%] h-[6%] cursor-pointer select-none"
     :style="{
+      left: `${gameObjectData.position.x}%`,
       top: `${gameObjectData.position.y}%`,
       'z-index': Math.floor(gameObjectData.position.y * 1000),
-      left: `${gameObjectData.position.x}%`,
     }"
-  ></div>
+  >
+    <component
+      :is="FigureImg"
+      class="flex w-full h-full"
+      :style="{
+        color: `${gameObjectData.color}`,
+      }"
+    />
+  </div>
 </template>
 
 <style scoped>
