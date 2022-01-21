@@ -53,42 +53,9 @@ if (!doc.type) {
     {
       _meta: {
         userCounter: 1,
-        idCounter: 2,
+        idCounter: 1,
       },
-      objects: {
-        '1': {
-          type: 'PlayingCard',
-          data: {
-            _meta: {
-              draggedBy: '',
-              isVisible: true,
-            },
-            position: {
-              x: 0,
-              y: 0,
-              z: 10,
-            },
-            isLocked: false,
-            isFlipped: false,
-          },
-        },
-        '2': {
-          type: 'PlayingCard',
-          data: {
-            _meta: {
-              draggedBy: '',
-              isVisible: true,
-            },
-            position: {
-              x: 25,
-              y: 0,
-              z: 10,
-            },
-            isLocked: false,
-            isFlipped: false,
-          },
-        },
-      },
+      objects: {},
       players: {},
     },
     (error) => {

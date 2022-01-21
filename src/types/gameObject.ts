@@ -1,9 +1,12 @@
 export type GameObjectInit =
-  | GameObjectBase<GameObjectType.PlayingCard, GameObjectInitDataTypes[GameObjectType.PlayingCard]>
+  | GameObjectBase<
+      GameObjectType.PlayingObject,
+      GameObjectInitDataTypes[GameObjectType.PlayingObject]
+    >
   | GameObjectBase<GameObjectType, GameObjectData>
 
 type GameObjectInitDataTypes = {
-  [GameObjectType.PlayingCard]: GameObjectDataPlayingCard
+  [GameObjectType.PlayingObject]: GameObjectDataPlayingCard
 }
 
 export type GameObjectDataTypes = {
@@ -45,6 +48,8 @@ interface GameObjectData {
     y: number
     z: number
   }
+  //image: string
+  color: string
   isLocked: boolean
 }
 

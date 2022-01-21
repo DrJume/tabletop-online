@@ -1,11 +1,9 @@
 <script lang="ts">
-import PlayingCard from '@/components/InGame/Tabletop/GameComponents/PlayingCard.vue'
-import PlayingBoard from '@/components/InGame/Tabletop/GameComponents/PlayingBoard.vue'
 import PlayingObject from '@/components/InGame/Tabletop/GameComponents/PlayingObject.vue'
+import PlayingBoard from '@/components/InGame/Tabletop/GameComponents/PlayingBoard.vue'
 
 export default {
   components: {
-    PlayingCard,
     PlayingBoard,
     PlayingObject,
   },
@@ -56,7 +54,7 @@ const dynamicFontSize = computed(() => `${(zoomPercent.value / 100) * 1.25}rem`)
 onMounted(() => {
   // add initial playing card
   // tabletopStore.addGameObject({
-  //   type: GameObjectType.PlayingCard,
+  //   type: GameObjectType.PlayingObject,
   //   data: {
   //     position: {
   //       x: 10,
@@ -116,7 +114,7 @@ const tabletopModalOptions = computed(
     <Dice />
     <div
       ref="tabletopRef"
-      class="aspect-square flex relative items-start bg-red-400 tt-fill-viewport"
+      class="aspect-square flex relative items-start bg-slate-300 tt-fill-viewport"
     >
       <!-- dynamically loop over game objects -->
       <template v-for="(gameObject, id) in tabletopStore.objects" :key="id">

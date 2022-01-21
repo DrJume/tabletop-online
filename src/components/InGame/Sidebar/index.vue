@@ -43,7 +43,11 @@
         class="group flex flex-col items-center py-2 pr-2 w-full text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md cursor-pointer"
       >
         <button class="flex-col items-center">
-          <component :is="figure.svg" :style="{ color: currentUser.color }" />
+          <component
+            :is="figure.svg"
+            :style="{ color: currentUser.color }"
+            @click="spawnObject(figure.svg)"
+          />
           {{ figure.name }}
         </button>
       </div>
@@ -112,6 +116,11 @@ const figureItems = [
     svg: FigureImg,
   },
 ]
+
+const spawnObject = (figure: any) => {
+  console.log(figure, currentUser.value.color)
+  tabletopStore.spawnObject({ figure, color: currentUser.value.color })
+}
 </script>
 
 <style scoped>
