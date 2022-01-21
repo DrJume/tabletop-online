@@ -1,5 +1,5 @@
 UI:
-    ☐ Sidebareinstellungen 
+    ☐ Sidebareinstellungen
         ✔ Farbe des Hintergrunds anpassbar (nur lokal) @done(22-01-18 21:44)
         ☐ Anzahl gewürfelter Würfel (nur lokal)
     ✔ einklappbare Sidebar @done(22-01-14 23:02)
@@ -16,8 +16,7 @@ UI:
     ✔ Logbuch auf rechter Displayseite @done(22-01-18 21:45)
     kann eingeblendet werden
 
-    ☐ Jedes erstellte Spielobjekt hat einen eigenen z-Index (abgeleitet aus ShareDB, wird hochgezählt)
-    Spielbrett muss zuerst erstellt werden, da alle Spielfiguren darüber liegen
+    ✔ Jedes erstellte Spielobjekt hat einen eigenen z-Index (über y-Position) @done(22-01-21 16:58)
 
     ☐ Farbwahl überarbeiten
     ☐ Hintergrundfarbe bearbeiten
@@ -39,8 +38,8 @@ Assets:
     Bei Auswahl eines Spielbretts wird eine Eigenschaft im ShareDB angepasst, die das Bild des Spielbretts enthält
 
     ✔ Spielfigur als SVG mit dynamischer Farbe @done(22-01-19 22:17)
-    ☐ Spielfigur als Spielobjekt einbinden
-    ☐ Spielbrett als Komponente einbinden
+    ✔ Spielfigur als Spielobjekt einbinden @done(22-01-21 16:59)
+    ✔ Spielbrett als Komponente einbinden @done(22-01-21 16:59)
 
 Zukünftige Erweiterungen:
     ☐ Funktion zum Löschen von Objekten
