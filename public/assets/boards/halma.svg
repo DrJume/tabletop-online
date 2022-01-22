@@ -1,0 +1,803 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--  y-coordinates: 
+1   866 
+2  1732
+3  2598
+4  3464
+5  4330
+6  5196
+7  6062
+8  6928
+-->
+
+<svg
+   width="1200"
+   height="1200"
+   viewBox="-6500 -7500 24000 24000"
+   version="1.1"
+   id="svg290"
+   sodipodi:docname="Sternhalma.svg"
+   inkscape:version="1.1.1 (26b7af14f2, 2022-01-19)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs294" />
+  <sodipodi:namedview
+     id="namedview292"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="0.82118668"
+     inkscape:cx="566.25371"
+     inkscape:cy="497.45084"
+     inkscape:window-width="1920"
+     inkscape:window-height="1044"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg290" />
+  <!-- white hexagon and six colored trigons-->
+  <!-- yellow circles -->
+  <!-- black circles, create coordinates once and then rotate -->
+  <rect
+     x="-6500"
+     y="-7500"
+     width="24000"
+     height="24000"
+     style="fill:#000000;stroke:none;stroke-width:20"
+     id="rect1357" />
+  <rect
+     x="-6300"
+     y="-7300"
+     width="23600"
+     height="23600"
+     style="fill:#ffff99;stroke:none;stroke-width:20"
+     id="rect1359" />
+  <g
+     id="g2120"
+     transform="matrix(1.6027895,0,0,1.6027895,5500.0003,4500)">
+    <polygon
+       style="fill:#ffffff;stroke:none"
+       points="2000,-3464 4000,0 2000,3464 -2000,3464 -4000,0 -2000,-3464 "
+       id="polygon2" />
+    <polygon
+       style="fill:#ff0000;stroke:none"
+       points="-2000,-3464 2000,-3464 0,-6928 "
+       id="polygon4" />
+    <polygon
+       style="fill:#ff0000;stroke:none"
+       points="2000,3464 -2000,3464 0,6928 "
+       id="polygon6" />
+    <polygon
+       style="fill:#009900;stroke:none;fill-opacity:1"
+       points="-2000,-3464 -4000,0 -6000,-3464 "
+       id="polygon8" />
+    <polygon
+       style="fill:#009900;stroke:none;fill-opacity:1"
+       points="2000,3464 4000,0 6000,3464 "
+       id="polygon10" />
+    <polygon
+       style="fill:#0090ff;stroke:none;fill-opacity:1"
+       points="2000,-3464 4000,0 6000,-3464 "
+       id="polygon12" />
+    <polygon
+       style="fill:#0090ff;stroke:none;fill-opacity:1"
+       points="-2000,3464 -4000,0 -6000,3464 "
+       id="polygon14" />
+    <g
+       style="fill:none;stroke:#000000;stroke-width:40;stroke-linecap:butt;stroke-linejoin:round"
+       id="g30">
+      <!-- Lines of a trigon. Create coordinates once, mirror it by swapping "y" and rotate it -->
+      <polyline
+         points="  500,-6062  -500,-6062 -1000,-5196  1000,-5196  1500,-4330                 -1500,-4330 -2000,-3464  2000,-3464     0,-6928  -500,-6062                  1000,-3464     0,-3464 -1000,-5196 -1500,-4330 -1000,-3464                   500,-6062  1000,-5196     0,-3464  1000,-3464  1500,-4330 "
+         id="polyline16" />
+      <polyline
+         points="  500,6062  -500,6062 -1000,5196  1000,5196  1500,4330                 -1500,4330 -2000,3464  2000,3464     0,6928  -500,6062                  1000,3464     0,3464 -1000,5196 -1500,4330 -1000,3464                   500,6062  1000,5196     0,3464  1000,3464  1500,4330 "
+         id="polyline18" />
+      <polyline
+         transform="rotate(60)"
+         points="  500,-6062  -500,-6062 -1000,-5196  1000,-5196  1500,-4330                 -1500,-4330 -2000,-3464  2000,-3464     0,-6928  -500,-6062                  1000,-3464     0,-3464 -1000,-5196 -1500,-4330 -1000,-3464                   500,-6062  1000,-5196     0,-3464  1000,-3464  1500,-4330 "
+         id="polyline20" />
+      <polyline
+         transform="rotate(60)"
+         points="  500,6062  -500,6062 -1000,5196  1000,5196  1500,4330                 -1500,4330 -2000,3464  2000,3464     0,6928  -500,6062                  1000,3464     0,3464 -1000,5196 -1500,4330 -1000,3464                   500,6062  1000,5196     0,3464  1000,3464  1500,4330 "
+         id="polyline22" />
+      <polyline
+         transform="rotate(120)"
+         points="  500,-6062  -500,-6062 -1000,-5196  1000,-5196  1500,-4330                 -1500,-4330 -2000,-3464  2000,-3464     0,-6928  -500,-6062                  1000,-3464     0,-3464 -1000,-5196 -1500,-4330 -1000,-3464                   500,-6062  1000,-5196     0,-3464  1000,-3464  1500,-4330 "
+         id="polyline24" />
+      <polyline
+         transform="rotate(120)"
+         points="  500,6062  -500,6062 -1000,5196  1000,5196  1500,4330                 -1500,4330 -2000,3464  2000,3464     0,6928  -500,6062                  1000,3464     0,3464 -1000,5196 -1500,4330 -1000,3464                   500,6062  1000,5196     0,3464  1000,3464  1500,4330 "
+         id="polyline26" />
+      <!-- lines in the white hexagon -->
+      <polyline
+         points="-2000,-3464  2000,-3464  2500,-2598 -2500,-2598 -3000,-1732  3000,-1732  3500,-866                 -3500,-866  -4000,0      4000,0      3500,866   -3500,866   -3000,1732   3000,1732                  2500,2598  -2500,2598  -2000,3464  2000,3464    4000,0      3500,-866   1000,3464                     0,3464   3000,-1732  2500,-2598 -1000,3464  -2000,3464   2000,-3464  1000,-3464                 -2500,2598  -3000,1732      0,-3464 -1000,-3464 -3500,866   -4000,0    -2000,-3464                  1000,-3464  3500,866    3000,1732      0,-3464 -1000,-3464   2500,2598  2000,3464                   -2000,-3464 -2500,-2598  1000,3464      0,3464  -3000,-1732  -3500,-866 -1000,3464  "
+         id="polyline28" />
+    </g>
+    <g
+       style="fill:#0b0b00;fill-opacity:1;stroke:#000000;stroke-width:40"
+       id="g106">
+      <circle
+         cx="-1500"
+         cy="-2598"
+         r="200"
+         id="circle32"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="-500"
+         cy="-2598"
+         r="200"
+         id="circle34"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="500"
+         cy="-2598"
+         r="200"
+         id="circle36"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="1500"
+         cy="-2598"
+         r="200"
+         id="circle38"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="-2000"
+         cy="-1732"
+         r="200"
+         id="circle40"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="-1000"
+         cy="-1732"
+         r="200"
+         id="circle42"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="0"
+         cy="-1732"
+         r="200"
+         id="circle44"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="1000"
+         cy="-1732"
+         r="200"
+         id="circle46"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="2000"
+         cy="-1732"
+         r="200"
+         id="circle48"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="-2500"
+         cy="-866"
+         r="200"
+         id="circle50"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="-1500"
+         cy="-866"
+         r="200"
+         id="circle52"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="-500"
+         cy="-866"
+         r="200"
+         id="circle54"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="500"
+         cy="-866"
+         r="200"
+         id="circle56"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="1500"
+         cy="-866"
+         r="200"
+         id="circle58"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="2500"
+         cy="-866"
+         r="200"
+         id="circle60"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="-3000"
+         cy="0"
+         r="200"
+         id="circle62"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="-2000"
+         cy="0"
+         r="200"
+         id="circle64"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="-1000"
+         cy="0"
+         r="200"
+         id="circle66"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="0"
+         cy="0"
+         r="200"
+         id="circle68"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="1000"
+         cy="0"
+         r="200"
+         id="circle70"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="2000"
+         cy="0"
+         r="200"
+         id="circle72"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="3000"
+         cy="0"
+         r="200"
+         id="circle74"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="-2500"
+         cy="866"
+         r="200"
+         id="circle76"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="-1500"
+         cy="866"
+         r="200"
+         id="circle78"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="-500"
+         cy="866"
+         r="200"
+         id="circle80"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="500"
+         cy="866"
+         r="200"
+         id="circle82"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="1500"
+         cy="866"
+         r="200"
+         id="circle84"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="2500"
+         cy="866"
+         r="200"
+         id="circle86"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="-2000"
+         cy="1732"
+         r="200"
+         id="circle88"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="-1000"
+         cy="1732"
+         r="200"
+         id="circle90"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="0"
+         cy="1732"
+         r="200"
+         id="circle92"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="1000"
+         cy="1732"
+         r="200"
+         id="circle94"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="2000"
+         cy="1732"
+         r="200"
+         id="circle96"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="-1500"
+         cy="2598"
+         r="200"
+         id="circle98"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="-500"
+         cy="2598"
+         r="200"
+         id="circle100"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="500"
+         cy="2598"
+         r="200"
+         id="circle102"
+         style="fill:#0b0b00;fill-opacity:1" />
+      <circle
+         cx="1500"
+         cy="2598"
+         r="200"
+         id="circle104"
+         style="fill:#0b0b00;fill-opacity:1" />
+    </g>
+    <g
+       style="fill:#000000;stroke:#000000;stroke-width:40"
+       id="g288">
+      <g
+         id="g136">
+        <circle
+           cx="4000"
+           cy="0"
+           r="200"
+           id="circle108" />
+        <circle
+           cx="3500"
+           cy="866"
+           r="200"
+           id="circle110" />
+        <circle
+           cx="4500"
+           cy="866"
+           r="200"
+           id="circle112" />
+        <circle
+           cx="3000"
+           cy="1732"
+           r="200"
+           id="circle114" />
+        <circle
+           cx="4000"
+           cy="1732"
+           r="200"
+           id="circle116" />
+        <circle
+           cx="5000"
+           cy="1732"
+           r="200"
+           id="circle118" />
+        <circle
+           cx="2500"
+           cy="2598"
+           r="200"
+           id="circle120" />
+        <circle
+           cx="3500"
+           cy="2598"
+           r="200"
+           id="circle122" />
+        <circle
+           cx="4500"
+           cy="2598"
+           r="200"
+           id="circle124" />
+        <circle
+           cx="5500"
+           cy="2598"
+           r="200"
+           id="circle126" />
+        <!--  2000 / 3464 not needed -->
+        <circle
+           cx="3000"
+           cy="3464"
+           r="200"
+           id="circle128" />
+        <circle
+           cx="4000"
+           cy="3464"
+           r="200"
+           id="circle130" />
+        <circle
+           cx="5000"
+           cy="3464"
+           r="200"
+           id="circle132" />
+        <circle
+           cx="6000"
+           cy="3464"
+           r="200"
+           id="circle134" />
+      </g>
+      <g
+         transform="rotate(60)"
+         id="g166">
+        <circle
+           cx="4000"
+           cy="0"
+           r="200"
+           id="circle138" />
+        <circle
+           cx="3500"
+           cy="866"
+           r="200"
+           id="circle140" />
+        <circle
+           cx="4500"
+           cy="866"
+           r="200"
+           id="circle142" />
+        <circle
+           cx="3000"
+           cy="1732"
+           r="200"
+           id="circle144" />
+        <circle
+           cx="4000"
+           cy="1732"
+           r="200"
+           id="circle146" />
+        <circle
+           cx="5000"
+           cy="1732"
+           r="200"
+           id="circle148" />
+        <circle
+           cx="2500"
+           cy="2598"
+           r="200"
+           id="circle150" />
+        <circle
+           cx="3500"
+           cy="2598"
+           r="200"
+           id="circle152" />
+        <circle
+           cx="4500"
+           cy="2598"
+           r="200"
+           id="circle154" />
+        <circle
+           cx="5500"
+           cy="2598"
+           r="200"
+           id="circle156" />
+        <circle
+           cx="3000"
+           cy="3464"
+           r="200"
+           id="circle158" />
+        <circle
+           cx="4000"
+           cy="3464"
+           r="200"
+           id="circle160" />
+        <circle
+           cx="5000"
+           cy="3464"
+           r="200"
+           id="circle162" />
+        <circle
+           cx="6000"
+           cy="3464"
+           r="200"
+           id="circle164" />
+      </g>
+      <g
+         transform="rotate(120)"
+         id="g196">
+        <circle
+           cx="4000"
+           cy="0"
+           r="200"
+           id="circle168" />
+        <circle
+           cx="3500"
+           cy="866"
+           r="200"
+           id="circle170" />
+        <circle
+           cx="4500"
+           cy="866"
+           r="200"
+           id="circle172" />
+        <circle
+           cx="3000"
+           cy="1732"
+           r="200"
+           id="circle174" />
+        <circle
+           cx="4000"
+           cy="1732"
+           r="200"
+           id="circle176" />
+        <circle
+           cx="5000"
+           cy="1732"
+           r="200"
+           id="circle178" />
+        <circle
+           cx="2500"
+           cy="2598"
+           r="200"
+           id="circle180" />
+        <circle
+           cx="3500"
+           cy="2598"
+           r="200"
+           id="circle182" />
+        <circle
+           cx="4500"
+           cy="2598"
+           r="200"
+           id="circle184" />
+        <circle
+           cx="5500"
+           cy="2598"
+           r="200"
+           id="circle186" />
+        <circle
+           cx="3000"
+           cy="3464"
+           r="200"
+           id="circle188" />
+        <circle
+           cx="4000"
+           cy="3464"
+           r="200"
+           id="circle190" />
+        <circle
+           cx="5000"
+           cy="3464"
+           r="200"
+           id="circle192" />
+        <circle
+           cx="6000"
+           cy="3464"
+           r="200"
+           id="circle194" />
+      </g>
+      <g
+         transform="scale(-1)"
+         id="g226">
+        <circle
+           cx="4000"
+           cy="0"
+           r="200"
+           id="circle198" />
+        <circle
+           cx="3500"
+           cy="866"
+           r="200"
+           id="circle200" />
+        <circle
+           cx="4500"
+           cy="866"
+           r="200"
+           id="circle202" />
+        <circle
+           cx="3000"
+           cy="1732"
+           r="200"
+           id="circle204" />
+        <circle
+           cx="4000"
+           cy="1732"
+           r="200"
+           id="circle206" />
+        <circle
+           cx="5000"
+           cy="1732"
+           r="200"
+           id="circle208" />
+        <circle
+           cx="2500"
+           cy="2598"
+           r="200"
+           id="circle210" />
+        <circle
+           cx="3500"
+           cy="2598"
+           r="200"
+           id="circle212" />
+        <circle
+           cx="4500"
+           cy="2598"
+           r="200"
+           id="circle214" />
+        <circle
+           cx="5500"
+           cy="2598"
+           r="200"
+           id="circle216" />
+        <circle
+           cx="3000"
+           cy="3464"
+           r="200"
+           id="circle218" />
+        <circle
+           cx="4000"
+           cy="3464"
+           r="200"
+           id="circle220" />
+        <circle
+           cx="5000"
+           cy="3464"
+           r="200"
+           id="circle222" />
+        <circle
+           cx="6000"
+           cy="3464"
+           r="200"
+           id="circle224" />
+      </g>
+      <g
+         transform="rotate(-60)"
+         id="g256">
+        <circle
+           cx="4000"
+           cy="0"
+           r="200"
+           id="circle228" />
+        <circle
+           cx="3500"
+           cy="866"
+           r="200"
+           id="circle230" />
+        <circle
+           cx="4500"
+           cy="866"
+           r="200"
+           id="circle232" />
+        <circle
+           cx="3000"
+           cy="1732"
+           r="200"
+           id="circle234" />
+        <circle
+           cx="4000"
+           cy="1732"
+           r="200"
+           id="circle236" />
+        <circle
+           cx="5000"
+           cy="1732"
+           r="200"
+           id="circle238" />
+        <circle
+           cx="2500"
+           cy="2598"
+           r="200"
+           id="circle240" />
+        <circle
+           cx="3500"
+           cy="2598"
+           r="200"
+           id="circle242" />
+        <circle
+           cx="4500"
+           cy="2598"
+           r="200"
+           id="circle244" />
+        <circle
+           cx="5500"
+           cy="2598"
+           r="200"
+           id="circle246" />
+        <circle
+           cx="3000"
+           cy="3464"
+           r="200"
+           id="circle248" />
+        <circle
+           cx="4000"
+           cy="3464"
+           r="200"
+           id="circle250" />
+        <circle
+           cx="5000"
+           cy="3464"
+           r="200"
+           id="circle252" />
+        <circle
+           cx="6000"
+           cy="3464"
+           r="200"
+           id="circle254" />
+      </g>
+      <g
+         transform="rotate(-120)"
+         id="g286">
+        <circle
+           cx="4000"
+           cy="0"
+           r="200"
+           id="circle258" />
+        <circle
+           cx="3500"
+           cy="866"
+           r="200"
+           id="circle260" />
+        <circle
+           cx="4500"
+           cy="866"
+           r="200"
+           id="circle262" />
+        <circle
+           cx="3000"
+           cy="1732"
+           r="200"
+           id="circle264" />
+        <circle
+           cx="4000"
+           cy="1732"
+           r="200"
+           id="circle266" />
+        <circle
+           cx="5000"
+           cy="1732"
+           r="200"
+           id="circle268" />
+        <circle
+           cx="2500"
+           cy="2598"
+           r="200"
+           id="circle270" />
+        <circle
+           cx="3500"
+           cy="2598"
+           r="200"
+           id="circle272" />
+        <circle
+           cx="4500"
+           cy="2598"
+           r="200"
+           id="circle274" />
+        <circle
+           cx="5500"
+           cy="2598"
+           r="200"
+           id="circle276" />
+        <circle
+           cx="3000"
+           cy="3464"
+           r="200"
+           id="circle278" />
+        <circle
+           cx="4000"
+           cy="3464"
+           r="200"
+           id="circle280" />
+        <circle
+           cx="5000"
+           cy="3464"
+           r="200"
+           id="circle282" />
+        <circle
+           cx="6000"
+           cy="3464"
+           r="200"
+           id="circle284" />
+      </g>
+    </g>
+  </g>
+</svg>

@@ -136,6 +136,10 @@ const boardItems = [
     name: 'Mensch ärgere dich nicht (6 Personen)',
     path: '/assets/boards/mensch_aergere_dich_nicht_6er.svg',
   },
+  {
+    name: 'Halma',
+    path: '/assets/boards/halma.svg',
+  },
 ]
 
 const figureItems = [
