@@ -57,21 +57,6 @@ export const useTabletopStore = defineStore('tabletop', {
         oi: this.objects[id],
       })
     },
-    spawnObject({ figure, color }: { figure: any; color: string }) {
-      this.addGameObject({
-        type: GameObjectType.PlayingObject,
-        data: {
-          position: {
-            x: 50,
-            y: 50,
-            z: 10,
-          },
-          //image: figure,
-          color,
-          isLocked: false,
-        },
-      })
-    },
     deleteGameObject({ id }: { id: number }) {
       delete this.objects[id]
     },

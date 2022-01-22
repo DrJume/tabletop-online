@@ -47,7 +47,21 @@
           <component
             :is="figure.svg"
             :style="{ color: currentUser.color }"
-            @click="spawnObject(figure.svg)"
+            @click="
+              tabletopStore.addGameObject({
+                type: GameObjectType.PlayingObject,
+                data: {
+                  position: {
+                    x: 50,
+                    y: 50,
+                    z: 10,
+                  },
+                  isLocked: false,
+                  color: currentUser.color,
+                  // image: figure,
+                },
+              })
+            "
           />
           {{ figure.name }}
         </button>
@@ -79,6 +93,8 @@ import FigureImg from '@/assets/figures/figure.svg?component'
 import { useTabletopStore } from '@/stores/tabletop'
 import { useSessionStore } from '@/stores/session'
 import { computed } from 'vue'
+
+import { GameObjectType } from '@/types/gameObject'
 
 const tabletopStore = useTabletopStore()
 const sessionStore = useSessionStore()
@@ -125,11 +141,6 @@ const figureItems = [
     svg: FigureImg,
   },
 ]
-
-const spawnObject = (figure: any) => {
-  console.log(figure, currentUser.value.color)
-  tabletopStore.spawnObject({ figure, color: currentUser.value.color })
-}
 </script>
 
 <style scoped>
