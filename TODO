@@ -11,7 +11,7 @@ UI:
     ✔ Nutzer wird beim Betreten der Webseite nach Spielernamen gefragt @done(22-01-19 22:15)
     ✔ Würfel @done(22-01-18 21:45)
     Einfache Implementation als runder Button
-        ☐ Das Würfelergebnis erscheint im Log
+        ✔ Das Würfelergebnis erscheint im Log @done(22-01-23 00:56)
 
     ✔ Logbuch auf rechter Displayseite @done(22-01-18 21:45)
     kann eingeblendet werden
@@ -19,17 +19,17 @@ UI:
     ✔ Jedes erstellte Spielobjekt hat einen eigenen z-Index (über y-Position) @done(22-01-21 16:58)
 
     ☐ Farbwahl überarbeiten
-    ☐ Hintergrundfarbe bearbeiten
+    ✔ Hintergrundfarbe bearbeiten @done(22-01-23 00:56)
 
 Synchronisation:
     ✔ Z-Index @done(22-01-19 22:16)
-    ☐ Log
+    ✔ Log @done(22-01-23 00:56)
     ✔ Spielernamen (und -farben) @done(22-01-20 20:46)
     Farben sind vorgegeben anhand Spielbrett
     Beim Erstellen von Spielfiguren wird die Farbe des Spielers auf die Farbe der Spielfigur gesetzt
 
-    ☐ Live-Updates von Objekten über Socket.io, sonst Interpolation zwischen Anfangs- und Endzustand
-    ☐ Entfernen von Spielern bei Verlassen des Spiels oder bei Verbindungsverlust
+    ✔ Live-Updates von Objekten über Socket.io @done(22-01-23 00:56)
+    ✔ Entfernen von Spielern bei Verlassen des Spiels oder bei Verbindungsverlust @done(22-01-23 00:57)
 
 Assets:
     ✔ Mensch ärgere dich nicht - Spielbrett @done(22-01-19 22:16)
