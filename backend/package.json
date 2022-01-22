@@ -12,6 +12,8 @@
   "dependencies": {
     "@socket.io/admin-ui": "^0.2.0",
     "@teamwork/websocket-json-stream": "^2.0.0",
+    "fastify": "^3.27.0",
+    "fastify-static": "^4.5.0",
     "socket.io": "^4.4.1",
     "ws": "^8.4.2"
   },
@@ -19,6 +21,6 @@
     "@types/node": "^16.11.21",
     "ts-node": "^10.4.0",
     "tslib": "^2.3.1",
-    "typescript": "^4.5.4"
+    "typescript": "^4.5.5"
   }
 }

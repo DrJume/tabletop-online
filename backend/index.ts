@@ -1,7 +1,26 @@
-import { createServer } from 'http'
-const httpServer = createServer()
+/* eslint-env node */
 
-// *** init websockets ***
+// import { createServer } from 'http'
+// const httpServer = createServer()
+
+import Fastify from 'fastify'
+import fastifyStatic from 'fastify-static'
+import path from 'path'
+
+// const serverFactory = (handler, opts) => {
+//   httpServer.on('request', (req, res) => {
+//     handler(req, res)
+//   })
+
+//   return httpServer
+// }
+
+const fastify = Fastify({ /* serverFactory, */ logger: true })
+
+fastify.register(fastifyStatic, {
+  // eslint-disable-next-line unicorn/prefer-module
+  root: path.join(__dirname, '../dist'),
+})
 
 // init ShareDB socket
 import ShareDB from 'sharedb'
@@ -18,7 +37,7 @@ import { instrument } from '@socket.io/admin-ui'
 import { Doc } from 'sharedb/lib/client'
 
 const socketIOSocketServer = new SocketIOServer<ClientToServerEvents, ServerToClientEvents>(
-  httpServer,
+  fastify.server,
   {
     path: '/socket.io',
     cors: {
@@ -36,8 +55,7 @@ instrument(socketIOSocketServer, {
   auth: false,
 })
 
-httpServer.on('upgrade', function upgrade(request, socket, head) {
-  // socketIOSocketServer upgrades are handled by express
+fastify.server.on('upgrade', (request, socket, head) => {
   if (!request.url.startsWith('/socket.io')) {
     shareDBSocketServer.handleUpgrade(request, socket, head, function done(ws) {
       shareDBSocketServer.emit('connection', ws, request)
@@ -143,8 +161,7 @@ socketIOSocketServer.of('/tabletop').on('connection', (socket) => {
   })
 })
 
-// start server
-httpServer.listen(8080, () => {
+fastify.listen(8080, () => {
   console.log('listening on *:8080')
 })
 
