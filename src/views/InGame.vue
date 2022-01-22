@@ -11,14 +11,16 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { onKeyStroke, useCssVar } from '@vueuse/core'
+import { useToast } from 'vue-toastification'
 
 import Sidebar from '@/components/InGame/Sidebar/index.vue'
 import LogBar from '@/components/InGame/LogBar/index.vue'
 import Dice from '@/components/InGame/Dice/index.vue'
 import TabletopModal from '@/components/UI/TabletopModal.vue'
 import PlayingBoard from '@/components/InGame/Tabletop/GameComponents/PlayingBoard.vue'
+import TabletopNotification from '@/components/UI/TabletopNotification.vue'
 
 import { Player } from '@/types/player'
 
@@ -92,6 +94,28 @@ const submitProfile = (mode: TabletopModalOptions['mode'], { name, color }: Play
     }
   }
 }
+
+const toast = useToast()
+
+watch(
+  () => tabletopStore.log,
+  (log) => {
+    if (log.length === 0) return
+    const newestLog = log[log.length - 1]
+
+    // don't show notifications older than 10s
+    if (newestLog.timestamp + 10 * 1000 /* ms */ < Date.now()) return
+
+    toast({
+      component: TabletopNotification,
+      props: {
+        title: newestLog.message,
+        icon: newestLog.icon,
+      },
+    })
+  },
+  { deep: true }
+)
 
 interface TabletopModalOptions {
   mode: 'join' | 'change'

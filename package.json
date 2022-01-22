@@ -26,7 +26,8 @@
     "ts-toolbelt": "^9.6.0",
     "vite-svg-loader": "^3.1.2",
     "vue": "^3.2.28",
-    "vue-router": "^4.0.12"
+    "vue-router": "^4.0.12",
+    "vue-toastification": "^2.0.0-rc.5"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.1.0",

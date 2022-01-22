@@ -10,12 +10,14 @@
   <title>Tabletop Online 2D</title>
 </head>
 
-<body class="h-full">
+<body class="h-full overscroll-none">
   <noscript>
     <strong>Bitte aktivieren Sie JavaScript, um diese Anwendung nutzen zu können.</strong>
   </noscript>
 
-  <div id="tabletop-online" class="h-full"></div>
+  <div id="tabletop-online" class="h-full isolate"></div>
+  <div id="tabletop-notification-container"
+    class="flex fixed inset-0 items-end py-6 px-4 pointer-events-none sm:items-start justify-end sm:p-6"></div>
 
   <script type="module" src="/src/main.ts"></script>
 </body>
