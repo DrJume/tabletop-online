@@ -15,7 +15,15 @@ import path from 'path'
 //   return httpServer
 // }
 
-const fastify = Fastify({ /* serverFactory, */ logger: true })
+const fastify = Fastify({
+  /* serverFactory, */
+  logger: {
+    prettyPrint: {
+      translateTime: 'HH:MM:ss Z',
+      ignore: 'pid,hostname',
+    },
+  },
+})
 
 fastify.register(fastifyStatic, {
   // eslint-disable-next-line unicorn/prefer-module
