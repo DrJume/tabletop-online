@@ -105,7 +105,7 @@ const tabletopModalOptions = computed(
     v-model:open="sessionStore.ui.isUserProfileModalOpen"
     :mode="tabletopModalOptions.mode"
     :username="tabletopModalOptions.username"
-    :color="tabletopModalOptions.color"
+    :current-color="tabletopModalOptions.color"
     @submit="submitProfile"
   />
   <div class="overflow-auto relative h-full bg-gray-200">

@@ -1,7 +1,12 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
   <TransitionRoot as="template" :show="open">
-    <Dialog as="div" class="overflow-y-auto fixed inset-0 z-10" :initial-focus="getActiveElement()">
+    <Dialog
+      as="div"
+      class="overflow-y-auto fixed inset-0 z-10"
+      :initial-focus="getActiveElement()"
+      @vnode-before-mount="updateModeDisplay()"
+    >
       <div
         class="flex justify-center items-end px-4 pt-4 pb-20 min-h-screen text-center sm:block sm:p-0"
       >
@@ -37,7 +42,9 @@
               <div class="text-center">
                 <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
                   <span
-                    >{{ mode === 'join' ? 'Willkommen bei TabletopOnline!' : 'Nutzerprofil' }}
+                    >{{
+                      modeDisplay === 'join' ? 'Willkommen bei TabletopOnline!' : 'Nutzerprofil'
+                    }}
                   </span>
                 </DialogTitle>
                 <div class="mt-2">
@@ -58,7 +65,7 @@
                   name="username"
                   class="block w-full rounded-md border-gray-300 focus:border-transparent focus:ring-2 shadow-sm sm:text-sm"
                   :style="`--tw-ring-color: ${selectedColorCSS}`"
-                  @keypress.enter="username && submitProfile()"
+                  @keypress.enter="isReady && submitProfile()"
                 />
               </div>
             </div>
@@ -106,13 +113,13 @@
                 type="button"
                 class="group inline-flex justify-center w-full text-base font-medium text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-sm disabled:opacity-60 disabled:cursor-not-allowed sm:text-sm"
                 :style="`--tw-ring-color: ${selectedColorCSS}; background-color: ${selectedColorCSS};`"
-                :disabled="!username"
+                :disabled="!isReady"
                 @click="submitProfile"
               >
                 <span
                   class="py-2 px-4 w-full rounded-md border border-transparent group-hover:backdrop-brightness-75 group-disabled:group-hover:backdrop-filter-none"
                 >
-                  {{ mode === 'join' ? 'Spiel beitreten' : 'Aktualisieren' }}
+                  {{ modeDisplay === 'join' ? 'Spiel beitreten' : 'Aktualisieren' }}
                 </span>
               </button>
             </div>
@@ -141,13 +148,20 @@ import { useVModel } from '@vueuse/core'
 const getActiveElement = () => document.activeElement as HTMLElement
 
 const props = withDefaults(
-  defineProps<{ mode?: 'join' | 'change'; username?: string; color?: string; open: boolean }>(),
+  defineProps<{
+    mode?: 'join' | 'change'
+    username?: string
+    currentColor?: string
+    open: boolean
+  }>(),
   {
     mode: 'join',
     username: 'dev',
-    color: '',
+    currentColor: '',
   }
 )
+
+const isReady = computed(() => !!username.value)
 
 const emit = defineEmits<{
   (e: 'submit', { name, color }: Player): void
@@ -155,6 +169,11 @@ const emit = defineEmits<{
 }>()
 
 const open = useVModel(props, 'open')
+
+const modeDisplay = ref(props.mode)
+const updateModeDisplay = () => {
+  modeDisplay.value = props.mode
+}
 
 const colors = [
   { name: 'Red', bgColor: 'bg-red-600', ringColor: 'ring-red-600' },
@@ -173,9 +192,9 @@ const username = ref(props.username)
 
 const colorElements = ref<Element[]>(Array.from({ length: colors.length }))
 
-const selectedColorIndex = ref(props.color ? -1 : 0)
+const selectedColorIndex = ref(props.currentColor ? -1 : 0)
 const selectedColorCSS = computed(() => {
-  if (selectedColorIndex.value === -1) return props.color
+  if (selectedColorIndex.value === -1) return props.currentColor
 
   const selectedColorElement = colorElements.value[selectedColorIndex.value]
   if (!selectedColorElement) return ''
