@@ -18,7 +18,7 @@ const { ShareDBDoc } = useShareDB()
 
 const props = defineProps<{
   tabletopRef: HTMLElement | null
-  modelValue: GameObjectDataTypes[GameObjectType.PlayingObject]
+  modelValue: GameObjectDataTypes<GameObjectType.PlayingObject>
   id: string
 }>()
 const gameObjectData = useVModel(

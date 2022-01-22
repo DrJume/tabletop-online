@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { GameObject, GameObjectInit, GameObjectType } from '@/types/gameObject'
+import { GameObject, GameObjectInitDataTypes, GameObjectType } from '../types/gameObject' // use ../ for tmp fix to allow importing in backend/
 import { Player } from '@/types/player'
 import { useSessionStore } from '@/stores/session'
 import { useShareDB } from '@/modules/useShareDB'
@@ -26,7 +26,13 @@ export const useTabletopStore = defineStore('tabletop', {
   }),
   // getters: {},
   actions: {
-    addGameObject({ type, data: initData }: GameObjectInit) {
+    addGameObject<T extends GameObjectType>({
+      type,
+      data: initData,
+    }: {
+      type: T
+      data: GameObjectInitDataTypes<T>
+    }) {
       const { ShareDBDoc } = useShareDB()
 
       const id = this._meta.idCounter++

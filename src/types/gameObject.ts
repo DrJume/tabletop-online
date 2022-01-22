@@ -1,21 +1,30 @@
-export type GameObjectInit =
-  | GameObjectBase<
-      GameObjectType.PlayingObject,
-      GameObjectInitDataTypes[GameObjectType.PlayingObject]
-    >
-  | GameObjectBase<GameObjectType, GameObjectData>
+// export type GameObjectInit =
+//   | GameObjectBase<GameObjectType.PlayingCard>
+//   | GameObjectBase<GameObjectType.PlayingObject>
+// | GameObjectBase<GameObjectType>
 
-type GameObjectInitDataTypes = {
-  [GameObjectType.PlayingObject]: GameObjectDataPlayingCard
-}
+// export type GameObjectInitDataTypes = {
+//   [GameObjectType.PlayingCard]: GameObjectDataPlayingCard
+//   [GameObjectType.PlayingObject]: GameObjectDataPlayingObject
+// }
 
-export type GameObjectDataTypes = {
-  [K in keyof GameObjectInitDataTypes]: GameObjectInitDataTypes[K] & GameObjectMeta
-}
+// type a = Parameters<(num: number) => void>
 
-export type GameObject = GameObjectInit & {
-  data: GameObjectMeta
-}
+export type GameObjectInitDataTypes<T extends GameObjectType> = T extends GameObjectType.PlayingCard
+  ? GameObjectDataPlayingCard
+  : T extends GameObjectType.PlayingObject
+  ? GameObjectDataPlayingObject
+  : never
+
+export type GameObjectDataTypes<T extends GameObjectType> = GameObjectInitDataTypes<T> &
+  GameObjectMeta
+
+export const defineGameObject = <T extends GameObjectType>(gameObject: {
+  type: T
+  data: GameObjectDataTypes<T>
+}) => gameObject
+
+export type GameObject = ReturnType<typeof defineGameObject>
 
 type GameObjectMeta = {
   _meta: {
@@ -30,17 +39,17 @@ type GameObjectMeta = {
 export enum GameObjectType {
   PlayingCard = 'PlayingCard',
   PlayingObject = 'PlayingObject',
-  PlayingBoard = 'PlayingBoard',
-  Dice = 'Dice',
+  // PlayingBoard = 'PlayingBoard',
+  // Dice = 'Dice',
 }
 
 // type GameObjectTypeKey = `${GameObjectType}`
 // type GameObjectTypeKeys2 = keyof typeof GameObjectType
 
-interface GameObjectBase<Type, Data> {
-  type: Type
-  data: Data
-}
+// interface GameObjectBase<T extends GameObjectType> {
+//   type: T
+//   data: GameObjectInitDataTypes<T>
+// }
 
 interface GameObjectData {
   position: {
@@ -48,8 +57,6 @@ interface GameObjectData {
     y: number
     z: number
   }
-  //image: string
-  color: string
   isLocked: boolean
 }
 
@@ -57,17 +64,25 @@ interface GameObjectDataPlayingCard extends GameObjectData {
   isFlipped: boolean
 }
 
-// const test: GameObject = {
+interface GameObjectDataPlayingObject extends GameObjectData {
+  color: string
+  // image: string
+}
+
+// const test: GameObject = defineGameObject({
 //   type: GameObjectType.PlayingCard,
 //   data: {
 //     _meta: {
-//       id: '0',
-//       isDragged: false,
+//       draggedBy: '',
 //       isVisible: true,
 //     },
-//     x: 0,
-//     y: 0,
+//     position: {
+//       x: 0,
+//       y: 0,
+//       z: 0,
+//     },
 //     isLocked: false,
 //     isFlipped: false,
+//     color: 'asd',
 //   },
-// }
+// })
