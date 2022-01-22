@@ -170,7 +170,7 @@ watch(
   >
     <component
       :is="FigureImg"
-      class="flex w-full h-full"
+      class="flex w-full h-full drop-shadow-lg"
       :style="{
         color: `${gameObjectData.color}`,
       }"
