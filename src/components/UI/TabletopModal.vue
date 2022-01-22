@@ -147,24 +147,23 @@ import { useVModel } from '@vueuse/core'
 
 const getActiveElement = () => document.activeElement as HTMLElement
 
-const props = withDefaults(
-  defineProps<{
-    mode?: 'join' | 'change'
-    username?: string
-    currentColor?: string
-    open: boolean
-  }>(),
-  {
-    mode: 'join',
-    username: 'dev',
-    currentColor: '',
-  }
-)
+interface Props {
+  mode?: 'join' | 'change'
+  username?: string
+  currentColor?: string
+  open: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  mode: 'join',
+  username: 'dev',
+  currentColor: '',
+})
 
 const isReady = computed(() => !!username.value)
 
 const emit = defineEmits<{
-  (e: 'submit', { name, color }: Player): void
+  (e: 'submit', mode: NonNullable<Props['mode']>, { name, color }: Player): void
   (e: 'update:open', open: boolean): void
 }>()
 
@@ -204,6 +203,6 @@ const selectedColorCSS = computed(() => {
 
 const submitProfile = () => {
   open.value = false
-  emit('submit', { name: username.value, color: selectedColorCSS.value })
+  emit('submit', props.mode, { name: username.value, color: selectedColorCSS.value })
 }
 </script>

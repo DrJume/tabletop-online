@@ -71,6 +71,8 @@ fastify.server.on('upgrade', (request, socket, head) => {
   }
 })
 
+import { playerName } from '../src/util/tabletopLogFormatter'
+
 // ShareDB server logic
 const connection = backend.connect()
 const roomDoc: Doc<TabletopState> = connection.get('tabletop-online', 'room-1')
@@ -101,6 +103,7 @@ if (!roomDoc.type) {
         }),
       },
       players: {},
+      log: [],
     } as TabletopState,
     (error) => {
       console.log('doc created')
@@ -162,10 +165,25 @@ socketIOSocketServer.of('/tabletop').on('connection', (socket) => {
 
     if (!roomDoc.data.players[socket.id]) return
 
-    roomDoc.submitOp({
-      p: ['players', socket.id],
-      od: roomDoc.data.players[socket.id],
-    })
+    const clonedPlayer = JSON.parse(JSON.stringify(roomDoc.data.players[socket.id]))
+
+    roomDoc.submitOp([
+      {
+        p: ['players', socket.id],
+        od: roomDoc.data.players[socket.id],
+      },
+      {
+        p: ['log', String(roomDoc.data.log.length)],
+        li: {
+          timestamp: Date.now(),
+          message: `${playerName({
+            name: clonedPlayer.name,
+            color: clonedPlayer.color,
+          })} hat das Spiel verlassen.`,
+          icon: 'UserRemoveIcon',
+        },
+      },
+    ])
   })
 })
 

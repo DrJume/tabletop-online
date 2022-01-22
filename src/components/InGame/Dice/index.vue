@@ -10,7 +10,22 @@
 import TabletopButton from '@/components/UI/TabletopButton.vue'
 import DiceIcon from '@/assets/dice.svg?component'
 
+import { useTabletopStore } from '@/stores/tabletop'
+import { useSessionStore } from '@/stores/session'
+import { playerName } from '@/util/tabletopLogFormatter'
+
+const tabletopStore = useTabletopStore()
+const sessionStore = useSessionStore()
+
 const rollDice = () => {
-  alert('Du hast eine ' + Math.ceil(Math.random() * (6 - 1)) + ' gewürfelt!')
+  const username = tabletopStore.players[sessionStore.userId].name
+  const color = tabletopStore.players[sessionStore.userId].color
+
+  tabletopStore.printToLog(
+    `${playerName({ name: username, color })} hat eine ${Math.floor(
+      Math.random() * 6 + 1
+    )} gewürfelt!`,
+    'CubeIcon'
+  )
 }
 </script>

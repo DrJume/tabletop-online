@@ -9,7 +9,15 @@ import { TabletopState, useTabletopStore } from '@/stores/tabletop'
 
 import TsToolbelt from 'ts-toolbelt'
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import { get, setWith, isEqual, unset } from 'lodash-es'
+
+// improve typing of lodash's get() with TsToolbelt's AutoPath
+declare function get<O extends object, P extends string>(
+  object: O,
+  path: TsToolbelt.Function.AutoPath<O, P>
+): TsToolbelt.Object.Path<O, TsToolbelt.String.Split<P, '.'>>
 
 //
 
@@ -63,7 +71,7 @@ export const connectShareDB = () => {
       if (source) return
 
       for (const op of ops) {
-        const opPath = [...op.p] as GameObjectsStatePaths
+        const opPath = [...op.p] as TsToolbelt.List.Pop<GameObjectsStatePaths>
 
         // const opTarget = opPath.pop()
         // if (!opTarget) return
@@ -141,6 +149,30 @@ export const connectShareDB = () => {
           }
 
           unset(tabletopStore, path)
+        } else if ('li' in op) {
+          // 'li': list insert
+
+          log.log("ShareDB operation 'li'", op)
+
+          const indexPart = opPath.pop()
+          if (indexPart === undefined) throw new Error('ShareDB operation path is not defined')
+
+          const index = Number.parseInt(`${indexPart}`)
+
+          // const opPathLists = [...opPath] as TsToolbelt.Union.Filter<
+          //   typeof opPath,
+          //   number,
+          //   'default'
+          // >
+
+          const opPathList = [...opPath] as TsToolbelt.List.Pop<typeof opPath>
+
+          const path = opPathList.join('.') as TsToolbelt.String.Join<typeof opPathList, '.'>
+
+          const list = get(tabletopStore, path)
+          if (!Array.isArray(list)) throw new Error("ShareDB operation 'li' not modifying an array")
+
+          list.splice(index, 0, op.li)
         } else {
           log.warn(`ShareDB operation ${JSON.stringify(op)} not yet implemented!`)
         }

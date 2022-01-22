@@ -11,20 +11,22 @@ export default {
 </script>
 
 <script setup lang="ts">
-import PlayingBoard from '@/components/InGame/Tabletop/GameComponents/PlayingBoard.vue'
-
 import { ref, computed } from 'vue'
 import { onKeyStroke, useCssVar } from '@vueuse/core'
+
 import Sidebar from '@/components/InGame/Sidebar/index.vue'
 import LogBar from '@/components/InGame/LogBar/index.vue'
 import Dice from '@/components/InGame/Dice/index.vue'
 import TabletopModal from '@/components/UI/TabletopModal.vue'
+import PlayingBoard from '@/components/InGame/Tabletop/GameComponents/PlayingBoard.vue'
+
 import { Player } from '@/types/player'
 
 import { log } from '@/util/logger'
 
 import { useTabletopStore } from '@/stores/tabletop'
 import { useSessionStore } from '@/stores/session'
+import { playerName } from '@/util/tabletopLogFormatter'
 
 const tabletopStore = useTabletopStore()
 const sessionStore = useSessionStore()
@@ -59,36 +61,70 @@ tabletopStore.$subscribe((mutation, state) => {
   log.log('tabletopStore.$subscribe()', mutation)
 })
 
-const submitProfile = ({ name, color }: Player) => {
-  log.log('submitProfile()', { name, color })
-  tabletopStore.playerUpdate({ name, color })
-}
+const submitProfile = (mode: TabletopModalOptions['mode'], { name, color }: Player) => {
+  log.log('submitProfile()', mode, { name, color })
 
-const tabletopModalOptions = computed(
-  (): { mode: 'join' | 'change'; username?: string; color?: string } => {
-    // the player has not yet joined, when userId is not in the player list
-    if (!sessionStore._userId || !tabletopStore.players[sessionStore._userId]) {
-      return {
-        mode: 'join',
-        username: undefined,
-        color: undefined,
-      }
+  const profileBefore = tabletopStore.players[sessionStore.userId]
+  tabletopStore.playerUpdate({ name, color })
+
+  switch (mode) {
+    case 'join': {
+      tabletopStore.printToLog(
+        `${playerName({ name, color })} ist dem Spiel beigetreten.`,
+        'UserAddIcon'
+      )
+      break
     }
-    return {
-      mode: 'change',
-      username: tabletopStore.players[sessionStore._userId].name,
-      color: tabletopStore.players[sessionStore._userId].color,
+
+    case 'change': {
+      tabletopStore.printToLog(
+        `${playerName({
+          name: profileBefore.name,
+          color: profileBefore.color,
+        })} ist jetzt ${playerName({ name, color })}.`,
+        'SparklesIcon'
+      )
+      break
+    }
+
+    default: {
+      break
     }
   }
-)
+}
+
+interface TabletopModalOptions {
+  mode: 'join' | 'change'
+  player: Partial<Player>
+}
+
+const tabletopModalOptions = computed((): TabletopModalOptions => {
+  // the player has not yet joined, when userId is not in the player list
+  if (!sessionStore._userId || !tabletopStore.players[sessionStore._userId]) {
+    return {
+      mode: 'join',
+      player: {
+        name: undefined,
+        color: undefined,
+      },
+    }
+  }
+  return {
+    mode: 'change',
+    player: {
+      name: tabletopStore.players[sessionStore._userId].name,
+      color: tabletopStore.players[sessionStore._userId].color,
+    },
+  }
+})
 </script>
 
 <template>
   <TabletopModal
     v-model:open="sessionStore.ui.isUserProfileModalOpen"
     :mode="tabletopModalOptions.mode"
-    :username="tabletopModalOptions.username"
-    :current-color="tabletopModalOptions.color"
+    :username="tabletopModalOptions.player.name"
+    :current-color="tabletopModalOptions.player.color"
     @submit="submitProfile"
   />
   <div class="overflow-auto relative h-full bg-gray-200">
@@ -119,5 +155,23 @@ const tabletopModalOptions = computed(
 <style>
 .tt-dynamic-font-size {
   font-size: v-bind(dynamicFontSize);
+}
+</style>
+
+<!-- vue-toastification custom styling -->
+<style lang="scss">
+@use './node_modules/vue-toastification/src/scss/index.scss';
+
+.Vue-Toastification__toast {
+  --min-height: calc(64px - 2 * 4px - 2 * 4px);
+  @apply p-0 mr-20 bg-transparent min-h-[var(--min-height)] font-sans;
+}
+
+.Vue-Toastification__toast-component-body > * {
+  @apply h-full;
+}
+
+.Vue-Toastification__progress-bar {
+  @apply bg-gray-600/20 h-1;
 }
 </style>

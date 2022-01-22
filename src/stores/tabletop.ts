@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { GameObject, GameObjectInitDataTypes, GameObjectType } from '../types/gameObject' // use ../ for tmp fix to allow importing in backend/
 import { Player } from '@/types/player'
+import { LogEntry } from '@/types/log'
 import { useSessionStore } from '@/stores/session'
 import { useShareDB } from '@/modules/useShareDB'
 
@@ -12,6 +13,7 @@ export interface TabletopState {
   }
   objects: Record<string, GameObject>
   players: Record<string, Player>
+  log: Array<LogEntry>
 }
 
 export const useTabletopStore = defineStore('tabletop', {
@@ -23,6 +25,7 @@ export const useTabletopStore = defineStore('tabletop', {
     },
     objects: {},
     players: {},
+    log: [],
   }),
   // getters: {},
   actions: {
@@ -93,6 +96,17 @@ export const useTabletopStore = defineStore('tabletop', {
       ShareDBDoc.value.submitOp({
         p: ['_meta', 'boardURL'],
         oi: url,
+      })
+    },
+    printToLog(message: string, icon: string) {
+      const { ShareDBDoc } = useShareDB()
+      const timestamp = Date.now()
+
+      this.log.push({ timestamp, message, icon })
+
+      ShareDBDoc.value.submitOp({
+        p: ['log', this.log.length],
+        li: this.log[this.log.length - 1],
       })
     },
   },
