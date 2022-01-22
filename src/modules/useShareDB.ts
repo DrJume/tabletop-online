@@ -1,4 +1,4 @@
-import { readonly, ref, Ref } from 'vue'
+import { ref, Ref } from 'vue'
 
 import { Connection, Op } from 'sharedb/lib/client'
 import type { Doc, Socket } from 'sharedb/lib/sharedb'
@@ -6,11 +6,10 @@ import ReconnectingWebSocket from 'reconnecting-websocket'
 
 import { log } from '@/util/logger'
 import { TabletopState, useTabletopStore } from '@/stores/tabletop'
-import { useSessionStore } from '@/stores/session'
 
 import TsToolbelt from 'ts-toolbelt'
 
-import { get, setWith } from 'lodash-es'
+import { get, setWith, isEqual, unset } from 'lodash-es'
 
 //
 
@@ -34,7 +33,6 @@ export const connectShareDB = () => {
   log.log('useShareDB roomDoc:', roomDoc)
 
   const tabletopStore = useTabletopStore()
-  const sessionStore = useSessionStore()
 
   // subscribe to ShareDB document
   roomDoc.subscribe((error) => {
@@ -48,7 +46,6 @@ export const connectShareDB = () => {
     // apply ShareDB doc to local store
     tabletopStore.$patch(clonedShareDBDoc)
 
-    sessionStore.userId = String(roomDoc.data._meta.userCounter)
     roomDoc.submitOp({ p: ['_meta', 'userCounter'], na: 1 })
 
     log.log('ShareDB subscribe() data:', JSON.stringify(roomDoc.data))
@@ -106,9 +103,7 @@ export const connectShareDB = () => {
         if ('oi' in op) {
           // 'oi': insert/overwrite property
 
-          log.log("ShareDB operation 'oi'", op.p, JSON.stringify(op.oi), {
-            userID: sessionStore.userId,
-          })
+          log.log("ShareDB operation 'oi'", op.p, JSON.stringify(op.oi))
 
           const patch: TsToolbelt.Object.Partial<TabletopState, 'deep'> = setWith(
             {},
@@ -131,9 +126,23 @@ export const connectShareDB = () => {
           )
 
           tabletopStore.$patch(patch)
-        } else if ('li' in op) {
-          //TODO: implement ShareDB 'li' operation
-          log.warn("ShareDB operation 'li' not yet implemented!")
+        } else if ('od' in op) {
+          // 'od': remove property
+
+          log.log("ShareDB operation 'od'", op)
+
+          if (!isEqual(op.od, get(tabletopStore, path))) {
+            log.error(
+              "ShareDB operation 'od' failed, because op.od didn't match current data",
+              op.od,
+              get(tabletopStore, path)
+            )
+            return
+          }
+
+          unset(tabletopStore, path)
+        } else {
+          log.warn(`ShareDB operation ${JSON.stringify(op)} not yet implemented!`)
         }
       }
     })

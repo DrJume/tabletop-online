@@ -89,19 +89,20 @@ import { MapIcon, UsersIcon, PuzzleIcon, AdjustmentsIcon } from '@heroicons/vue/
 import { UserIcon } from '@heroicons/vue/solid'
 import SidebarSection from './SidebarSection.vue'
 import TabletopSidebar from '@/components/UI/TabletopSidebar.vue'
-import FigureImg from '@/assets/figures/figure.svg?component'
 import { useTabletopStore } from '@/stores/tabletop'
 import { useSessionStore } from '@/stores/session'
 import { computed } from 'vue'
 
 import { GameObjectType } from '@/types/gameObject'
 
+import FigureImg from '@/assets/figures/figure.svg?component'
+
 const tabletopStore = useTabletopStore()
 const sessionStore = useSessionStore()
 
 const currentUser = computed(() => {
-  if (sessionStore.userId === undefined) throw new Error('UserId is undefined')
-  const user = tabletopStore.players[sessionStore.userId]
+  if (sessionStore._userId === undefined) throw new Error('UserId is undefined')
+  const user = tabletopStore.players[sessionStore._userId]
 
   return user
 })
@@ -117,7 +118,9 @@ const switchToUserProfileModal = () => {
 // }))
 
 const filteredTeammates = computed(() => {
-  return Object.entries(tabletopStore.players).filter(([key, value]) => key !== sessionStore.userId)
+  return Object.entries(tabletopStore.players).filter(
+    ([key, value]) => key !== sessionStore._userId
+  )
 })
 
 const boardItems = [

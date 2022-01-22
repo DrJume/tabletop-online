@@ -64,7 +64,7 @@ export const useTabletopStore = defineStore('tabletop', {
       const { ShareDBDoc } = useShareDB()
       const sessionStore = useSessionStore()
 
-      const id = sessionStore.userId
+      const id = sessionStore._userId
       if (id === undefined) throw new Error('userId is not yet loaded')
       this.players[id] = {
         name,

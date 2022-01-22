@@ -3,7 +3,7 @@ const httpServer = createServer()
 
 // *** init websockets ***
 
-// init sharedb socket
+// init ShareDB socket
 import ShareDB from 'sharedb'
 import WebSocket from 'ws'
 import WebSocketJSONStream from '@teamwork/websocket-json-stream'
@@ -15,6 +15,7 @@ const backend = new ShareDB()
 import { Server as SocketIOServer } from 'socket.io'
 import { ClientToServerEvents, ServerToClientEvents } from './types/socketIo'
 import { instrument } from '@socket.io/admin-ui'
+import { Doc } from 'sharedb/lib/client'
 
 const socketIOSocketServer = new SocketIOServer<ClientToServerEvents, ServerToClientEvents>(
   httpServer,
@@ -27,9 +28,10 @@ const socketIOSocketServer = new SocketIOServer<ClientToServerEvents, ServerToCl
   }
 )
 
-// *** additional config ***
+import { TabletopState } from '../src/stores/tabletop'
+import { defineGameObject, GameObjectType } from '../src/types/gameObject'
 
-// init admin panel, access only with /admin
+// Socket.io admin panel, access only with /admin
 instrument(socketIOSocketServer, {
   auth: false,
 })
@@ -43,22 +45,37 @@ httpServer.on('upgrade', function upgrade(request, socket, head) {
   }
 })
 
-// *** sharedb server logic ***
+// ShareDB server logic
 const connection = backend.connect()
-const doc = connection.get('tabletop-online', 'room-1')
+const roomDoc: Doc<TabletopState> = connection.get('tabletop-online', 'room-1')
 
-// create initial sharedb doc
-if (!doc.type) {
-  doc.create(
+// create initial ShareDB doc
+if (!roomDoc.type) {
+  roomDoc.create(
     {
       _meta: {
         userCounter: 1,
-        idCounter: 1,
+        idCounter: 2,
         boardURL: '',
       },
-      objects: {},
+      objects: {
+        '1': defineGameObject({
+          type: GameObjectType.PlayingCard,
+          data: {
+            _meta: { draggedBy: '', isVisible: true },
+            position: {
+              x: 10,
+              y: 10,
+              z: 10,
+            },
+            isLocked: false,
+            isFlipped: false,
+            // color: '',
+          },
+        }),
+      },
       players: {},
-    },
+    } as TabletopState,
     (error) => {
       console.log('doc created')
       if (error) console.error(error)
@@ -66,18 +83,63 @@ if (!doc.type) {
   )
 }
 
+// subscribe to ShareDB doc to receive updates
+roomDoc.subscribe()
+
 shareDBSocketServer.on('connection', (webSocket) => {
   const stream = new WebSocketJSONStream(webSocket)
   backend.listen(stream)
 })
 
-// *** tabletop server logic ***
-
+// tabletop Socket.io server logic
 socketIOSocketServer.of('/tabletop').on('connection', (socket) => {
   console.log('user ' + socket.id + ' connected')
 
+  socket.on('startDrag', ({ playerId, objectId }, accept) => {
+    const objectDraggedBy = roomDoc.data.objects[objectId].data._meta.draggedBy
+
+    if (objectDraggedBy !== '') {
+      console.log(`BLOCK 'startDrag' of object '${objectId}' for player '${playerId}'`)
+      accept(false)
+      return
+    }
+
+    // lock game object for other players
+    roomDoc.submitOp({
+      p: ['objects', objectId, 'data', '_meta', 'draggedBy'],
+      oi: playerId,
+    })
+
+    // send a move event to faster broadcast the draggedBy state than ShareDB
+    socket.volatile.broadcast.emit('move', {
+      playerId,
+      objectId,
+      position: roomDoc.data.objects[objectId].data.position,
+    })
+
+    accept(true)
+  })
+
+  socket.on('drag', ({ playerId, objectId, position }) => {
+    const objectDraggedBy = roomDoc.data.objects[objectId].data._meta.draggedBy
+
+    if (objectDraggedBy !== playerId) {
+      console.log(`BLOCK 'drag' of object '${objectId}' from player '${playerId}'`)
+      return
+    }
+
+    socket.volatile.broadcast.emit('move', { playerId, objectId, position })
+  })
+
   socket.on('disconnect', () => {
-    console.log('user ' + socket.id + ' disconnected')
+    console.log('user ' + socket.id + ' disconnected', roomDoc.data.players[socket.id])
+
+    if (!roomDoc.data.players[socket.id]) return
+
+    roomDoc.submitOp({
+      p: ['players', socket.id],
+      od: roomDoc.data.players[socket.id],
+    })
   })
 })
 
@@ -86,7 +148,6 @@ httpServer.listen(8080, () => {
   console.log('listening on *:8080')
 })
 
-// TODO: check if this is actually working
 // force clean reconnect of all active sockets when using nodemon
 process.once('SIGUSR2', () => {
   socketIOSocketServer.disconnectSockets(true)

@@ -1,15 +1,43 @@
 import { io, Socket } from 'socket.io-client'
 
-import { AnonymousCallback } from '@/types/'
 import { ClientToServerEvents, ServerToClientEvents } from '@/../backend/types/socketIo'
 
-export const useSocketIo = (backendUrl: string, namespace: `/${string}`) => {
+import { useSessionStore } from '@/stores/session'
+
+const backendUrl = `ws://${location.hostname}:8080`
+
+export const useSocketIo = (namespace: `/${string}`) => {
   // socket.io reuses the existing instance based on same scheme/port/host, and we initialize sockets for each namespace.
   const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(`${backendUrl}${namespace}`)
 
-  // TODO: prevent clients from connecting multiple times
+  const sessionStore = useSessionStore()
+
+  socket.on('connect', () => {
+    console.log("useSocketIo() on('connect') socket.id:", socket.id)
+    sessionStore._userId = socket.id
+  })
+
+  socket.on('disconnect', () => {
+    console.log("useSocketIo() on('disconnect')")
+  })
+
+  // prevent clients from connecting multiple times during dev mode
   if (import.meta.hot) {
-    import.meta.hot.dispose((data) => {
+    // import.meta.hot.on('vite:beforeUpdate', () => {
+    //   console.warn('vite:beforeUpdate')
+    //   socket.disconnect()
+    // })
+    // import.meta.hot.on('vite:beforeFullReload', () => {
+    //   console.warn('vite:beforeFullReload')
+    // })
+    // import.meta.hot.on('vite:beforePrune', () => {
+    //   console.warn('vite:beforePrune')
+    //   socket.disconnect()
+    // })
+    import.meta.hot.accept(() => {
+      socket.connect()
+    })
+    import.meta.hot.dispose(() => {
       socket.disconnect()
     })
   }
@@ -22,12 +50,25 @@ export const useSocketIo = (backendUrl: string, namespace: `/${string}`) => {
     socket.disconnect()
   }
 
-  const onEvent = (eventName: keyof ServerToClientEvents, callback: AnonymousCallback) => {
+  const onEvent = (
+    eventName: keyof ServerToClientEvents,
+    callback: (...args: Parameters<ServerToClientEvents[typeof eventName]>) => void
+  ) => {
     socket.on(eventName, callback)
   }
 
-  const emit = (eventName: keyof ClientToServerEvents, value: any) => {
-    socket.emit(eventName, value)
+  const emit = (
+    eventName: keyof ClientToServerEvents,
+    ...args: Parameters<ClientToServerEvents[typeof eventName]>
+  ) => {
+    socket.emit(eventName, ...args)
+  }
+
+  const volatileEmit = (
+    eventName: keyof ClientToServerEvents,
+    ...args: Parameters<ClientToServerEvents[typeof eventName]>
+  ) => {
+    socket.volatile.emit(eventName, ...args)
   }
 
   return {
@@ -35,6 +76,7 @@ export const useSocketIo = (backendUrl: string, namespace: `/${string}`) => {
     disconnect,
     onEvent,
     emit,
+    volatileEmit,
     socket,
   }
 }

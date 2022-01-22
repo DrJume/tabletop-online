@@ -5,11 +5,9 @@ import { useVModel } from '@vueuse/core'
 import { GameObjectDataTypes, GameObjectType } from '@/types/gameObject'
 import { useTabletopDraggable } from '@/modules/useTabletopDraggable'
 
-import FigureImg from '@/assets/figures/figure.svg?component'
-
 const props = defineProps<{
   tabletopRef: HTMLElement | null
-  modelValue: GameObjectDataTypes<GameObjectType.PlayingObject>
+  modelValue: GameObjectDataTypes<GameObjectType.PlayingCard>
   objectId: string
 }>()
 const gameObjectData = useVModel(props, 'modelValue')
@@ -26,23 +24,17 @@ useTabletopDraggable({
 </script>
 
 <template>
-  <!-- TODO: make loaded svg dynamic -->
-
   <div
     ref="elementRef"
-    class="flex absolute w-[3%] h-[6%] cursor-pointer select-none"
     :style="{
       left: `${gameObjectData.position.x}%`,
       top: `${gameObjectData.position.y}%`,
       'z-index': Math.floor(gameObjectData.position.y * 1000),
     }"
+    class="flex absolute justify-center items-center w-[10%] h-[15%] text-center bg-green-400 drop-shadow-md cursor-pointer select-none tt-dynamic-font-size"
   >
-    <component
-      :is="FigureImg"
-      class="flex w-full h-full drop-shadow-lg"
-      :style="{
-        color: `${gameObjectData.color}`,
-      }"
-    />
+    {{ gameObjectData.position.x }}% <br />
+    {{ gameObjectData.position.y }}% <br />
+    {{ gameObjectData._meta.draggedBy }}
   </div>
 </template>

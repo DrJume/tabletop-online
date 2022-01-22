@@ -1,9 +1,11 @@
 <script lang="ts">
 import PlayingObject from '@/components/InGame/Tabletop/GameComponents/PlayingObject.vue'
+import PlayingCard from '@/components/InGame/Tabletop/GameComponents/PlayingCard.vue'
 
 export default {
   components: {
     PlayingObject,
+    PlayingCard,
   },
 }
 </script>
@@ -84,7 +86,7 @@ const submitProfile = ({ name, color }: Player) => {
 const tabletopModalOptions = computed(
   (): { mode: 'join' | 'change'; username?: string; color?: string } => {
     // the player has not yet joined, when userId is not in the player list
-    if (!sessionStore.userId || !tabletopStore.players[sessionStore.userId]) {
+    if (!sessionStore._userId || !tabletopStore.players[sessionStore._userId]) {
       return {
         mode: 'join',
         username: undefined,
@@ -93,8 +95,8 @@ const tabletopModalOptions = computed(
     }
     return {
       mode: 'change',
-      username: tabletopStore.players[sessionStore.userId].name,
-      color: tabletopStore.players[sessionStore.userId].color,
+      username: tabletopStore.players[sessionStore._userId].name,
+      color: tabletopStore.players[sessionStore._userId].color,
     }
   }
 )
@@ -123,13 +125,9 @@ const tabletopModalOptions = computed(
         <!-- component can be PlayingCard, PlayingObject, Dice, etc. -->
         <component
           :is="gameObject.type"
-          v-show="
-            gameObject.data._meta.isVisible &&
-            (gameObject.data._meta.draggedBy === '' ||
-              gameObject.data._meta.draggedBy === sessionStore.userId)
-          "
-          :id="id"
+          v-show="gameObject.data._meta.isVisible"
           v-model="gameObject.data"
+          :object-id="id"
           :tabletop-ref="tabletopRef"
         ></component>
       </template>

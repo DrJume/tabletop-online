@@ -1,27 +1,38 @@
 import { useSocketIo } from '@/modules/useSocketIo'
 
-import { AnonymousCallback } from '@/types/'
+import { ClientToServerEvents, ServerToClientEvents } from '@/../backend/types/socketIo'
 
-// let socketIoConnection: undefined | ReturnType<typeof useSocketIo>
+let socketIoConnection: undefined | ReturnType<typeof useSocketIo>
 
-export const useTabletopSocket = (backendUrl: string) => {
-  // // only connect with socket.io on first use
-  // if (socketIoConnection === undefined) socketIoConnection = useSocketIo(backendUrl, '/tabletop')
+export const useTabletopSocket = () => {
+  // only connect with socket.io on first use
+  if (socketIoConnection === undefined) socketIoConnection = useSocketIo('/tabletop')
 
-  const { reconnect, disconnect, onEvent, emit } = useSocketIo(backendUrl, '/tabletop')
+  const { reconnect, disconnect, onEvent, emit, volatileEmit } = socketIoConnection
 
-  const onLock = (callback: AnonymousCallback) => onEvent('lockFromServer', callback)
-  const onMove = (callback: AnonymousCallback) => onEvent('move', callback)
+  const generateListener =
+    <K extends keyof ServerToClientEvents>(name: K) =>
+    <E extends ServerToClientEvents[K]>(callback: E) =>
+      onEvent(name, callback)
 
-  const doLock = (lock: boolean) => emit('lockFromClient', lock)
-  const drag = (x: number, y: number) => emit('drag', { x, y })
+  const generateEmitter =
+    (emitFn: typeof emit) =>
+    <K extends keyof ClientToServerEvents>(name: K) =>
+    (...params: Parameters<ClientToServerEvents[K]>) =>
+      emitFn(name, ...params)
+
+  const onMove = generateListener('move')
+
+  const startDrag = generateEmitter(emit)('startDrag')
+  const drag = generateEmitter(volatileEmit)('drag')
 
   return {
     reconnect,
     disconnect,
-    onLock,
+
+    startDrag,
     drag,
-    doLock,
+
     onMove,
   }
 }
