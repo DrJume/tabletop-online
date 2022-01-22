@@ -58,6 +58,15 @@ export const useTabletopStore = defineStore('tabletop', {
       })
     },
     deleteGameObject({ id }: { id: number }) {
+      const { ShareDBDoc } = useShareDB()
+
+      const clonedGameObject = JSON.parse(JSON.stringify(this.objects[id]))
+
+      ShareDBDoc.value.submitOp({
+        p: ['objects', id],
+        od: clonedGameObject,
+      })
+
       delete this.objects[id]
     },
     playerUpdate({ name, color }: Player) {
