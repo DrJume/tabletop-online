@@ -13,7 +13,7 @@ export default {
 <script setup lang="ts">
 import PlayingBoard from '@/components/InGame/Tabletop/GameComponents/PlayingBoard.vue'
 
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import { onKeyStroke, useCssVar } from '@vueuse/core'
 import Sidebar from '@/components/InGame/Sidebar/index.vue'
 import LogBar from '@/components/InGame/LogBar/index.vue'
@@ -49,33 +49,14 @@ onKeyStroke('-', () => {
 
 const dynamicFontSize = computed(() => `${(zoomPercent.value / 100) * 1.25}rem`)
 
-// ===================================================
-
-/* add game objects only after the tabletop is mounted
-   -> let the tabletop mount itself first, so that the tabletopRef is available for its children */
-onMounted(() => {
-  // add initial playing card
-  // tabletopStore.addGameObject({
-  //   type: GameObjectType.PlayingObject,
-  //   data: {
-  //     position: {
-  //       x: 10,
-  //       y: 10,
-  //       z: 10,
-  //     },
-  //     isLocked: false,
-  //     isFlipped: false,
-  //   },
-  // })
-})
+//
 
 // triggers every time a change occurs in store
-// -> used to push local changes to automerge
 tabletopStore.$subscribe((mutation, state) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const event = mutation.events as any
-  if (event.type === 'set' && event.key === 'position') return
-  log.log('tabletopStore.$subscribe()', event.type, event.key, event.newValue, event, mutation)
+  // don't log 'direct' mutations because it spams
+  if (mutation?.type === 'direct') return
+
+  log.log('tabletopStore.$subscribe()', mutation)
 })
 
 const submitProfile = ({ name, color }: Player) => {
