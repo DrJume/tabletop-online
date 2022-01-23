@@ -1,12 +1,12 @@
-import { useSocketIo } from '@/modules/useSocketIo'
+import { useSocketIO } from '@/modules/useSocketIO'
 
 import { ClientToServerEvents, ServerToClientEvents } from '@/../backend/types/socketIo'
 
-let socketIoConnection: undefined | ReturnType<typeof useSocketIo>
+let socketIoConnection: undefined | ReturnType<typeof useSocketIO>
 
 export const useTabletopSocket = () => {
   // only connect with socket.io on first use
-  if (socketIoConnection === undefined) socketIoConnection = useSocketIo('/tabletop')
+  if (socketIoConnection === undefined) socketIoConnection = useSocketIO('/tabletop')
 
   const { reconnect, disconnect, onEvent, emit, volatileEmit } = socketIoConnection
 

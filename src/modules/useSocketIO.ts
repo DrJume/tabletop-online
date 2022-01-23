@@ -6,19 +6,19 @@ import { useSessionStore } from '@/stores/session'
 
 import { backendURL } from '@/util/globals'
 
-export const useSocketIo = (namespace: `/${string}`) => {
+export const useSocketIO = (namespace: `/${string}`) => {
   // socket.io reuses the existing instance based on same scheme/port/host, and we initialize sockets for each namespace.
   const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(`${backendURL}${namespace}`)
 
   const sessionStore = useSessionStore()
 
   socket.on('connect', () => {
-    console.log("useSocketIo() on('connect') socket.id:", socket.id)
+    console.log("useSocketIO() on('connect') socket.id:", socket.id)
     sessionStore._userId = socket.id
   })
 
   socket.on('disconnect', () => {
-    console.log("useSocketIo() on('disconnect')")
+    console.log("useSocketIO() on('disconnect')")
   })
 
   // prevent clients from connecting multiple times during dev mode
