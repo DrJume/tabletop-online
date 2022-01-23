@@ -9,6 +9,10 @@ export interface SessionState {
     isTabletopSidebarOpen: boolean
     tabletopBackgroundColor: string
   }
+  dice: {
+    min: number
+    max: number
+  }
 }
 
 export const useSessionStore = defineStore('session', {
@@ -18,6 +22,10 @@ export const useSessionStore = defineStore('session', {
       isUserProfileModalOpen: true,
       isTabletopSidebarOpen: false,
       tabletopBackgroundColor: '#cbd5e1',
+    },
+    dice: {
+      min: 1,
+      max: 6,
     },
   }),
   getters: {
