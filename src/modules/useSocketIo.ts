@@ -4,11 +4,11 @@ import { ClientToServerEvents, ServerToClientEvents } from '@/../backend/types/s
 
 import { useSessionStore } from '@/stores/session'
 
-const backendUrl = `ws://${location.hostname}:8080`
+import { backendURL } from '@/util/globals'
 
 export const useSocketIo = (namespace: `/${string}`) => {
   // socket.io reuses the existing instance based on same scheme/port/host, and we initialize sockets for each namespace.
-  const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(`${backendUrl}${namespace}`)
+  const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(`${backendURL}${namespace}`)
 
   const sessionStore = useSessionStore()
 

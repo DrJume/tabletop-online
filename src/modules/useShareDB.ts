@@ -32,8 +32,10 @@ type GameObjectsStatePaths = TsToolbelt.List.Compulsory<TsToolbelt.Object.Paths<
 //   List.Length<GameObjectsStatePathUnion>
 // >
 
+import { backendURL } from '@/util/globals'
+
 export const connectShareDB = () => {
-  const socket = new ReconnectingWebSocket(`ws://${location.hostname}:8080`)
+  const socket = new ReconnectingWebSocket(backendURL)
   const connection = new Connection(socket as Socket)
   const roomDoc: Doc<TabletopState> = connection.get('tabletop-online', 'room-1')
   ShareDBDoc.value = roomDoc
