@@ -18,7 +18,7 @@
               {{ dateFormatter.format(new Date(logItem.timestamp)) }}
             </td>
             <td
-              class="py-3 text-sm font-medium text-gray-700 whitespace-nowrap"
+              class="py-3 pr-1 text-sm font-medium text-gray-700 break-all"
               v-html="DomPurify.sanitize(logItem.message, { USE_PROFILES: { html: true } })"
             ></td>
           </tr>
