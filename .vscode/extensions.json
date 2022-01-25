@@ -11,5 +11,6 @@
     "meganrogge.template-string-converter",
     "vivaxy.vscode-conventional-commits",
     "sibiraj-s.vscode-scss-formatter",
+    "fabiospampinato.vscode-todo-plus",
   ]
 }

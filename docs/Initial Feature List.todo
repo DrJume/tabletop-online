@@ -1,0 +1,124 @@
+Views:
+  ☐ Startseite
+  * Raum erstellen
+  * Raum beitreten
+  * Raum importieren
+  * Impressum
+  * Handbuch
+
+  ☐ Spiel (InGame)
+
+
+Spiel:
+Spiel ist in mehere Ebenen unterteilt.
+(Spieltisch, Gelegte Objekte, HUD)
+
+Der Spieler betrachtet die Spielfläche aus der Vofelperspektive.
+Die Spielobjekte werden isometrisch dargestellt. (3D-Effekt)
+
+  Virtueller Spieltisch: @high
+    ☐ Beliebig veränderbarer Hintergrund
+      Spielbretter, Spielkarten können als Hintergrund fixiert werden
+
+    ☐ Spieler können ihre Ansicht auf den Spieltisch beliebig drehen
+
+  Spielobjekte: @high
+  Alle gelegten Spielobjekte befinden sich auf dem Spielfeld
+
+    ☐ Spielobjekte können beliebig erstellt, verschoben, fixiert, entfernt werden
+    ☐ Spezielle Spielobjekte haben bestimmte Aktionen
+    Karte -> Karte umdrehen, Würfel -> Würfeln
+
+  HUD:
+    Kontextmenüs:
+      für Spieltisch und gelegte Spielobjekte
+      Die Darstellung unterscheidet sich auf PC und Smartphone
+
+      Aktionen:
+        ☐ Objekte entfernen
+        ☐ (Spieltisch) Hintergrund ändern
+        ☐ (Kartendeck) Karten mischen
+
+    Interaktion mit Spielobjekten:
+
+      ☐ Desktop: @high
+      * 1x Linksklick: Auswahl
+      * 1x Rechtsklick: Auswahl + Aufruf des Kontextmenüs
+      * 2x Linksklick: Hauptaktion ausführen
+      * Rechtsklick halten + Ziehen: Ansicht rotieren
+      * Linksklick halten + Ziehen: Ansicht verschieben
+      * Auswahl + Linksklick halten + Ziehen: Ansicht verschieben
+      * Rad: Zoom
+
+      ☐ Mobil:
+      * 1x Klick: Auswahl des Spielobjekts
+      * Auswahl + 2x Klick: Aufruf des (radialen?) Kontextmenüs
+      * Auswahl + Gedrückt halten und ziehen: Verschieben des Spielobjekts
+      * Auswahl + 1x Klick: Hauptaktion ausführen (z.B. Umdrehen der Karte, Würfel würfeln)
+      * Pinch & Stretch: Zoom
+      * 2-Finger-Rotate: Ansicht drehen
+      * 2-Finger-Drag | 1-Finger-Drag: Ansicht verschieben
+      * Auswahl + 2-Finger-Rotate: Spielobjekt drehen
+
+    Hand: @high
+      ☐ Jeder Spieler hat einen geschützten Bereich (eigene Hand), wo er Spielobjekte aufbeahren kann.
+      ☐ Die Hand hat 2 Ansichten (Normal und Detailiert)
+      In der normalen Ansicht sieht der Spieler nur eine Auswahl aller Spielobjekte, die er auf der Hand hat.
+      In der detailierten Ansicht werden alle Spielobjekte in einer Liste angezeigt.
+
+    Spieler:
+      ☐ Die Position der anderen Spieler (Mauszeiger) wird einem Spieler angezeigt
+
+Spielumgebung:
+  ☐ Responsive Design
+  Spielerlebnis auf jedem Gerät (Desktop, Tablet, Smartphone) gegeben.
+  Unterschiedliche Gesten sind an die Geräte angepasst.
+
+  Menüs:
+    ☐ Obermenü
+    besteht nur aus Icons, die die anderen Menüs aufrufen
+
+    ☐ Spielmenü @high
+    * Verbindungsstatus - nur angezeigt, wenn es ein problem gibt (auf Smartphone)
+    * Spielername und -farbe
+    * Ausloggen-Button
+    * Spielerliste
+    * Import & Export
+    * Beitreten & Raum teilen
+
+    ☐ Log
+    Zeigt an, wenn Spieler das Spiel verlassen oder betreten
+    Kann als Debugging-Hilfe dienen
+
+    ☐ Spielobjekt-Katalog @high
+    wird dargestellt als Sidebar (PC), und als "Bottombar" (Smartphone)
+    enthält alle möglichen Spielobjekte
+    um neue Spielobjekte hinzuzufügen, werden diese per Drag'n'Drop auf das Spielbrett gezogen
+    wird über einen Plus-Button aufgerufen
+
+  Räume: @high
+    ☐ Jeder Spieler kann einen eigenen Raum erstellen
+    ☐ Spieler können andere Spieler in ihren Raum einladen und anderen Räumen beitreten
+
+  Synchronisation: @high
+    ☐ Spieltisch und alle gelegten Spielobjekte werden synchronisiert
+    über Peer-To-Peer
+
+    ☐ Verliert ein Spieler die Verbindung, wird das Spiel für ihn eingefroren.
+
+
+  Spielstand:
+    ☐ Ein Raum kann mit aktuellem Spielstand exportiert/importiert werden.
+    Gespeichert als ZIP
+    Exportiert werden u.a. Gelegte Spielobjekte, Hände, Spielernamen- und farben, alle nichtstandardmäßigen hinzugefügten Spielobjekte in der Liste der Spielobjekte
+
+
+  Spieler:
+    ☐ Spieler die einen Raum betreten, können sich entweder als neue oder vorhandene Spieler anmelden
+    Dadurch gibt es keine Probleme bei der Identifizierung von Spielerhänden bei Export/Import
+    
+    ☐ Jeder Spieler kann eine eigenen Spielernamen und Spielerfarbe festlegen
+    Die Spielerfarbe wird beim Auswählen von Objekten den anderen Spielern als Umrandung angezeigt
+
+    ☐ Wenn ein Spieler sich ausloggen möchte, erscheint ein Dialog
+    Der Spieler wird gefragt, ob er sich wirklich ausloggen möchte und ob er den aktuellen Spielstand speichern will
