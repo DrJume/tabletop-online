@@ -16,7 +16,7 @@ Spiel:
 Spiel ist in mehrere Ebenen unterteilt.
 (Spieltisch, Gelegte Objekte, HUD)
 
-Der Spieler betrachtet die Spielfläche aus der Vofelperspektive.
+Der Spieler betrachtet die Spielfläche aus der Vogelperspektive.
 Die Spielobjekte werden isometrisch dargestellt. (3D-Effekt)
 
   Virtueller Spieltisch: @high
@@ -77,10 +77,10 @@ Die Spielobjekte werden isometrisch dargestellt. (3D-Effekt)
       * Auswahl + 2-Finger-Rotate: Spielobjekt drehen
 
     ☐ Hand: @high
-      ☐ Jeder Spieler hat einen geschützten Bereich (eigene Hand), wo er Spielobjekte aufbeahren kann.
-      ☐ Die Hand hat 2 Ansichten (Normal und detailiert)
+      ☐ Jeder Spieler hat einen geschützten Bereich (eigene Hand), wo er Spielobjekte aufbewahren kann.
+      ☐ Die Hand hat 2 Ansichten (Normal und detailliert)
       In der normalen Ansicht sieht der Spieler nur eine Auswahl aller Spielobjekte, die er auf der Hand hat.
-      In der detailierten Ansicht werden alle Spielobjekte in einer Liste angezeigt.
+      In der detaillierten Ansicht werden alle Spielobjekte in einer Liste angezeigt.
 
     Spieler:
       ☐ Die Position der anderen Spieler (Mauszeiger) wird einem Spieler angezeigt
@@ -143,7 +143,7 @@ Spielumgebung:
   ☐ Spielstand:
     ☐ Ein Raum kann mit aktuellem Spielstand exportiert/importiert werden.
     Gespeichert als ZIP
-    Exportiert werden u.a. Gelegte Spielobjekte, Hände, Spielernamen- und farben, alle nichtstandardmäßigen hinzugefügten Spielobjekte in der Liste der Spielobjekte
+    Exportiert werden u.a. Gelegte Spielobjekte, Hände, Spielernamen und -farben, alle nicht standardmäßigen hinzugefügten Spielobjekte in der Liste der Spielobjekte
 
 
   Spieler:
