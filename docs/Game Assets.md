@@ -1,6 +1,11 @@
-# Asset Sources
+# Game Assets
 
-## mensch_aergere_dich_nicht_4er.svg
+## Erläuterung
+Dieses Dokument enthält die Quellenangaben aller benutzten Bilder entsprechend ihren Lizenzbedingungen, die im Spiel benutzt werden.
+
+## Spielbretter
+
+### mensch_aergere_dich_nicht_4er.svg
 
 | Meta    | Value                                                                                                                     |
 | ------- | ------------------------------------------------------------------------------------------------------------------------- |
@@ -10,7 +15,7 @@
 | Changes | removed "A" and "B" in base                                                                                               |
 | Source  | [Wikipedia](https://de.wikipedia.org/wiki/Mensch_%C3%A4rgere_Dich_nicht#/media/Datei:Mensch_%C3%A4rgere_dich_nicht_4.svg) |
 
-## mensch_aergere_dich_nicht_6er.svg
+### mensch_aergere_dich_nicht_6er.svg
 
 | Meta    | Value                                                                                                                        |
 | ------- | ---------------------------------------------------------------------------------------------------------------------------- |
@@ -20,7 +25,7 @@
 | Changes | removed "A" and "B" in base; changed colors a bit; removed red border, used black border instead; removed small black border |
 | Source  | [Wikipedia](https://de.wikipedia.org/wiki/Datei:Dontworry6.svg)                                                              |
 
-## halma.svg
+### halma.svg
 
 | Meta    | Value                                                                                            |
 | ------- | ------------------------------------------------------------------------------------------------ |
@@ -30,7 +35,9 @@
 | Changes | fill center fields with black background color; add yellow board background; change colors a bit |
 | Source  | [Wikipedia](https://de.wikipedia.org/wiki/Halma#/media/Datei:Sternhalma.svg)                     |
 
-## figure.svg
+## Spielfiguren
+
+### figure.svg
 
 | Meta    | Value                                                                 |
 | ------- | --------------------------------------------------------------------- |
@@ -40,7 +47,9 @@
 | Changes | removed base of figure; removed black border; make pawn color dynamic |
 | Source  | [freesvg.org](https://freesvg.org/game-player-piece)                  |
 
-## dice.svg
+## User Interface
+
+### dice.svg
 
 | Meta    | Value                                                                                       |
 | ------- | ------------------------------------------------------------------------------------------- |
