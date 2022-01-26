@@ -82,3 +82,27 @@ Um besser voranzukommen, haben wir die verbleibenden Aufgaben untereinander aufg
 
 ### 18.01.2022
 Das User Interface unabhängig vom Spielfeld ist vom Layout her umgesetzt. Der nächste Schritt ist das Einbinden von Funktionalität ins UI.
+
+### 19.01.2022
+Die Synchronisation der Spielobjekte über ShareDB ist stabil. Es hat sich herausgestellt, dass ShareDB mit den vielen Bewegungsupdates eines Spielobjekts überlastet ist. Dadurch kommt es zu großen zeitlichen Verzögerungen (ca. 1 Sekunde) bei der Synchronisation, wodurch die Integrität des Sperrzustands eines Spielobjekts nicht gewährleistet werden kann. Deshalb werden jetzt beim Bewegen eines Spielobjekts erstmal nur Anfangs- und Endposition über ShareDB synchronisiert.
+
+Um dennoch eine flüssige Bewegung synchronisieren zu können, bietet sich Socket.io an. Mit Socket.io könnte dann das Weiterleiten von Bewegungsupdates realisiert werden, während ShareDB für das Halten des Spielstands und das Sperren von Spielobjekten verantwortlich ist. Falls die Synchronisierung der Bewegungsupdates mit Socket.io zu schwierig wird, gäbe es auch noch die Möglichkeit, nur sehr wenige Bewegungsupdates zu schicken und die Bewegung dann bei der Anzeige im Client zu interpolieren.
+
+### 20.01.2022
+Das Spiel kann nun Spielerprofile verwalten. Ein Spieler gibt dazu vor Betreten des Spiels seinen Namen an und wählt eine Farbe aus. Öffnet er die Sidebar, dann kann er dort sein Profil einsehen und bei Bedarf aktualisieren. Alle anderen Mitspieler werden in einer Liste ebenfalls in der Sidebar angezeigt. Die Farbe des Spielers wird der Farbe der Spielfigur in der Sidebar angepasst.
+
+Der Gedanke dahinter ist, dass die Spielerfarbe gleichzeitig die Farbe des Spielers in "Mensch ärgere dich nicht" sein soll.
+
+### 21.01.2022
+Das Spawnen beliebig vieler Spielfiguren und das Einstellen eines Spielbretts ist jetzt möglich.
+
+Damit sich die Spielfiguren auf dem Spielbrett beim Verschieben nicht ungünstig überlappen und damit den 3D-Effekt stören, müssen die einzelnen Spielfiguren jeweils über einen z-Index unterschieden werden. Dadurch ist dann klar definiert welche Spielfiguren weiter vorn und welche weiter hinten auf dem Brett positioniert sind. Wir haben den z-Index sehr effizient über den y-Wert der Position definiert. Befindet sich eine Spielfigur weiter unten auf dem Brett ist sie zudem weiter vorn als eine Spielfigur weiter oben auf dem Spielbrett, die sich dadurch weiter hinten befindet. Diese Proportionalität zwischen y-Wert und z-Index konnten wir direkt auf die Spielfiguren anwenden.
+
+### 22.01.2022
+Das Synchronisieren von flüssigen Bewegungen der Spielobjekte über Socket.io ist jetzt implementiert.
+
+### 23.01.2022
+Die restliche Funktionalität des UI ist fertig. Implementiert wurde das Logbuch mit Popup-Meldungen und das Würfeln. Das Spielen von "Mensch ärgere dich nicht" mit mehreren Mitspielern ist jetzt möglich.
+
+### 26.01.2022
+Wir haben an der Dokumentation des Projekts weitergearbeitet. Dazu wurde unsere Todo-Liste überarbeitet und mit der Feature-List zu Beginn des Projekts verglichen. Außerdem wurden zwei C4-Diagramme (Level 2 & 3) erstellt, um den Aufbau der Anwendung nachvollziehen zu können. Um die Funktionsweise der Synchronisation besser verstehen zu können, haben wir zusätzlich ein Sequenzdiagramm angefertigt, was den Ablauf der Vorgänge bei Bewegung eines Spielobjekts darstellt.
