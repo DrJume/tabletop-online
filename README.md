@@ -14,6 +14,7 @@ Belegarbeit _Programmierung von Benutzeroberflächen (PBO)_ an der HTW Dresden i
 - [Project Structure](https://github.com/DrJume/tabletop-online/blob/dev/docs/Project%20Structure.md)
 - [Current Todos](https://github.com/DrJume/tabletop-online/blob/dev/TODO.todo)
 - [Mockups](https://www.figma.com/file/QvCJYXvBnFTH5O0j9478dD/TabletopOnline?node-id=5%3A7)
+- [Project Presentation](https://docs.google.com/presentation/d/1abQTGAcKNF0SFd0ipNW1vJ5Zp_1cwJLoAGV5aG1xqqk/edit#slide=id.gc6f9e470d_0_0)
 
 ## Project Setup
 
