@@ -15,7 +15,7 @@
       <div
         v-for="[userId, user] in filteredTeammates"
         :key="userId"
-        class="group flex items-center py-2 pr-2 pl-11 w-full text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md cursor-default"
+        class="group flex items-center py-2 pr-2 pl-11 w-full text-sm font-medium text-gray-600 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 rounded-md cursor-default"
       >
         <UserIcon class="shrink-0 mr-3 w-6 h-6" :style="{ color: user.color }" aria-hidden="true" />
         {{ user.name }}
@@ -27,10 +27,19 @@
       <div
         v-for="(board, index) in boardItems"
         :key="index"
-        class="group flex flex-col items-center py-2 pr-2 w-full text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md cursor-pointer"
+        class="group flex flex-col items-center py-2 pr-2 w-full text-sm font-medium text-gray-600 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 rounded-md cursor-pointer"
       >
-        <button class="flex-col items-center" @click="tabletopStore.setBoardURL(board.path)">
-          <img :src="board.path" loading="lazy" width="100" class="mx-auto mb-2" />
+        <button
+          class="flex-col items-center font-medium"
+          @click="tabletopStore.setBoardURL(board.path)"
+        >
+          <img
+            v-if="board.path"
+            :src="board.path"
+            loading="lazy"
+            width="100"
+            class="mx-auto mb-2"
+          />
           {{ board.name }}
         </button>
       </div>
@@ -41,9 +50,9 @@
       <div
         v-for="(figure, index) in figureItems"
         :key="index"
-        class="group flex flex-col items-center py-2 pr-2 w-full text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md cursor-pointer"
+        class="group flex flex-col items-center py-2 pr-2 w-full text-sm font-medium text-gray-600 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 rounded-md cursor-pointer"
       >
-        <button class="flex-col items-center">
+        <button class="flex-col items-center font-medium">
           <component
             :is="figure.svg"
             :style="{ color: currentUser.color }"
@@ -71,7 +80,7 @@
     <!-- Settings -->
     <SidebarSection :item="{ name: 'Einstellungen', icon: AdjustmentsIcon }">
       <div
-        class="group flex items-center py-2 pr-2 pl-11 w-full text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md cursor-default"
+        class="group flex items-center py-2 pr-2 pl-11 w-full text-sm font-medium text-gray-600 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 rounded-md cursor-default"
       >
         <div class="flex-auto">Hintergrundfarbe</div>
         <input

@@ -52,7 +52,7 @@ const draggingColor = computed(() => {
       class="flex w-full h-full drop-shadow-lg"
       :style="`
         color: ${gameObjectData.color};
-        ${draggingColor && `--tw-drop-shadow : ${draggingColor}`}
+        ${draggingColor && `--tw-drop-shadow : ${draggingColor}`};
       `"
     />
   </div>

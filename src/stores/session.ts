@@ -21,7 +21,7 @@ export const useSessionStore = defineStore('session', {
     ui: {
       isUserProfileModalOpen: true,
       isTabletopSidebarOpen: false,
-      tabletopBackgroundColor: '#cbd5e1',
+      tabletopBackgroundColor: 'rgb(212 212 212)',
     },
     dice: {
       min: 1,

@@ -6,13 +6,13 @@
     orientation="right"
     caption="Logbuch"
   >
-    <div class="overflow-y-auto -mx-2">
-      <table class="min-w-full divide-y divide-gray-200">
-        <tbody>
+    <div class="overflow-y-auto -mx-2 border-neutral-200">
+      <table class="min-w-full">
+        <tbody class="border-y border-neutral-200 divide-y divide-neutral-200">
           <tr
             v-for="(logItem, index) in tabletopStore.log.slice().reverse()"
             :key="index"
-            :class="index % 2 === 0 ? 'bg-white' : 'bg-gray-50'"
+            :class="index % 2 === 1 ? 'bg-neutral-50' : 'bg-neutral-100'"
           >
             <td class="py-2 pr-2 pl-4 text-sm text-gray-500 whitespace-nowrap">
               {{ dateFormatter.format(new Date(logItem.timestamp)) }}

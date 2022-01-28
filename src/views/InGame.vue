@@ -151,7 +151,7 @@ const tabletopModalOptions = computed((): TabletopModalOptions => {
     :current-color="tabletopModalOptions.player.color"
     @submit="submitProfile"
   />
-  <div class="overflow-auto relative h-full bg-gray-200">
+  <div class="overflow-auto relative h-full bg-neutral-200">
     <Sidebar />
     <LogBar />
     <Dice />

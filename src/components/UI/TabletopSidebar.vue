@@ -1,6 +1,4 @@
 <template>
-  <!-- TODO: ordentliche Styles --->
-
   <TransitionRoot as="template" :show="sidebarOpen">
     <Dialog
       as="div"
@@ -29,7 +27,7 @@
         :leave-to="props.orientation == 'right' ? 'translate-x-full' : '-translate-x-full'"
       >
         <div
-          class="flex relative flex-col flex-1 pt-5 pb-4 w-full max-w-xs bg-indigo-700"
+          class="flex relative flex-col flex-1 pt-5 pb-4 w-full max-w-xs bg-neutral-50"
           :class="props.orientation == 'right' ? 'order-1' : ''"
         >
           <TransitionChild
@@ -47,7 +45,7 @@
             >
               <button
                 type="button"
-                class="flex justify-center items-center ml-1 w-10 h-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                class="flex justify-center items-center ml-1 w-10 h-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-600"
                 @click="sidebarOpen = false"
               >
                 <span class="sr-only">Close sidebar</span>
@@ -55,11 +53,11 @@
               </button>
             </div>
           </TransitionChild>
-          <div class="flex shrink-0 items-center px-4">
+          <div class="flex shrink-0 items-center px-4 text-xl">
             <h2>{{ props.caption }}</h2>
           </div>
           <div class="overflow-y-auto flex-1 mt-5 h-0">
-            <nav class="flex-1 px-2 space-y-1 bg-white" aria-label="Sidebar">
+            <nav class="flex-1 px-2 space-y-1 bg-neutral-50" aria-label="Sidebar">
               <slot></slot>
             </nav>
           </div>

@@ -36,11 +36,11 @@
           leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         >
           <div
-            class="inline-block overflow-hidden relative p-4 text-left align-bottom bg-white rounded-lg shadow-xl transition-all sm:p-6 sm:my-8 sm:w-full sm:max-w-sm sm:align-middle"
+            class="inline-block overflow-hidden relative p-4 text-left align-bottom bg-neutral-100 rounded-lg shadow-xl transition-all sm:p-6 sm:my-8 sm:w-full sm:max-w-sm sm:align-middle"
           >
             <div>
               <div class="text-center">
-                <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
+                <DialogTitle as="h3" class="text-xl font-medium leading-6 text-gray-900">
                   <span
                     >{{
                       modeDisplay === 'join' ? 'Willkommen bei TabletopOnline!' : 'Nutzerprofil'
@@ -111,7 +111,7 @@
             <div class="mt-10">
               <button
                 type="button"
-                class="group inline-flex justify-center w-full text-base font-medium text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-sm disabled:opacity-60 disabled:cursor-not-allowed sm:text-sm"
+                class="group inline-flex justify-center w-full text-base font-medium text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-100 shadow-sm disabled:opacity-60 disabled:cursor-not-allowed sm:text-sm"
                 :style="`--tw-ring-color: ${selectedColorCSS}; background-color: ${selectedColorCSS};`"
                 :disabled="!isReady"
                 @click="submitProfile"
