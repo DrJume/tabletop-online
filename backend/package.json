@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@types/node": "^16.11.21",
+    "nodemon": "^2.0.15",
     "pino-pretty": "^7.5.0",
     "ts-node": "^10.4.0",
     "tslib": "^2.3.1",

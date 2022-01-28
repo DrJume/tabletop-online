@@ -17,12 +17,12 @@ import path from 'path'
 
 const fastify = Fastify({
   /* serverFactory, */
-  logger: {
-    prettyPrint: {
-      translateTime: 'HH:MM:ss Z',
-      ignore: 'pid,hostname',
-    },
-  },
+  // logger: {
+  //   prettyPrint: {
+  //     translateTime: 'HH:MM:ss Z',
+  //     ignore: 'pid,hostname',
+  //   },
+  // },
 })
 
 fastify.register(fastifyStatic, {
