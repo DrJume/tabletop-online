@@ -117,6 +117,12 @@ roomDoc.subscribe()
 
 shareDBSocketServer.on('connection', (webSocket) => {
   const stream = new WebSocketJSONStream(webSocket)
+
+  // Prevents server crashes on errors?
+  stream.on('error', (error) => {
+    console.log(error.message) // Tends to print "WebSocket CLOSING or CLOSED."
+  })
+
   backend.listen(stream)
 })
 
@@ -127,7 +133,7 @@ socketIOSocketServer.of('/tabletop').on('connection', (socket) => {
   socket.on('startDrag', ({ playerId, objectId }, accept) => {
     const objectDraggedBy = roomDoc.data.objects[objectId].data._meta.draggedBy
 
-    if (objectDraggedBy !== '') {
+    if (!(objectDraggedBy === '' || objectDraggedBy === playerId)) {
       console.log(`BLOCK 'startDrag' of object '${objectId}' for player '${playerId}'`)
       accept(false)
       return
@@ -194,5 +200,6 @@ fastify.listen(8080, () => {
 // force clean reconnect of all active sockets when using nodemon
 process.once('SIGUSR2', () => {
   socketIOSocketServer.disconnectSockets(true)
+  backend.close()
   process.kill(process.pid, 'SIGUSR2')
 })
