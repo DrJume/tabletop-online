@@ -52,8 +52,8 @@
                 type: GameObjectType.PlayingObject,
                 data: {
                   position: {
-                    x: 50,
-                    y: 50,
+                    x: 50 - 3 / 2 + upToNDigits(randomFloatBetween(-10, 10), 1),
+                    y: 50 - 6 / 3 + upToNDigits(randomFloatBetween(-10, 10), 1),
                     z: 10,
                   },
                   isLocked: false,
@@ -95,6 +95,7 @@ import { computed } from 'vue'
 
 import { GameObjectType } from '@/types/gameObject'
 
+import { randomFloatBetween, upToNDigits } from '@/util/numbers'
 import FigureImg from '@/assets/figures/figure.svg?component'
 
 const tabletopStore = useTabletopStore()

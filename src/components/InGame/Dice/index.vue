@@ -15,6 +15,7 @@ import { useThrottleFn } from '@vueuse/core'
 import { useTabletopStore } from '@/stores/tabletop'
 import { useSessionStore } from '@/stores/session'
 import { playerName } from '@/util/tabletopLogFormatter'
+import { randomIntBetween } from '@/util/numbers'
 
 const tabletopStore = useTabletopStore()
 const sessionStore = useSessionStore()
@@ -24,7 +25,7 @@ const rollDice = () => {
   const color = tabletopStore.players[sessionStore.userId].color
 
   const { min, max } = sessionStore.dice
-  const diceResult = Math.floor(Math.random() * (max - min + 1) + min)
+  const diceResult = randomIntBetween(min, max)
 
   tabletopStore.printToLog(
     `${playerName({
