@@ -25,6 +25,7 @@ export const useTabletopSocket = () => {
 
   const startDrag = generateEmitter(emit)('startDrag')
   const drag = generateEmitter(volatileEmit)('drag')
+  const recover = generateEmitter(emit)('recover')
 
   return {
     reconnect,
@@ -32,6 +33,7 @@ export const useTabletopSocket = () => {
 
     startDrag,
     drag,
+    recover,
 
     onMove,
   }

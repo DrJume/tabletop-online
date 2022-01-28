@@ -27,4 +27,8 @@ export interface ClientToServerEvents {
     objectId: string
     position: { x: number; y: number; z: number }
   }) => void
+  recover: (
+    { playerId, data }: { playerId: string; data: any },
+    accept: (ok: boolean) => void
+  ) => void
 }

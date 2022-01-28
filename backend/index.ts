@@ -112,6 +112,12 @@ if (!roomDoc.type) {
   )
 }
 
+const State = {
+  recover: {
+    playerId: null,
+  },
+}
+
 // subscribe to ShareDB doc to receive updates
 roomDoc.subscribe()
 
@@ -164,6 +170,34 @@ socketIOSocketServer.of('/tabletop').on('connection', (socket) => {
     }
 
     socket.volatile.broadcast.emit('move', { playerId, objectId, position })
+  })
+
+  socket.on('recover', ({ playerId, data }, accept) => {
+    if (State.recover.playerId !== null) {
+      console.log(`BLOCK 'recover' from player ${playerId} ${roomDoc.version}`)
+      accept(false)
+      return
+    }
+    State.recover.playerId = playerId
+
+    accept(true)
+    // roomDoc.del({}, () => {
+    // roomDoc.create(snapshot.data, () => {
+    // State.recover.playerId = null
+    // })
+    // })
+    roomDoc.submitOp(
+      [
+        { p: ['_meta'], oi: data._meta },
+        { p: ['objects'], oi: data.objects },
+        { p: ['log'], oi: data.log },
+      ],
+      {},
+      () => {
+        // State.recover.playerId = null
+      }
+    )
+    console.log(`recover with from player ${playerId}`)
   })
 
   socket.on('disconnect', () => {

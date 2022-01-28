@@ -1,5 +1,11 @@
 import { Ref, UnwrapRef, watch } from 'vue'
-import { useDraggable, useElementBounding, useThrottleFn } from '@vueuse/core'
+import {
+  unrefElement,
+  useDraggable,
+  useElementBounding,
+  useThrottleFn,
+  VueInstance,
+} from '@vueuse/core'
 
 import { GameObjectDataTypes, GameObjectType } from '@/types/gameObject'
 
@@ -49,6 +55,8 @@ export const useTabletopDraggable = <T extends GameObjectDataTypes<GameObjectTyp
   }
   const broadcastThrottled = useThrottleFn(broadcast, /* 30 Hz */ 1000 / 30, /* leading */ false)
 
+  // (elementRef?.value as unknown as VueInstance)?.$el ?? elementRef,
+  // unrefElement(elementRef),
   const { position: positionAbsoluteDraggable, isDragging } = useDraggable(elementRef, {
     draggingElement: tabletopRef,
     // exact: true,
