@@ -5,25 +5,31 @@ Belegarbeit _Programmierung von Benutzeroberflächen (PBO)_ an der HTW Dresden i
 
 **Node.js version:** `16`
 
-**Commit style:** [Conventional Commits](https://github.com/DrJume/tabletop-online/blob/main/docs/Conventional%20Commits.md)
+**Commit style:** [Conventional Commits](https://github.com/DrJume/tabletop-online/blob/dev/docs/Conventional%20Commits.md)
 
 ## Documentation
-- [Design](https://github.com/DrJume/tabletop-online/blob/dev/docs/Design.md)
+
+- [Software-Design](https://github.com/DrJume/tabletop-online/blob/dev/docs/Design.md)
 - [Game Assets](https://github.com/DrJume/tabletop-online/blob/dev/docs/Game%20Assets.md)
 - [Dev Log](https://github.com/DrJume/tabletop-online/blob/dev/docs/Dev%20Log.md)
 - [Project Structure](https://github.com/DrJume/tabletop-online/blob/dev/docs/Project%20Structure.md)
 - [Current Todos](https://github.com/DrJume/tabletop-online/blob/dev/TODO.todo)
-- [Mockups](https://www.figma.com/file/QvCJYXvBnFTH5O0j9478dD/TabletopOnline?node-id=5%3A7)
-- [Project Presentation](https://docs.google.com/presentation/d/1abQTGAcKNF0SFd0ipNW1vJ5Zp_1cwJLoAGV5aG1xqqk/edit#slide=id.gc6f9e470d_0_0)
+
+**External:**
+
+- [Mockups (Figma)](https://www.figma.com/file/QvCJYXvBnFTH5O0j9478dD/TabletopOnline)
+- [Project Presentation (Google Slides)](https://docs.google.com/presentation/d/1abQTGAcKNF0SFd0ipNW1vJ5Zp_1cwJLoAGV5aG1xqqk/edit?usp=sharing)
 
 ## Project Setup
 
-> Install pnpm <br>
+> **Use pnpm** <br>
 > - https://pnpm.io/installation (Recommended) <br>
 > - `npm install -g pnpm`
 
+### Install dependencies
+
 ```sh
-pnpm install
+pnpm -r install
 ```
 
 ### Lint and fix files
@@ -44,21 +50,28 @@ cd backend/
 pnpm dev
 ```
 
-### Compile and Minify for Production
+### Run in production
+
+#### Compile and minify frontend sources
 
 ```sh
 pnpm build
 ```
 
-### Run in production
-
+#### Start backend
 ```sh
 cd backend/
 pnpm dev
 ```
 
-## Tool Installation
+## Tips
 
-**`node`:**
+### Installation of Node.js
 
-- run `pnpm env use -g lts` to get the latest `Node.js` LTS version and `npm`
+- Use `pnpm` with
+
+  ```sh
+  pnpm env use -g lts
+  ```
+
+  to get the latest `Node.js` LTS  and the corresponding `npm` version
