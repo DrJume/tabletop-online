@@ -54,17 +54,19 @@ export const connectShareDB = () => {
     // clone ShareDB doc with JSON trick to remove weird references
     const clonedShareDBDoc = JSON.parse(JSON.stringify(roomDoc.data))
     // apply ShareDB doc to local store
-    tabletopStore.$patch(clonedShareDBDoc)
+    // tabletopStore.$reset()
+    // tabletopStore.$patch(clonedShareDBDoc)
+    tabletopStore.$state = clonedShareDBDoc
 
     roomDoc.submitOp({ p: ['_meta', 'userCounter'], na: 1 })
 
-    log.log('ShareDB subscribe() data:', JSON.stringify(roomDoc.data))
+    log.log('ShareDB subscribe() version:', roomDoc.version, JSON.stringify(roomDoc.data))
 
     /* A change (operation) occured in the database.
      Combine all operations into one with 'op batch'.
      Sync ShareDB with the tabletopStore store. */
-    roomDoc.on('op batch', (ops: Op[], source) => {
-      log.log("ShareDB on('op batch')", source, ops)
+    roomDoc.on('before op batch', (ops: Op[], source) => {
+      log.log("ShareDB on('before op batch')", source ? '->' : '<-', ops)
 
       /* The 'source' parameter is truthy, when
       the change initiated from this client.

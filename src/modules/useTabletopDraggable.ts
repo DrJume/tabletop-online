@@ -59,13 +59,24 @@ export const useTabletopDraggable = <T extends GameObjectDataTypes<GameObjectTyp
       log.log('useDraggable onStart()')
 
       // block if object is already dragged by another user
-      if (gameObjectData.value._meta.draggedBy !== '') return false
+      if (
+        !(
+          gameObjectData.value._meta.draggedBy === '' ||
+          gameObjectData.value._meta.draggedBy === sessionStore.safeUserId
+        )
+      )
+        return false
 
-      // gameObjectData.value._meta.draggedBy = sessionStore.userId // server makes submitOp
+      // optimistic aquisition
+      gameObjectData.value._meta.draggedBy = sessionStore.safeUserId
 
       startDrag({ playerId: sessionStore.safeUserId, objectId }, (ok) => {
         if (!ok) {
           console.error('BLOCK CARD')
+
+          if (gameObjectData.value._meta.draggedBy === sessionStore.safeUserId)
+            gameObjectData.value._meta.draggedBy = ''
+
           return
         }
       })
