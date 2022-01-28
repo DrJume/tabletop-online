@@ -2,6 +2,8 @@ version: '3.3'
 services:
   tabletop-online:
     image: tabletop-online:latest
+    stdin_open: true # docker run -i
+    tty: true # docker run -t
     ports:
       - '80:8080'
     # volumes:
