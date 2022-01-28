@@ -100,12 +100,12 @@ const toast = useToast()
 
 watch(
   () => tabletopStore.log,
-  (log) => {
-    if (log.length === 0) return
+  (log, oldLog) => {
+    if (oldLog.length === 0 || log.length === 0) return
     const newestLog = log[log.length - 1]
 
-    // don't show notifications older than 10s
-    if (newestLog.timestamp + 10 * 1000 /* ms */ < Date.now()) return
+    // don't show notifications older than 5s
+    if (newestLog.timestamp + 5 * 1000 /* ms */ < Date.now()) return
 
     toast({
       component: TabletopNotification,
