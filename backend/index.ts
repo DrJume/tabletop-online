@@ -193,7 +193,7 @@ socketIOSocketServer.of('/tabletop').on('connection', (socket) => {
   })
 })
 
-fastify.listen(8080, () => {
+fastify.listen(8080, '0.0.0.0', () => {
   console.log('listening on *:8080')
 })
 
