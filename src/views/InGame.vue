@@ -39,16 +39,16 @@ const zoomVar = useCssVar('--zoom', tabletopRef)
 const zoomPercent = computed(() => Number.parseInt(zoomVar.value.replace('%', '')))
 
 onKeyStroke('+', () => {
-  zoomVar.value = `${zoomPercent.value + 10}%`
+  zoomVar.value = `${zoomPercent.value + 5}%`
 })
 onKeyStroke('0', () => {
   zoomVar.value = '100%'
 })
 onKeyStroke('-', () => {
   // zooming out of playarea is not permitted
-  if (zoomPercent.value <= 100) return
+  // if (zoomPercent.value <= 100) return
 
-  zoomVar.value = `${zoomPercent.value - 10}%`
+  zoomVar.value = `${zoomPercent.value - 5}%`
 })
 
 const dynamicFontSize = computed(() => `${(zoomPercent.value / 100) * 1.25}rem`)
