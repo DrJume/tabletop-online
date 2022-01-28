@@ -5,7 +5,7 @@
       as="div"
       class="overflow-y-auto fixed inset-0 z-10"
       :initial-focus="getActiveElement()"
-      @vnode-before-mount="updateModeDisplay()"
+      @vnode-before-mount="updateDeferedDisplayMode()"
     >
       <div
         class="flex justify-center items-end px-4 pt-4 pb-20 min-h-screen text-center sm:block sm:p-0"
@@ -43,7 +43,9 @@
                 <DialogTitle as="h3" class="text-xl font-medium leading-6 text-gray-900">
                   <span
                     >{{
-                      modeDisplay === 'join' ? 'Willkommen bei TabletopOnline!' : 'Nutzerprofil'
+                      deferedDisplayMode === 'join'
+                        ? 'Willkommen bei TabletopOnline!'
+                        : 'Nutzerprofil'
                     }}
                   </span>
                 </DialogTitle>
@@ -113,13 +115,35 @@
                 type="button"
                 class="group inline-flex justify-center w-full text-base font-medium text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-100 shadow-sm disabled:opacity-60 disabled:cursor-not-allowed sm:text-sm"
                 :style="`--tw-ring-color: ${selectedColorCSS}; background-color: ${selectedColorCSS};`"
-                :disabled="!isReady"
+                :disabled="!isValidUsername || !isReady"
                 @click="submitProfile"
               >
                 <span
-                  class="py-2 px-4 w-full rounded-md border border-transparent group-hover:backdrop-brightness-75 group-disabled:group-hover:backdrop-filter-none"
+                  class="flex justify-center items-center py-2 px-4 w-full rounded-md border border-transparent group-hover:backdrop-brightness-75 group-disabled:group-hover:backdrop-filter-none"
                 >
-                  {{ modeDisplay === 'join' ? 'Spiel beitreten' : 'Aktualisieren' }}
+                  {{ deferedDisplayMode === 'join' ? 'Spiel beitreten' : 'Aktualisieren' }}
+
+                  <svg
+                    v-show="!isReady"
+                    class="ml-3 w-5 h-5 text-white animate-spin"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      class="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      stroke-width="4"
+                    ></circle>
+                    <path
+                      class="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
                 </span>
               </button>
             </div>
@@ -145,35 +169,38 @@ import {
 import { Player } from '@/types/player'
 import { useVModel } from '@vueuse/core'
 
+import { useSessionStore } from '@/stores/session'
+const sessionStore = useSessionStore()
+
 const getActiveElement = () => document.activeElement as HTMLElement
 
 interface Props {
-  mode?: 'join' | 'change'
-  username?: string
-  currentColor?: string
+  playerProfile: Player
   open: boolean
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  mode: 'join',
-  username: 'dev',
-  currentColor: '',
-})
-
-const isReady = computed(() => !!username.value)
-
+const props = defineProps<Props>()
 const emit = defineEmits<{
-  (e: 'submit', mode: NonNullable<Props['mode']>, { name, color }: Player): void
   (e: 'update:open', open: boolean): void
+  (e: 'submit', mode: 'join' | 'edit', playerProfile: Player): void
 }>()
 
 const open = useVModel(props, 'open')
 
-const modeDisplay = ref(props.mode)
-const updateModeDisplay = () => {
-  modeDisplay.value = props.mode
-}
+const username = ref(props.playerProfile.name)
 
+const isValidUsername = computed(() => !!username.value)
+const isReady = computed(() => open.value && sessionStore.user.id)
+
+/* Display Mode */
+const displayMode = computed(() => (props.playerProfile.name ? 'edit' : 'join'))
+const deferedDisplayMode = ref(displayMode.value)
+const updateDeferedDisplayMode = () => {
+  deferedDisplayMode.value = displayMode.value
+}
+/*  */
+
+/* Colors */
 const colors = [
   { name: 'Red', bgColor: 'bg-red-600', ringColor: 'ring-red-600' },
   { name: 'Orange', bgColor: 'bg-orange-500', ringColor: 'ring-orange-500' },
@@ -187,22 +214,21 @@ const colors = [
   { name: 'Black', bgColor: 'bg-gray-800', ringColor: 'ring-gray-800' },
 ]
 
-const username = ref(props.username)
-
 const colorElements = ref<Element[]>(Array.from({ length: colors.length }))
 
-const selectedColorIndex = ref(props.currentColor ? -1 : 0)
+const selectedColorIndex = ref(props.playerProfile.color ? -1 : 0)
 const selectedColorCSS = computed(() => {
-  if (selectedColorIndex.value === -1) return props.currentColor
+  if (selectedColorIndex.value === -1) return props.playerProfile.color
 
   const selectedColorElement = colorElements.value[selectedColorIndex.value]
   if (!selectedColorElement) return ''
 
   return window.getComputedStyle(selectedColorElement).backgroundColor
 })
+/*  */
 
 const submitProfile = () => {
   open.value = false
-  emit('submit', props.mode, { name: username.value, color: selectedColorCSS.value })
+  emit('submit', displayMode.value, { name: username.value, color: selectedColorCSS.value })
 }
 </script>

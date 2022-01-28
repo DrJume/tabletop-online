@@ -63,7 +63,7 @@ export const useTabletopDraggable = <T extends GameObjectDataTypes<GameObjectTyp
 
       // gameObjectData.value._meta.draggedBy = sessionStore.userId // server makes submitOp
 
-      startDrag({ playerId: sessionStore.userId, objectId }, (ok) => {
+      startDrag({ playerId: sessionStore.safeUserId, objectId }, (ok) => {
         if (!ok) {
           console.error('BLOCK CARD')
           return
@@ -100,7 +100,7 @@ export const useTabletopDraggable = <T extends GameObjectDataTypes<GameObjectTyp
       }
 
       broadcastThrottled({
-        playerId: sessionStore.userId,
+        playerId: sessionStore.safeUserId,
         objectId,
         data: gameObjectData.value,
       })

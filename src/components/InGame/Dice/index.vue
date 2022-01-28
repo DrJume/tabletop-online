@@ -21,15 +21,14 @@ const tabletopStore = useTabletopStore()
 const sessionStore = useSessionStore()
 
 const rollDice = () => {
-  const username = tabletopStore.players[sessionStore.userId].name
-  const color = tabletopStore.players[sessionStore.userId].color
+  const { name, color } = sessionStore.user
 
   const { min, max } = sessionStore.dice
   const diceResult = randomIntBetween(min, max)
 
   tabletopStore.printToLog(
     `${playerName({
-      name: username,
+      name,
       color,
     })} hat eine <code class="font-bold text-base">${diceResult}</code> gewürfelt!`,
     'CubeIcon'

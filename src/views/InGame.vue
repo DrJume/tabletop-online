@@ -63,10 +63,11 @@ tabletopStore.$subscribe((mutation, state) => {
   log.log('tabletopStore.$subscribe()', mutation)
 })
 
-const submitProfile = (mode: TabletopModalOptions['mode'], { name, color }: Player) => {
+const submitProfile = (mode: 'join' | 'edit', { name, color }: Player) => {
   log.log('submitProfile()', mode, { name, color })
 
-  const profileBefore = tabletopStore.players[sessionStore.userId]
+  const profileBefore = { ...sessionStore.user }
+  sessionStore.$patch({ user: { name, color } })
   tabletopStore.playerUpdate({ name, color })
 
   switch (mode) {
@@ -78,7 +79,7 @@ const submitProfile = (mode: TabletopModalOptions['mode'], { name, color }: Play
       break
     }
 
-    case 'change': {
+    case 'edit': {
       tabletopStore.printToLog(
         `${playerName({
           name: profileBefore.name,
@@ -116,39 +117,12 @@ watch(
   },
   { deep: true }
 )
-
-interface TabletopModalOptions {
-  mode: 'join' | 'change'
-  player: Partial<Player>
-}
-
-const tabletopModalOptions = computed((): TabletopModalOptions => {
-  // the player has not yet joined, when userId is not in the player list
-  if (!sessionStore._userId || !tabletopStore.players[sessionStore._userId]) {
-    return {
-      mode: 'join',
-      player: {
-        name: undefined,
-        color: undefined,
-      },
-    }
-  }
-  return {
-    mode: 'change',
-    player: {
-      name: tabletopStore.players[sessionStore._userId].name,
-      color: tabletopStore.players[sessionStore._userId].color,
-    },
-  }
-})
 </script>
 
 <template>
   <TabletopModal
     v-model:open="sessionStore.ui.isUserProfileModalOpen"
-    :mode="tabletopModalOptions.mode"
-    :username="tabletopModalOptions.player.name"
-    :current-color="tabletopModalOptions.player.color"
+    :player-profile="sessionStore.user"
     @submit="submitProfile"
   />
   <div class="overflow-auto relative h-full bg-neutral-200">

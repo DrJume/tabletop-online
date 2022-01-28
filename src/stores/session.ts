@@ -3,7 +3,11 @@
 import { defineStore } from 'pinia'
 
 export interface SessionState {
-  _userId: undefined | string
+  user: {
+    id: undefined | string
+    name: string
+    color: string
+  }
   ui: {
     isUserProfileModalOpen: boolean
     isTabletopSidebarOpen: boolean
@@ -17,7 +21,11 @@ export interface SessionState {
 
 export const useSessionStore = defineStore('session', {
   state: (): SessionState => ({
-    _userId: undefined,
+    user: {
+      id: undefined,
+      name: '',
+      color: '',
+    },
     ui: {
       isUserProfileModalOpen: true,
       isTabletopSidebarOpen: false,
@@ -29,13 +37,13 @@ export const useSessionStore = defineStore('session', {
     },
   }),
   getters: {
-    userId(): string {
-      if (!this._userId) {
-        console.error('sessionStore._userId is not defined!')
-        throw new Error('sessionStore._userId is not defined!')
+    safeUserId(): string {
+      if (!this.user.id) {
+        console.error('sessionStore.user.id is not defined!')
+        throw new Error('sessionStore.user.id is not defined!')
       }
 
-      return this._userId
+      return this.user.id
     },
   },
 })

@@ -6,7 +6,7 @@
   >
     <!-- Player -->
     <SidebarSection
-      :item="{ name: currentUser.name, icon: UserIcon, color: currentUser.color }"
+      :item="{ name: sessionStore.user.name, icon: UserIcon, color: sessionStore.user.color }"
       @click="switchToUserProfileModal()"
     />
 
@@ -55,7 +55,7 @@
         <button class="flex-col items-center font-medium">
           <component
             :is="figure.svg"
-            :style="{ color: currentUser.color }"
+            :style="{ color: sessionStore.user.color }"
             @click="
               tabletopStore.addGameObject({
                 type: GameObjectType.PlayingObject,
@@ -66,7 +66,7 @@
                     z: 10,
                   },
                   isLocked: false,
-                  color: currentUser.color,
+                  color: sessionStore.user.color,
                   // image: figure,
                 },
               })
@@ -94,42 +94,32 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+
 import { MapIcon, UsersIcon, PuzzleIcon, AdjustmentsIcon } from '@heroicons/vue/outline'
 import { UserIcon } from '@heroicons/vue/solid'
 import SidebarSection from './SidebarSection.vue'
 import TabletopSidebar from '@/components/UI/TabletopSidebar.vue'
 import { useTabletopStore } from '@/stores/tabletop'
 import { useSessionStore } from '@/stores/session'
-import { computed } from 'vue'
 
 import { GameObjectType } from '@/types/gameObject'
 
 import { randomFloatBetween, upToNDigits } from '@/util/numbers'
+
 import FigureImg from '@/assets/figures/figure.svg?component'
 
 const tabletopStore = useTabletopStore()
 const sessionStore = useSessionStore()
-
-const currentUser = computed(() => {
-  if (sessionStore._userId === undefined) throw new Error('UserId is undefined')
-  const user = tabletopStore.players[sessionStore._userId]
-
-  return user
-})
 
 const switchToUserProfileModal = () => {
   sessionStore.ui.isTabletopSidebarOpen = false
   sessionStore.ui.isUserProfileModalOpen = true
 }
 
-// const userSection = computed(() => ({
-//   ...currentUser.value,
-//   icon: UserIcon,
-// }))
-
 const filteredTeammates = computed(() => {
   return Object.entries(tabletopStore.players).filter(
-    ([key, value]) => key !== sessionStore._userId
+    ([key, value]) => key !== sessionStore.user.id
   )
 })
 

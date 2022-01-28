@@ -14,7 +14,7 @@ export const useSocketIO = (namespace: `/${string}`) => {
 
   socket.on('connect', () => {
     console.log("useSocketIO() on('connect') socket.id:", socket.id)
-    sessionStore._userId = socket.id
+    sessionStore.user.id = socket.id
   })
 
   socket.on('disconnect', () => {
