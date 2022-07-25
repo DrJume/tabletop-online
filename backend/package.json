@@ -10,19 +10,19 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@socket.io/admin-ui": "^0.2.0",
+    "@fastify/static": "^6.4.1",
+    "@socket.io/admin-ui": "^0.4.0",
     "@teamwork/websocket-json-stream": "^2.0.0",
-    "fastify": "^3.27.0",
-    "fastify-static": "^4.5.0",
-    "socket.io": "^4.4.1",
-    "ws": "^8.4.2"
+    "fastify": "^4.3.0",
+    "socket.io": "^4.5.1",
+    "ws": "^8.8.1"
   },
   "devDependencies": {
-    "@types/node": "16",
-    "nodemon": "^2.0.15",
-    "pino-pretty": "^7.5.0",
-    "ts-node": "^10.4.0",
-    "tslib": "^2.3.1",
-    "typescript": "^4.5.5"
+    "@types/node": "^16.11.45",
+    "nodemon": "^2.0.19",
+    "pino-pretty": "^8.1.0",
+    "ts-node": "^10.9.1",
+    "tslib": "^2.4.0",
+    "typescript": "^4.7.4"
   }
 }
