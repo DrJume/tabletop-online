@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { useTabletopSocket } from '@/modules/useTabletopSocket'
 import { connectShareDB } from '@/modules/useShareDB'
 
-useTabletopSocket
 connectShareDB()
 </script>
 

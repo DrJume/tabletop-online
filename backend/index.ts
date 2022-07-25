@@ -4,7 +4,7 @@
 // const httpServer = createServer()
 
 import Fastify from 'fastify'
-import fastifyStatic from 'fastify-static'
+import fastifyStaticPlugin from '@fastify/static'
 import path from 'path'
 
 // const serverFactory = (handler, opts) => {
@@ -25,7 +25,7 @@ const fastify = Fastify({
   // },
 })
 
-fastify.register(fastifyStatic, {
+fastify.register(fastifyStaticPlugin, {
   // eslint-disable-next-line unicorn/prefer-module
   root: path.join(__dirname, '../dist'),
 })
@@ -49,7 +49,7 @@ const socketIOSocketServer = new SocketIOServer<ClientToServerEvents, ServerToCl
   {
     path: '/socket.io',
     cors: {
-      origin: ['http://localhost:3000', 'https://admin.socket.io'],
+      origin: ['http://localhost:5173', 'https://admin.socket.io'],
       credentials: true,
     },
   }
@@ -193,7 +193,7 @@ socketIOSocketServer.of('/tabletop').on('connection', (socket) => {
   })
 })
 
-fastify.listen(8080, '0.0.0.0', () => {
+fastify.listen({ host: '0.0.0.0', port: 8080 }, () => {
   console.log('listening on *:8080')
 })
 
